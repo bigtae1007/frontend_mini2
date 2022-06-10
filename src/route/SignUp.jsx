@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import Input from "../elems/Input";
+//컴포넌트
+
 import LoginTop from "../features/login/LoginTop";
+import SignUpForm from "../features/login/SingUpForm";
 
 export default function SignUp() {
   return (
     <WrapSignBox>
-      <LoginTop />
-      <Input />
+      <LoginTop title="회원가입" />
+      <SignUpForm />
     </WrapSignBox>
   );
 }
