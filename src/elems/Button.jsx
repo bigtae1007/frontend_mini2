@@ -6,6 +6,8 @@ export default function Button({ children, ...restProps }) {
 }
 
 const Btn = styled.button`
+  height: 40px;
+  border-radius: 10px;
   ${({ size }) => {
     switch (size) {
       case "size1":
@@ -23,12 +25,13 @@ const Btn = styled.button`
   }};
   color: ${({ color }) => `var(--${color})`};
   background-color: ${({ bgcolor }) => `var(--${bgcolor})`};
-  height: 40px;
-  border-radius: 10px;
 `;
 
 export const size1 = css`
   width: 100%;
+  height: 60px;
+  font-size: 1.2rem;
+  letter-spacing: 3px;
 `;
 export const size2 = css`
   width: 50%;

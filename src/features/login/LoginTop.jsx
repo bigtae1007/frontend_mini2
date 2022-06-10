@@ -12,7 +12,7 @@ export default function LoginTop({ title }) {
           navigate(-1);
         }}
       >
-        --
+        &#10602;
       </BackBtn>
       <h2>{title}</h2>
     </WrapTopLogin>

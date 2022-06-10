@@ -9,7 +9,7 @@ export default function LoginForm() {
   // 버튼 잠금 state
   const [formstate, setFromState] = useState(false);
   // data 입력 state
-  const [loginData, setloginData] = useState({ email: "", password: "" });
+  const [loginData, setloginData] = useState({ username: "", password: "" });
 
   //input 데이터 저장하기
   const changeInput = (e) => {
@@ -24,7 +24,7 @@ export default function LoginForm() {
 
   React.useEffect(() => {
     // 버튼 잠금
-    if (loginData.email !== "" && loginData.password !== "") {
+    if (loginData.username !== "" && loginData.password !== "") {
       setFromState(true);
     } else {
       setFromState(false);
@@ -34,7 +34,7 @@ export default function LoginForm() {
   return (
     <WrapForm onSubmit={submitLogin}>
       <Input
-        id="email"
+        id="username"
         type="email"
         placeholder="이메일을 입력"
         required
