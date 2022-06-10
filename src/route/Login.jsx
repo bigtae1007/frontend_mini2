@@ -11,7 +11,7 @@ import logo from "../logo.svg";
 export default function Login() {
   return (
     <WrapLoginBox>
-      <LoginTop />
+      <LoginTop title="로그인" />
       <WrapLogo>
         <img src={logo} alt="" />
       </WrapLogo>

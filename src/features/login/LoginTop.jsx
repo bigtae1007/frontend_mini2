@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-export default function LoginTop() {
+export default function LoginTop({ title }) {
   const navigate = useNavigate();
 
   return (
@@ -14,7 +14,7 @@ export default function LoginTop() {
       >
         --
       </BackBtn>
-      <h2>로그인</h2>
+      <h2>{title}</h2>
     </WrapTopLogin>
   );
 }
