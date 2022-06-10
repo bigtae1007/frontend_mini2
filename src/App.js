@@ -1,13 +1,28 @@
-import logo from "./logo.svg";
+//패키지
 import "./App.css";
-
+import { Routes, Route } from "react-router-dom";
+//CSS
+import GlobalStyle from "./elems/GlobalStyle";
 //컴포넌트
-import { Login } from "./route/Login";
+import Header from "./elems/Header";
+import Login from "./route/Login";
+import SignUp from "./route/SignUp";
+import PostList from "./route/PostList";
+import PostWrite from "./route/PostWrite";
+import PostModify from "./route/PostModify";
 
 function App() {
   return (
     <div className="App">
-      <Login />
+      <Header />
+      <GlobalStyle />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/sign" element={<SignUp />} />
+        <Route path="/" element={<PostList />} />
+        <Route path="/post" element={<PostWrite />} />
+        <Route path="/post/modify" element={<PostModify />} />
+      </Routes>
     </div>
   );
 }
