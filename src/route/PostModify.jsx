@@ -1,19 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 
-const PostWrite = () => {
+const PostModify = () => {
   const title_ref = React.useRef(null);
   const select_ref = React.useRef(null);
   const text_ref = React.useRef(null);
 
-  const addPost = () => {
+  const modifyPost = () => {
     console.log(
       title_ref.current.value,
       select_ref.current.value,
       text_ref.current.value
     );
   };
-
   return (
     <Wrap>
       <PostWarp>
@@ -33,7 +32,7 @@ const PostWrite = () => {
           <input ref={text_ref} className="textIpt" placeholder="글 내용" />
         </div>
         <div>
-          <button onClick={addPost}>작성하기</button>
+          <button onClick={modifyPost}>수정하기</button>
         </div>
       </PostWarp>
     </Wrap>
@@ -63,4 +62,4 @@ const PostWarp = styled.div`
     height: 20vh;
   }
 `;
-export default PostWrite;
+export default PostModify;

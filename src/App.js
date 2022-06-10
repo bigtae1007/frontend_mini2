@@ -1,16 +1,15 @@
+//패키지
 import "./App.css";
-
 import { Routes, Route } from "react-router-dom";
-
-//컴포넌트
-import Login from "./route/Login";
-import Header from "./elems/Header";
-import PostList from "./route/PostList";
-import PostWrite from "./route/PostWrite";
-import SignUp from "./route/SignUp";
-
 //CSS
 import GlobalStyle from "./elems/GlobalStyle";
+//컴포넌트
+import Header from "./elems/Header";
+import Login from "./route/Login";
+import SignUp from "./route/SignUp";
+import PostList from "./route/PostList";
+import PostWrite from "./route/PostWrite";
+import PostModify from "./route/PostModify";
 
 function App() {
   return (
@@ -18,10 +17,11 @@ function App() {
       <Header />
       <GlobalStyle />
       <Routes>
-        <Route path="/" element={<PostList />} />
-        <Route path="/post" element={<PostWrite />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign" element={<SignUp />} />
+        <Route path="/" element={<PostList />} />
+        <Route path="/post" element={<PostWrite />} />
+        <Route path="/post/modify" element={<PostModify />} />
       </Routes>
     </div>
   );
