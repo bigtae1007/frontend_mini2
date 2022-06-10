@@ -15,8 +15,12 @@ const Header = () => {
           <p>게시물 작성을 원하시면 login을 진행하세요</p>
         </div>
         <LogBtn>
-          <button>로그인</button>
-          <button>회원가입</button>
+          <Link to={"/login"} style={{ textDecoration: "none" }}>
+            <button>로그인</button>
+          </Link>
+          <Link to={"/sign"} style={{ textDecoration: "none" }}>
+            <button>회원가입</button>
+          </Link>
         </LogBtn>
       </Wrap>
       <Link to={"/post"} style={{ textDecoration: "none" }}>
