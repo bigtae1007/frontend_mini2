@@ -1,6 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./modules/userSlice";
-import postReducer from "./modules/postingSlice";
 import thunk from "redux-thunk";
 
 const middlewares = [thunk];
