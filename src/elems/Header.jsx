@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Top from "../img/caret-up.svg";
+import Home from "../img/home.svg";
+import Plus from "../img/plus-small.svg";
+import Down from "../img/caret-down.svg";
 
 const Header = () => {
   return (
@@ -23,16 +27,42 @@ const Header = () => {
           </Link>
         </LogBtn>
       </Wrap>
-      <Link to={"/post"} style={{ textDecoration: "none" }}>
-        <PostBtn>추가하기</PostBtn>
-      </Link>
+
+      <BtnWrap>
+        <TopBtn
+          onClick={() => {
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          }}
+        >
+          <img src={Top} alt="" />
+        </TopBtn>
+
+        <Link to={"/"} style={{ textDecoration: "none" }}>
+          <HomeBtn>
+            {" "}
+            <img src={Home} alt="" />
+          </HomeBtn>
+        </Link>
+        <Link to={"/post"} style={{ textDecoration: "none" }}>
+          <PostBtn>
+            {" "}
+            <img src={Plus} alt="" />
+          </PostBtn>
+        </Link>
+        <BotBtn
+          onClick={() => {
+            window.scrollTo({ top: 5000, left: 0, behavior: "smooth" });
+          }}
+        >
+          <img src={Down} alt="" />
+        </BotBtn>
+      </BtnWrap>
     </header>
   );
 };
 const Wrap = styled.div`
   display: flex;
   height: 50px;
-
   padding: 20px;
   background-color: lightblue;
   align-items: center;
@@ -48,9 +78,38 @@ const LogBtn = styled.div`
   margin: 0;
 `;
 
-const PostBtn = styled.button`
+const BtnWrap = styled.div`
+  display: flex;
+  flex-direction: column;
   position: fixed;
   bottom: 20px;
   right: 20px;
+  img {
+    width: 50px;
+    height: 50px;
+    margin: 0;
+  }
+`;
+
+const TopBtn = styled.button`
+  border: none;
+  background-color: transparent;
+`;
+const HomeBtn = styled.button`
+  border: none;
+  background-color: transparent;
+
+  img {
+    width: 25px;
+    height: 25px;
+  }
+`;
+const PostBtn = styled.button`
+  border: none;
+  background-color: transparent;
+`;
+const BotBtn = styled.button`
+  border: none;
+  background-color: transparent;
 `;
 export default Header;
