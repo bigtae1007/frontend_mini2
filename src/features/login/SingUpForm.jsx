@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 //컴포넌트
@@ -7,43 +7,82 @@ import Button from "../../elems/Button";
 
 export default function SignUpForm() {
   const [formstate, setFromState] = useState(false);
-  const [singData, setsingData] = useState({
+  const [signData, setsignData] = useState({
     username: "",
     nickname: "",
     password: "",
     passwordCheck: "",
   });
+  const [email, setEmail] = useState(false);
+  const [nick, setNick] = useState(false);
+  const [pw, setPw] = useState(false);
 
   //input 데이터 저장하기
   const changeInput = (e) => {
     const { value, id } = e.target;
-    setsingData({ ...singData, [id]: value });
+    setsignData({ ...signData, [id]: value });
   };
 
   // submit 이벤트
   const submitLogin = (e) => {
     e.preventDefault();
-    console.log(singData);
+    console.log(signData);
+  };
+
+  // 중복확인 이벤트
+  const CheckId = () => {
+    console.log(signData.username);
+  };
+  const CheckNick = () => {
+    console.log(signData.nickname);
   };
 
   React.useEffect(() => {
-    // 버튼 잠금
+    // input 조건
     if (
-      singData.username !== "" &&
-      singData.nickname !== "" &&
-      singData.password !== "" &&
-      singData.passwordCheck !== ""
+      signData.username.indexOf("@") !== -1 &&
+      signData.username.indexOf(".") !== -1
     ) {
+      setEmail(true);
+    } else {
+      setEmail(false);
+    }
+    if (signData.nickname.length > 2 && signData.nickname.length < 12) {
+      setNick(true);
+    } else {
+      setNick(false);
+    }
+    if (
+      signData.passwordCheck === signData.password &&
+      signData.password !== ""
+    ) {
+      setPw(true);
+    } else {
+      setPw(false);
+    }
+  }, [signData]);
+  useEffect(() => {
+    // 버튼 잠금
+    if (email && nick && pw) {
       setFromState(true);
     } else {
       setFromState(false);
     }
-  }, [singData]);
+  }, [email, nick, pw]);
 
   return (
     <WrapForm onSubmit={submitLogin}>
       <WrapInputLabel>
-        <h4>아이디(e-mail)</h4>
+        <div>
+          <span>
+            아이디(e-mail)
+            <CheckText color={email ? "blue" : "red"}>
+              {email ? "통과" : "이메일 형식이 아닙니다"}
+            </CheckText>
+          </span>
+
+          <CheckBtn onClick={CheckId}>중복 확인</CheckBtn>
+        </div>
         <Input
           id="username"
           type="email"
@@ -53,7 +92,16 @@ export default function SignUpForm() {
         />
       </WrapInputLabel>
       <WrapInputLabel>
-        <h4>닉네임</h4>
+        <div>
+          <span>
+            닉네임
+            <CheckText color={nick ? "blue" : "red"}>
+              {nick ? "통과" : "2~12 사이로 작성해주세요"}
+            </CheckText>
+          </span>
+
+          <CheckBtn onClick={CheckNick}>중복 확인</CheckBtn>
+        </div>
         <Input
           id="nickname"
           placeholder="닉네임을 입력해주세요"
@@ -62,7 +110,7 @@ export default function SignUpForm() {
         />
       </WrapInputLabel>
       <WrapInputLabel>
-        <h4>비밀번호</h4>
+        <span>비밀번호</span>
         <Input
           id="password"
           type="password"
@@ -72,7 +120,13 @@ export default function SignUpForm() {
         />
       </WrapInputLabel>
       <WrapInputLabel>
-        <h4>비밀번호 확인</h4>
+        <span>
+          비밀번호 확인
+          <CheckText color={pw ? "blue" : "red"}>
+            {pw ? "통과" : "비밀 번호가 일치하지 않습니다"}
+          </CheckText>
+        </span>
+
         <Input
           id="passwordCheck"
           type="password"
@@ -104,4 +158,22 @@ const WrapInputLabel = styled.div`
   flex-direction: column;
   gap: 10px;
   text-align: left;
+`;
+
+const CheckBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 30px;
+  float: right;
+  border-radius: 10px;
+  background-color: var(--grey);
+  cursor: pointer;
+`;
+
+const CheckText = styled.span`
+  margin-left: 20px;
+  color: ${({ color }) => color};
+  font-size: 10px;
 `;
