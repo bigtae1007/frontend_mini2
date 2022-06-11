@@ -37,7 +37,6 @@ const Header = () => {
         >
           <img src={Top} alt="" />
         </TopBtn>
-
         <Link to={"/"} style={{ textDecoration: "none" }}>
           <HomeBtn>
             <img src={Home} alt="" />

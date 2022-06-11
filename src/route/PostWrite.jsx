@@ -18,9 +18,6 @@ const PostWrite = () => {
     <Wrap>
       <PostWarp>
         <div>
-          <input ref={title_ref} placeholder="글 제목" />
-        </div>
-        <div>
           <select ref={select_ref}>
             <option value="React">React</option>
             <option value="JavaScript">JavaScript</option>
@@ -28,12 +25,15 @@ const PostWrite = () => {
             <option value="Node">Node</option> {/* 선택하려던 부분! */}
             <option value="view">view</option>
           </select>
-        </div>
-        <div>
-          <input ref={text_ref} className="textIpt" placeholder="글 내용" />
-        </div>
-        <div>
           <button onClick={addPost}>작성하기</button>
+        </div>
+        <div></div>
+        <TitleIpt>
+          <textarea ref={title_ref} placeholder="제목을 입력하세요." />
+        </TitleIpt>
+
+        <div>
+          <textarea ref={text_ref} className="textIpt" placeholder="" />
         </div>
       </PostWarp>
     </Wrap>
@@ -41,7 +41,7 @@ const PostWrite = () => {
 };
 
 const Wrap = styled.div`
-  width: 80vw;
+  width: 60vw;
   margin: 50px auto;
 `;
 
@@ -52,15 +52,36 @@ const PostWarp = styled.div`
     margin: 15px;
   }
 
-  input {
-    width: 60vw;
-  }
   select {
+    margin: 50px 0 30px 0;
+    float: left;
+  }
+  button {
+    margin: 50px 0 30px 0;
+    float: right;
+    border: none;
+    background-color: transparent;
+  }
+  textarea {
     width: 60vw;
+    border: none;
+    resize: none;
+  }
+  textarea:focus {
+    outline: none;
   }
 
   .textIpt {
-    height: 20vh;
+    margin-bottom: 200px;
   }
 `;
+
+const TitleIpt = styled.div`
+  textarea {
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
+  border-bottom: 2px solid lightgray;
+`;
+
 export default PostWrite;
