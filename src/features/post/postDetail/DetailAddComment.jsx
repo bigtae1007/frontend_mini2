@@ -1,8 +1,16 @@
 import React, { useRef } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { __addComment } from "../../../redux/modules/commentSlice";
 
 const DetailAddComment = () => {
+  const dispatch = useDispatch();
   let commentText = useRef("");
+
+  const addComment = () => {
+    dispatch(__addComment(commentText.current.value));
+    commentText.current.value = "";
+  };
   return (
     <>
       <WrapComment>
@@ -10,7 +18,7 @@ const DetailAddComment = () => {
         <Textarea ref={commentText} />
       </WrapComment>
       <WrapBtn>
-        <button>저장</button>
+        <button onClick={addComment}>저장</button>
         <button
           onClick={() => {
             commentText.current.value = "";
