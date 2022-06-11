@@ -1,56 +1,120 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+//css
+import logo from "../logo.svg";
 
 const PostList = () => {
   return (
-    <div>
-      <Warp>
-        <PostBox>
+    <Warp>
+      <PostBox>
+        <ImgBox>
+          <img src={logo} alt=""></img>
+        </ImgBox>
+        <Link to="/post/detail/id">
+          <TextBox>
+            <div>
+              <h4>
+                Redux connect()와 React Router와 같은 인기 있는 API에 대해
+                Hook은 무엇을 의미합니까?
+              </h4>
+            </div>
+            <div>
+              <Text>
+                hello, world!!, hello, world!!, hello, world!!, hello, world!!,
+                hello, world!!, hello, world!!, hello, world!!, hello, world!!
+              </Text>
+            </div>
+            <div>
+              <Nick>nickname - 2022-06-11</Nick>
+            </div>
+            <div>
+              <Like>like : 5 ㅤㅤFeedBack : 4</Like>
+            </div>
+          </TextBox>
+        </Link>
+      </PostBox>
+      <PostBox>
+        <ImgBox>
+          <img src={logo} alt=""></img>
+        </ImgBox>
+        <TextBox>
           <div>
-            <Img>언어 이미지</Img>
+            <h4>
+              Redux connect()와 React Router와 같은 인기 있는 API에 대해 Hook은
+              무엇을 의미합니까?
+            </h4>
           </div>
           <div>
-            <h4>제목</h4>
-            <p>글 내용(글자 수 또는 줄 수 제한 주기)</p>
-            <p>작성자, 작성시간</p>
-            <p>좋아요 수, 댓글 수</p>
+            <Text>
+              hello, world!!, hello, world!!, hello, world!!, hello, world!!,
+              hello, world!!, hello, world!!, hello, world!!, hello, world!!
+            </Text>
           </div>
-        </PostBox>
-      </Warp>
-      <Warp>
-        <PostBox>
           <div>
-            <Img>언어 이미지</Img>
+            <Nick>nickname - 2022-06-11</Nick>
           </div>
-
           <div>
-            <h4>제목</h4>
-            <p>글 내용(글자 수 또는 줄 수 제한 주기)</p>
-            <p>작성자, 작성시간</p>
-            <p>좋아요 수, 댓글 수</p>
+            <Like>like : 5 ㅤㅤFeedBack : 4</Like>
           </div>
-        </PostBox>
-      </Warp>
-      <Warp>
-        <PostBox>
+        </TextBox>
+      </PostBox>
+      <PostBox>
+        <ImgBox>
+          <img src={logo} alt=""></img>
+        </ImgBox>
+        <TextBox>
           <div>
-            <Img>언어 이미지</Img>
+            <h4>
+              Redux connect()와 React Router와 같은 인기 있는 API에 대해 Hook은
+              무엇을 의미합니까?
+            </h4>
           </div>
-
           <div>
-            <h4>제목</h4>
-            <p>글 내용(글자 수 또는 줄 수 제한 주기)</p>
-            <p>작성자, 작성시간</p>
-            <p>좋아요 수, 댓글 수</p>
+            <Text>
+              hello, world!!, hello, world!!, hello, world!!, hello, world!!,
+              hello, world!!, hello, world!!, hello, world!!, hello, world!!
+            </Text>
           </div>
-        </PostBox>
-      </Warp>
-    </div>
+          <div>
+            <Nick>nickname - 2022-06-11</Nick>
+          </div>
+          <div>
+            <Like>like : 5 ㅤㅤFeedBack : 4</Like>
+          </div>
+        </TextBox>
+      </PostBox>
+      <PostBox>
+        <ImgBox>
+          <img src={logo} alt=""></img>
+        </ImgBox>
+        <TextBox>
+          <div>
+            <h4>
+              Redux connect()와 React Router와 같은 인기 있는 API에 대해 Hook은
+              무엇을 의미합니까?
+            </h4>
+          </div>
+          <div>
+            <Text>
+              hello, world!!, hello, world!!, hello, world!!, hello, world!!,
+              hello, world!!, hello, world!!, hello, world!!, hello, world!!
+            </Text>
+          </div>
+          <div>
+            <Nick>nickname - 2022-06-11</Nick>
+          </div>
+          <div>
+            <Like>like : 5 ㅤㅤFeedBack : 4</Like>
+          </div>
+        </TextBox>
+      </PostBox>
+    </Warp>
   );
 };
 
 const Warp = styled.div`
-  width: 70vw;
+  width: 60vw;
 
   margin: 20px auto;
   padding: 20px;
@@ -58,29 +122,57 @@ const Warp = styled.div`
 `;
 
 const PostBox = styled.div`
+  width: 55vw;
   display: flex;
 
+  margin: 50px auto;
   padding: 20px;
-  /* background-color: green; */
-  border-bottom: solid 2px black;
+
+  border-bottom: solid 4px darkgrey;
+`;
+
+const ImgBox = styled.div`
+  width: 150px;
+  height: 150px;
+
+  img {
+    width: 150px;
+    height: 150px;
+    float: left;
+  }
+`;
+
+const TextBox = styled.div`
+  display: block;
+  width: 40vw;
+  margin: auto;
 
   div {
-    display: block;
+    margin: 20px;
   }
 
   h4 {
-    margin: 5px 20px;
     text-align: left;
   }
 
   p {
-    margin: 5px 20px;
     text-align: left;
   }
 `;
-const Img = styled.div`
-  width: 100px;
-  height: 100px;
-  background-color: lightgray;
+const Text = styled.p`
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+`;
+
+const Nick = styled.p`
+  float: left;
+`;
+
+const Like = styled.p`
+  float: right;
+  color: gray;
 `;
 export default PostList;
