@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
   body{
+    margin-top: 110px;
   }
   :root {
     --black : #333333;
