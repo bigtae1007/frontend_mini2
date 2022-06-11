@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
-
-
+import { useDispatch, useSelector } from "react-redux";
 
 //컴포넌트
 import Input from "../../elems/Input";
 import Button from "../../elems/Button";
+//모듈
+import {
+  __checkNickname,
+  __checkUsername,
+  __signup,
+} from "../../redux/modules/signupSlice";
+import { createSelector } from "@reduxjs/toolkit";
 
 export default function SignUpForm() {
+  const checkName = useSelector((state) => state.signup.checkName);
+  const checkNick = useSelector((state) => state.signup.checkNick);
+  const dispatch = useDispatch();
   const [formstate, setFromState] = useState(false);
   const [signData, setsignData] = useState({
     username: "",
@@ -16,8 +24,8 @@ export default function SignUpForm() {
     password: "",
     passwordCheck: "",
   });
-  const [email, setEmail] = useState(false);
-  const [nick, setNick] = useState(false);
+  const email = checkName;
+  const nick = checkNick;
   const [pw, setPw] = useState(false);
 
   //input 데이터 저장하기
@@ -29,32 +37,20 @@ export default function SignUpForm() {
   // submit 이벤트
   const submitLogin = (e) => {
     e.preventDefault();
-    console.log(signData);
+    dispatch(__signup(signData));
   };
 
   // 중복확인 이벤트
   const CheckId = () => {
-    console.log(signData.username);
+    dispatch(__checkUsername(signData.username));
   };
   const CheckNick = () => {
-    console.log(signData.nickname);
+    dispatch(__checkNickname(signData.nickname));
   };
 
   React.useEffect(() => {
     // input 조건
-    if (
-      signData.username.indexOf("@") !== -1 &&
-      signData.username.indexOf(".") !== -1
-    ) {
-      setEmail(true);
-    } else {
-      setEmail(false);
-    }
-    if (signData.nickname.length > 2 && signData.nickname.length < 12) {
-      setNick(true);
-    } else {
-      setNick(false);
-    }
+
     if (
       signData.passwordCheck === signData.password &&
       signData.password !== ""
@@ -80,7 +76,7 @@ export default function SignUpForm() {
           <span>
             아이디(e-mail)
             <CheckText color={email ? "blue" : "red"}>
-              {email ? "통과" : "이메일 형식이 아닙니다"}
+              {email ? "중복 확인" : "중복 확인을 해주세요"}
             </CheckText>
           </span>
 
@@ -99,7 +95,7 @@ export default function SignUpForm() {
           <span>
             닉네임
             <CheckText color={nick ? "blue" : "red"}>
-              {nick ? "통과" : "2~12 사이로 작성해주세요"}
+              {nick ? "중복 확인" : "중복 확인을 해주세요"}
             </CheckText>
           </span>
 
@@ -126,7 +122,7 @@ export default function SignUpForm() {
         <span>
           비밀번호 확인
           <CheckText color={pw ? "blue" : "red"}>
-            {pw ? "통과" : "비밀 번호가 일치하지 않습니다"}
+            {pw ? "비밀 번호가 일치합니다" : "비밀 번호가 일치하지 않습니다"}
           </CheckText>
         </span>
 

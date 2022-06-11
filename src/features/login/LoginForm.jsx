@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
 
 // 컴포넌트
 import Input from "../../elems/Input";
 import Button from "../../elems/Button";
+import { __login } from "../../redux/modules/loginSlice";
 
 export default function LoginForm() {
+  const dispatch = useDispatch();
   // 버튼 잠금 state
   const [formstate, setFromState] = useState(false);
   // data 입력 state
@@ -20,6 +23,7 @@ export default function LoginForm() {
   // submit 이벤트
   const submitLogin = (e) => {
     e.preventDefault();
+    dispatch(__login(loginData));
   };
 
   React.useEffect(() => {
