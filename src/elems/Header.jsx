@@ -39,13 +39,11 @@ const Header = () => {
 
         <Link to={"/"} style={{ textDecoration: "none" }}>
           <HomeBtn>
-            {" "}
             <img src={Home} alt="" />
           </HomeBtn>
         </Link>
         <Link to={"/post"} style={{ textDecoration: "none" }}>
           <PostBtn>
-            {" "}
             <img src={Plus} alt="" />
           </PostBtn>
         </Link>
