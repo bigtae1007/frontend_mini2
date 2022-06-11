@@ -15,6 +15,11 @@ const GlobalStyle = createGlobalStyle`
   }
   body{
     margin-top: 110px;
+    background:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTTw8nR35RTqgFlZErljkykHRXJIJ0JcZUGg&usqp=CAU') no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
   }
   :root {
     --black : #333333;

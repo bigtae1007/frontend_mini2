@@ -25,7 +25,8 @@ const WrapLoginBox = styled.div`
   height: 600px;
   margin: 100px auto;
   padding: 10px;
-  border: 1px solid #000;
+  background-color: var(--white);
+  border-radius: 10px;
 `;
 const WrapLogo = styled.div`
   margin: 0 auto;

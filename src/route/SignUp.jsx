@@ -18,5 +18,5 @@ const WrapSignBox = styled.div`
   height: 600px;
   margin: 100px auto;
   padding: 10px;
-  border: 1px solid #000;
+  background-color: var(--white);
 `;
