@@ -16,7 +16,6 @@ import {
 export default function SignUpForm() {
   const checkName = useSelector((state) => state.signup.checkName);
   const checkNick = useSelector((state) => state.signup.checkNick);
-  const success = useSelector((state) => state.signup.success);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formstate, setFromState] = useState(false);
@@ -26,6 +25,7 @@ export default function SignUpForm() {
     password: "",
     passwordCheck: "",
   });
+
   const email = checkName;
   const nick = checkNick;
   const [pw, setPw] = useState(false);
@@ -36,10 +36,13 @@ export default function SignUpForm() {
     setsignData({ ...signData, [id]: value });
   };
 
-  // submit 이벤트
-  const submitLogin = (e) => {
+  // 회원가입 이벤트
+  const submitLogin = async (e) => {
     e.preventDefault();
-    dispatch(__signup(signData));
+    const checkState = await dispatch(__signup(signData));
+    if (checkState.payload) {
+      navigate("/login");
+    }
   };
 
   // 중복확인 이벤트
@@ -71,11 +74,6 @@ export default function SignUpForm() {
     }
   }, [email, nick, pw]);
 
-  React.useEffect(() => {
-    if (success) {
-      navigate("/login");
-    }
-  }, [success]);
   return (
     <WrapForm onSubmit={submitLogin}>
       <WrapInputLabel>

@@ -10,7 +10,7 @@ export const __signup = createAsyncThunk(
   async (payload, thunkAPI) => {
     const aa = await api.post("/posts", payload);
     const response = {
-      result: true,
+      result: false,
     };
 
     alert("회원가입이 완료됐습니다.");
@@ -27,7 +27,8 @@ export const __checkUsername = createAsyncThunk(
     const response = {
       result: true,
     };
-    return response;
+    if (!response.result) alert("동일한 아이디가 존재합니다");
+    return response.result;
   }
 );
 
@@ -40,7 +41,8 @@ export const __checkNickname = createAsyncThunk(
     const response = {
       result: true,
     };
-    return response;
+    if (!response.result) alert("동일한 닉네임이 존재합니다");
+    return response.result;
   }
 );
 
