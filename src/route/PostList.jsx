@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+//css
 import logo from "../logo.svg";
 
 const PostList = () => {
@@ -9,26 +11,28 @@ const PostList = () => {
         <ImgBox>
           <img src={logo} alt=""></img>
         </ImgBox>
-        <TextBox>
-          <div>
-            <h4>
-              Redux connect()와 React Router와 같은 인기 있는 API에 대해 Hook은
-              무엇을 의미합니까?
-            </h4>
-          </div>
-          <div>
-            <Text>
-              hello, world!!, hello, world!!, hello, world!!, hello, world!!,
-              hello, world!!, hello, world!!, hello, world!!, hello, world!!
-            </Text>
-          </div>
-          <div>
-            <Nick>nickname - 2022-06-11</Nick>
-          </div>
-          <div>
-            <Like>like : 5 ㅤㅤFeedBack : 4</Like>
-          </div>
-        </TextBox>
+        <Link to="/post/detail/id">
+          <TextBox>
+            <div>
+              <h4>
+                Redux connect()와 React Router와 같은 인기 있는 API에 대해
+                Hook은 무엇을 의미합니까?
+              </h4>
+            </div>
+            <div>
+              <Text>
+                hello, world!!, hello, world!!, hello, world!!, hello, world!!,
+                hello, world!!, hello, world!!, hello, world!!, hello, world!!
+              </Text>
+            </div>
+            <div>
+              <Nick>nickname - 2022-06-11</Nick>
+            </div>
+            <div>
+              <Like>like : 5 ㅤㅤFeedBack : 4</Like>
+            </div>
+          </TextBox>
+        </Link>
       </PostBox>
       <PostBox>
         <ImgBox>

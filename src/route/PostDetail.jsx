@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import DetailAddComment from "../features/post/postDetail/DetailAddComment";
 import DetailSideMenu from "../features/post/postDetail/DetailSideMenu";
 import DetailTopTile from "../features/post/postDetail/DetailTopTitle";
 
 export default function PostDetail() {
-  const [text, setText] = useState("");
-  console.log(text);
-
   return (
     <WrapDetailPost>
       <DetailTopTile />
@@ -30,26 +28,19 @@ export default function PostDetail() {
             <br />
             <br />
             <br />
-            http://stackoverflow.com/questions/248011/how-do-i-wrap-text-in-a-pre-tag
-            을 참고하시면 됩니다. pre     background-color: #E6E6FA;    
+            how-do-i-wrap-text-in-a-pre-tagasfasfhuihiujklj 을 참고하시면
+            됩니다. packground-color: #E6E6FA;
             <br />
-            padding:10px;     overflow: auto;     white-space: pre-wrap; /* pre
+            padding:10px; overflow: autwhite-space: pre-wrap; /* pre
             <br />
-            tag내에 word wrap */  출처: https://kkamagui.tistory.com/796
+            tag내에 word wrap출처: https://kkamagui.tistory.com/796
             <br />
             [kkamagui의 작업실:티스토리]
           </pre>
         </ContentDiv>
         <DetailSideMenu />
       </DetailContent>
-      <WrapComment>
-        <h4>답변 작성해주기</h4>
-        <Textarea
-          onChange={(e) => {
-            setText(e.currentTarget.value);
-          }}
-        ></Textarea>
-      </WrapComment>
+      <DetailAddComment />
     </WrapDetailPost>
   );
 }
@@ -58,29 +49,17 @@ const WrapDetailPost = styled.div`
   width: 70%;
   min-width: 480px;
   margin: 0 auto;
-  border: 1px solid #000;
 `;
 
 const DetailContent = styled.div`
   display: flex;
+  border-bottom: 1px solid var(--grey);
 `;
 const ContentDiv = styled.div`
-  width: 80%;
+  width: 75%;
   padding: 30px 20px;
   text-align: left;
   & > pre {
     white-space: pre-wrap;
   }
-`;
-
-const WrapComment = styled.div`
-  padding: 20px;
-  border: 1px solid #000;
-`;
-
-const Textarea = styled.textarea`
-  width: 100%;
-  height: 200px;
-  padding: 10px;
-  resize: none;
 `;

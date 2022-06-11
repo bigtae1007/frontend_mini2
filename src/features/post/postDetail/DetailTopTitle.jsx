@@ -34,6 +34,6 @@ const TitleImg = styled.img`
 const TitleDiv = styled.div`
   min-height: 60px;
   padding: 20px 0;
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   font-weight: bolder;
 `;

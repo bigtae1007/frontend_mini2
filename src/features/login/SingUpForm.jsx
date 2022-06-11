@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
+
+
+
 //컴포넌트
 import Input from "../../elems/Input";
 import Button from "../../elems/Button";
@@ -170,6 +173,7 @@ const CheckBtn = styled.div`
   border-radius: 10px;
   background-color: var(--grey);
   cursor: pointer;
+  font-size: 13px;
 `;
 
 const CheckText = styled.span`
