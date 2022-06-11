@@ -28,7 +28,9 @@ const GlobalStyle = createGlobalStyle`
     --greyD : #aaaaaa;
     --green : #00B98D;
     --red :#F85151; 
+    --blueL : #65a7e6;
     --blue : #0085FF;
+    --blueD: #134c81
   }
 `;
 
