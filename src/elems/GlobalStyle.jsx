@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     margin : 0;
     padding: 0;
-    
+   font-family: 'Elice Digital Coding', 'monospace'; 
   }
   a {
     text-decoration : none;
@@ -19,6 +19,7 @@ const GlobalStyle = createGlobalStyle`
     --black : #333333;
     --white: #ffffff;
     --grey : #dddddd;
+    --greyD : #aaaaaa;
     --green : #00B98D;
     --red :#F85151; 
     --blue : #0085FF;
