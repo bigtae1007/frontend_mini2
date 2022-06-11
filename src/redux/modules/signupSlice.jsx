@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { api } from "../../shared/api";
 
 // // thunk 함수
 
@@ -8,10 +8,13 @@ import axios from "axios";
 export const __signup = createAsyncThunk(
   "signup/SIGNUP_LOG",
   async (payload, thunkAPI) => {
-    const response = await axios.post("http://localhost:4000/posts", payload, {
-      headers: {},
-    });
-    return response;
+    const aa = await api.post("/posts", payload);
+    const response = {
+      result: true,
+    };
+
+    alert("회원가입이 완료됐습니다.");
+    return response.result;
   }
 );
 
@@ -19,8 +22,12 @@ export const __signup = createAsyncThunk(
 export const __checkUsername = createAsyncThunk(
   "signup/CHECKID_LOG",
   async (payload, thunkAPI) => {
-    console.log(payload);
-    // const response = await axios.post("http://localhost:4000/posts", payload);
+    // const aa = await api.get(`/posts/${payload}`);
+    const aa = await api.get(`/posts/${"36"}`);
+    const response = {
+      result: true,
+    };
+    return response;
   }
 );
 
@@ -28,8 +35,12 @@ export const __checkUsername = createAsyncThunk(
 export const __checkNickname = createAsyncThunk(
   "signup/CHECKNICK_LOG",
   async (payload, thunkAPI) => {
-    console.log(payload);
-    // const response = await axios.post("http://localhost:4000/posts", payload);
+    const aa = await api.get(`/posts/${"36"}`);
+    // const aa = await api.get(`/posts/${payload}`);
+    const response = {
+      result: true,
+    };
+    return response;
   }
 );
 
@@ -50,20 +61,17 @@ const signupSlice = createSlice({
     builder
       // 회원가입 하기
       .addCase(__signup.fulfilled, (state, action) => {
-        console.log(action.payload);
-        // state.text = action.payload;
+        state.success = action.payload;
       })
 
       // 아이디 중복검사
       .addCase(__checkUsername.fulfilled, (state, action) => {
-        //payload로 변경해야댐
-        state.checkName = true;
+        state.checkName = action.payload;
       })
 
       // 닉네임 중복검사
       .addCase(__checkNickname.fulfilled, (state, action) => {
-        //payload로 변경해야댐
-        state.checkNick = true;
+        state.checkNick = action.payload;
       });
   },
 });

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { api } from "../../shared/api";
 
 // // thunk 함수
 
@@ -7,14 +8,13 @@ import axios from "axios";
 export const __login = createAsyncThunk(
   "log/LOGIN_LOG",
   async (payload, thunkAPI) => {
-    const response = await axios.post(
-      "http://localhost:4000/posts",
-      payload,
-      {}
-    );
+    const aa = await api.post("/posts", payload);
     // 토큰 localStorge 저장하기 해야댐
-    console.log(response);
-
+    // 가상으로 받은 값
+    const response = {
+      result: true,
+      nickName: "이건 별명이 들어가요",
+    };
     return response;
   }
 );
@@ -28,20 +28,13 @@ const loginSlice = createSlice({
     loading: false,
     error: null,
   },
-  // 리듀서를 작성 할 필요는 없었다.
   reducers: {},
-
-  /*만들어진 비동기 액션에 대한 리듀서는 아래와 같이 extraReducers로 작성할 수 있다.
-   extraReducers로 지정된 reducer는 외부 작업을 참조하기 위한 것이기 때문에 slice.actions에 생성되지 않는다.
-  또한, ActionReducerMapBuilder를 수신하는 콜백으로 작성하는 것이 권장된다.*/
-
-  // toolkit 장점 통신 상태를 자동으로 받아와 try ~ catch를 사용할 필요가 없다.
+  //
   extraReducers: (builder) => {
     builder
 
       //로그인
       .addCase(__login.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.loading = false;
         state.user = action.payload;
       })

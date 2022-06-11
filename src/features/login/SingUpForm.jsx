@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 //컴포넌트
 import Input from "../../elems/Input";
@@ -11,12 +12,13 @@ import {
   __checkUsername,
   __signup,
 } from "../../redux/modules/signupSlice";
-import { createSelector } from "@reduxjs/toolkit";
 
 export default function SignUpForm() {
   const checkName = useSelector((state) => state.signup.checkName);
   const checkNick = useSelector((state) => state.signup.checkNick);
+  const success = useSelector((state) => state.signup.success);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formstate, setFromState] = useState(false);
   const [signData, setsignData] = useState({
     username: "",
@@ -60,7 +62,7 @@ export default function SignUpForm() {
       setPw(false);
     }
   }, [signData]);
-  useEffect(() => {
+  React.useEffect(() => {
     // 버튼 잠금
     if (email && nick && pw) {
       setFromState(true);
@@ -69,6 +71,11 @@ export default function SignUpForm() {
     }
   }, [email, nick, pw]);
 
+  React.useEffect(() => {
+    if (success) {
+      navigate("/login");
+    }
+  }, [success]);
   return (
     <WrapForm onSubmit={submitLogin}>
       <WrapInputLabel>
