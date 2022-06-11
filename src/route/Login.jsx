@@ -1,19 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import Input from "../elems/Input";
-import LoginBottom from "../features/login/LoginBottom";
-import LoginForm from "../features/login/LoginForm";
 
 //컴포넌트
 import LoginTop from "../features/login/LoginTop";
-import logo from "../logo.svg";
+import LoginBottom from "../features/login/LoginBottom";
+import LoginForm from "../features/login/LoginForm";
+import logo_cofee from "../images/logo_cofee.png";
 
 export default function Login() {
   return (
     <WrapLoginBox>
       <LoginTop title="로그인" />
       <WrapLogo>
-        <img src={logo} alt="" />
+        <LogoImg src={logo_cofee} alt="" />
       </WrapLogo>
       <LoginForm />
       <LoginBottom />
@@ -30,7 +29,14 @@ const WrapLoginBox = styled.div`
 `;
 const WrapLogo = styled.div`
   margin: 0 auto;
+  object-fit: cover;
 
   width: 70%;
   height: 200px;
+`;
+
+const LogoImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 `;
