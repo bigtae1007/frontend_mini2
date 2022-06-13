@@ -9,7 +9,6 @@ export const __getCommentList = createAsyncThunk(
   "comment/GETCOMMENTLIST_LOG",
   async (payload, thunkAPI) => {
     const response = await api.get(`/api/post/${[payload.id]}`);
-    console.log(response, "리스트");
     return response.data;
   }
 );
@@ -29,7 +28,13 @@ export const __addComment = createAsyncThunk(
 export const __deleteComment = createAsyncThunk(
   "comment/DELETECOMMENT_LOG",
   async (payload, thunkAPI) => {
-    console.log(payload);
+    const response = await api.delete(
+      `/api/post/${payload.postId}/comment/${payload.commentId}`
+    );
+    if (response.request.status === 200) {
+      alert(response.data.msg);
+    }
+    return payload;
   }
 );
 
@@ -61,6 +66,13 @@ const commentSlice = createSlice({
       // 댓글 추가하기
       .addCase(__addComment.fulfilled, (state, action) => {
         state.comments = [action.payload, ...state.comments];
+      })
+      // 삭제하기
+      .addCase(__deleteComment.fulfilled, (state, action) => {
+        const newCommentList = state.comments.filter((v) => {
+          return v.id === action.payload.commentId ? false : true;
+        });
+        state.comments = newCommentList;
       });
   },
 });
