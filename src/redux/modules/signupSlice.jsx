@@ -1,21 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { api } from "../../shared/api";
 
-// // thunk 함수
+// thunk 함수
 
 // 회원가입
 
 export const __signup = createAsyncThunk(
   "signup/SIGNUP_LOG",
   async (payload, thunkAPI) => {
-    const aa = await api.post("/user/signup", payload);
+    const response = await api.post("/user/signup", payload);
+    console.log(response);
 
-    // const response = {
-    //   result: false,
-    // };
-
-    // alert("회원가입이 완료됐습니다.");
-    // return response.result;
+    alert("회원가입이 완료됐습니다.");
+    return response.data.result;
   }
 );
 
@@ -23,13 +20,9 @@ export const __signup = createAsyncThunk(
 export const __checkUsername = createAsyncThunk(
   "signup/CHECKID_LOG",
   async (payload, thunkAPI) => {
-    // const aa = await api.get(`/posts/${payload}`);
-    // const aa = await api.get(`/posts/${"36"}`);
-    const response = {
-      result: true,
-    };
-    if (!response.result) alert("동일한 아이디가 존재합니다");
-    return response.result;
+    const response = await api.get(`/user/email/${payload}`);
+    if (!response.data.result) alert("동일한 아이디가 존재합니다");
+    return response.data.result;
   }
 );
 
@@ -37,13 +30,11 @@ export const __checkUsername = createAsyncThunk(
 export const __checkNickname = createAsyncThunk(
   "signup/CHECKNICK_LOG",
   async (payload, thunkAPI) => {
-    // const aa = await api.get(`/posts/${"36"}`);
-    // const aa = await api.get(`/posts/${payload}`);
-    const response = {
-      result: true,
-    };
-    if (!response.result) alert("동일한 닉네임이 존재합니다");
-    return response.result;
+    console.log(payload);
+    const response = await api.get(`/user/nickname/${payload}`);
+    console.log(response);
+    if (!response.data.result) alert("동일한 닉네임이 존재합니다");
+    return response.data.result;
   }
 );
 
@@ -57,8 +48,14 @@ const signupSlice = createSlice({
     checkNick: false,
     checkMsg: "",
   },
-  // 리듀서를 작성 할 필요는 없었다.
-  reducers: {},
+  reducers: {
+    changeCheckName: (state, payload) => {
+      state.checkName = false;
+    },
+    changeCheckNick: (state) => {
+      state.checkNick = false;
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -71,14 +68,20 @@ const signupSlice = createSlice({
       .addCase(__checkUsername.fulfilled, (state, action) => {
         state.checkName = action.payload;
       })
+      .addCase(__checkUsername.rejected, (state, action) => {
+        state.checkName = true;
+      })
 
       // 닉네임 중복검사
       .addCase(__checkNickname.fulfilled, (state, action) => {
         state.checkNick = action.payload;
+      })
+      .addCase(__checkNickname.rejected, (state, action) => {
+        state.checkNick = true;
       });
   },
 });
 
 // // reducer dispatch하기 위해 export 하기
-export const {} = signupSlice.actions;
+export const { changeCheckName, changeCheckNick } = signupSlice.actions;
 export default signupSlice.reducer;
