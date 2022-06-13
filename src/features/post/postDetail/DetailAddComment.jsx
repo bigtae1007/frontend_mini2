@@ -3,12 +3,14 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { __addComment } from "../../../redux/modules/commentSlice";
 
-const DetailAddComment = () => {
+const DetailAddComment = ({ postId }) => {
   const dispatch = useDispatch();
   let commentText = useRef("");
 
   const addComment = () => {
-    dispatch(__addComment(commentText.current.value));
+    dispatch(
+      __addComment({ comment: commentText.current.value, postId: postId })
+    );
     commentText.current.value = "";
   };
   return (

@@ -8,13 +8,13 @@ import { api } from "../../shared/api";
 export const __addComment = createAsyncThunk(
   "comment/ADDCOMMENT_LOG",
   async (payload, thunkAPI) => {
-    const response = await api.post("posts", {
-      comment: payload,
-    });
-    // await api.post(`/api/post/${postId}/comment`, { comment: payload });
+    // const response = await api.post("posts", {
+    //   comment: payload,
+    // });
+    // await api.post(`/api/post/${payload.postId}/comment`, { comment: payload.comment });
     console.log(payload);
-    console.log(response);
-    return payload;
+    // console.log(response);
+    // return payload;
   }
 );
 

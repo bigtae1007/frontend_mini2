@@ -25,7 +25,7 @@ export default function PostDetail() {
         <DetailSideMenu user={data.User} />
       </DetailContent>
 
-      <DetailAddComment />
+      <DetailAddComment postId={data.id} />
       <DetailCommentList />
       <DetailCommentList />
       <DetailCommentList />
