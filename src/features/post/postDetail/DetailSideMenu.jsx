@@ -28,7 +28,7 @@ export default function DetailSideMenu({ user }) {
             <span>작성자 : </span> <span>{user.nickname}</span>
           </div>
           <div>
-            <span>달린 답변 : </span> <span>{commentList.length}</span>
+            <span>달린 답변 : </span> <span>{commentList?.length}</span>
           </div>
 
           <p>like : 20</p>
@@ -44,7 +44,7 @@ export default function DetailSideMenu({ user }) {
             <span>작성자 : </span> <span>{user.nickname}</span>
           </div>
           <div>
-            <span>달린 답변 : </span> <span>{commentList.length}</span>
+            <span>달린 답변 : </span> <span>{commentList?.length}</span>
           </div>
 
           <p>like : 20</p>
