@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 //모듈
-import { __editPost } from "../redux/modules/postSlice";
+// import { __editPost } from "../redux/modules/postSlice";
 
 const PostModify = () => {
   const dispatch = useDispatch();
@@ -15,13 +15,13 @@ const PostModify = () => {
   const text_ref = React.useRef(null);
 
   const modifyPost = () => {
-    dispatch(
-      __editPost({
-        title: title_ref.current.value,
-        img: select_ref.current.value,
-        content: text_ref.current.value,
-      })
-    );
+    // dispatch(
+    //   __editPost({
+    //     title: title_ref.current.value,
+    //     img: select_ref.current.value,
+    //     content: text_ref.current.value,
+    //   })
+    // );
     navigate("/");
   };
   return (

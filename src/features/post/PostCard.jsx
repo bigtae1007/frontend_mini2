@@ -19,12 +19,13 @@ const PostCard = () => {
   return (
     <Warp>
       {post_list.map((dic, idx) => {
+        // const date = dic.createdAt.slice()
         return (
-          <PostBox key={dic.postId}>
+          <PostBox key={dic.id}>
             <ImgBox>
               <img src={logo} alt=""></img>
             </ImgBox>
-            <Link to="/post/detail/id">
+            <Link to="/post/detail/:id">
               <TextBox>
                 <div>
                   <h4>{dic.title}</h4>
@@ -34,13 +35,11 @@ const PostCard = () => {
                 </div>
                 <div>
                   <Nick>
-                    {dic.nickname}ㅤ-{dic.date}
+                    {dic.User.nickname}ㅤ-{dic.createdAt}
                   </Nick>
                 </div>
                 <div>
-                  <Like>
-                    like : {dic.heart}.length ㅤㅤFeedBack : {dic.commentsNum}
-                  </Like>
+                  <Like>like : 2 ㅤㅤFeedBack : 2</Like>
                 </div>
               </TextBox>
             </Link>

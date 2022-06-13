@@ -12,7 +12,7 @@ export const __loadPost = createAsyncThunk("post/LOAD_POST", async () => {
 
   console.log(response);
 
-  // return response.data;
+  return response.data;
 });
 // 포스트 추가하기
 export const __addPost = createAsyncThunk(
@@ -24,30 +24,30 @@ export const __addPost = createAsyncThunk(
 
     console.log(response, "asd");
 
-    // return response.data;
+    return response.data;
   }
 );
 
 // 포스트 수정하기
-export const __editPost = createAsyncThunk(
-  "memos/DELETE_MEMO",
-  async (payload, thunkAPI) => {
-    const response = await axios.put("http://localhost:4000/list", payload);
-    // const response = await api.put("/post", payload);
-    return response;
-  }
-);
+// export const __editPost = createAsyncThunk(
+//   "memos/DELETE_MEMO",
+//   async (payload, thunkAPI) => {
+//     const response = await axios.put("http://localhost:4000/list", payload);
+//     // const response = await api.put("/post", payload);
+//     return response;
+//   }
+// );
 
-// 포스트 삭제하기
-export const __deletePost = createAsyncThunk(
-  "memos/DELETE_MEMO",
-  async (payload, thunkAPI) => {
-    const response = await axios.delete("http://localhost:4000/list", payload);
-    // const response = await api.delete("/post", payload);
+// // 포스트 삭제하기
+// export const __deletePost = createAsyncThunk(
+//   "memos/DELETE_MEMO",
+//   async (payload, thunkAPI) => {
+//     const response = await axios.delete("http://localhost:4000/list", payload);
+//     // const response = await api.delete("/post", payload);
 
-    return response;
-  }
-);
+//     return response;
+//   }
+// );
 
 // // 메모 변경하기
 // export const __changeMemo = createAsyncThunk(
@@ -103,21 +103,21 @@ const postSlice = createSlice({
         state.loading = false;
 
         state.list = [...state.list, action.payload];
-      })
-
-      //포스트 수정하기
-      .addCase(__editPost.fulfilled, (state, action) => {
-        state.loading = false;
-
-        state.list = [...state.list];
-      })
-
-      //포스트 삭제하기
-      .addCase(__deletePost.fulfilled, (state, action) => {
-        state.loading = false;
-
-        state.list = [...state.list];
       });
+
+    //포스트 수정하기
+    // .addCase(__editPost.fulfilled, (state, action) => {
+    //   state.loading = false;
+
+    //   state.list = [...state.list];
+    // })
+
+    // //포스트 삭제하기
+    // .addCase(__deletePost.fulfilled, (state, action) => {
+    //   state.loading = false;
+
+    //   state.list = [...state.list];
+    // });
 
     // .addDefaultCase((state, action) => {
     //   if (action.meta?.requestStatus === "pending") {
