@@ -1,9 +1,10 @@
 import React, { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { __addComment } from "../../../redux/modules/commentSlice";
 
 const DetailAddComment = ({ postId }) => {
+  const checkLogin = useSelector((state) => state.login.user.result);
   const dispatch = useDispatch();
   let commentText = useRef("");
 
@@ -16,19 +17,23 @@ const DetailAddComment = ({ postId }) => {
   return (
     <>
       <WrapComment>
-        <h4>답변 작성해주기</h4>
-        <Textarea ref={commentText} />
+        <h4>
+          {checkLogin ? "답변 작성해주기" : "답변을 하시려면 로그인 해주세요"}
+        </h4>
+        {checkLogin ? <Textarea ref={commentText} /> : null}
       </WrapComment>
-      <WrapBtn>
-        <button onClick={addComment}>저장</button>
-        <button
-          onClick={() => {
-            commentText.current.value = "";
-          }}
-        >
-          취소
-        </button>
-      </WrapBtn>
+      {checkLogin ? (
+        <WrapBtn>
+          <button onClick={addComment}>저장</button>
+          <button
+            onClick={() => {
+              commentText.current.value = "";
+            }}
+          >
+            취소
+          </button>
+        </WrapBtn>
+      ) : null}
     </>
   );
 };
