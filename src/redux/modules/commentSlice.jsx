@@ -20,7 +20,7 @@ export const __addComment = createAsyncThunk(
     const response = await api.post(`/api/post/${payload.postId}/comment`, {
       comment: payload.comment,
     });
-    return response.data.comment;
+    return response.data.fullComment;
   }
 );
 
