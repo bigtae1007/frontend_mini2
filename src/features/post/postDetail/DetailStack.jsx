@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function DetailStack() {
+export default function DetailStack({ img, createdAt }) {
   return (
     <>
       <WrapUnderTitle>
         <WrapStackList>
-          <StackSpan>JavaScript</StackSpan>
+          <StackSpan>{img}</StackSpan>
           <StackSpan>React</StackSpan>
         </WrapStackList>
-        <p>2022-06-06</p>
+        <p>{createdAt}</p>
       </WrapUnderTitle>
     </>
   );

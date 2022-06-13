@@ -27,7 +27,7 @@ export const __checkToken = createAsyncThunk(
   "__checkToken/CHECK_LOG",
   async (payload, thunkAPI) => {
     // const response = await api.post("/auth", payload);
-
+    // console.log(response);
     // 가상으로 받은 값
     // const response = {
     //   result: true,
