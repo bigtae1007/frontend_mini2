@@ -20,7 +20,7 @@ export default function SignUpForm() {
   const navigate = useNavigate();
   const [formstate, setFromState] = useState(false);
   const [signData, setsignData] = useState({
-    username: "",
+    email: "",
     nickname: "",
     password: "",
     passwordCheck: "",
@@ -47,7 +47,7 @@ export default function SignUpForm() {
 
   // 중복확인 이벤트
   const CheckId = () => {
-    dispatch(__checkUsername(signData.username));
+    dispatch(__checkUsername(signData.email));
   };
   const CheckNick = () => {
     dispatch(__checkNickname(signData.nickname));
@@ -88,7 +88,7 @@ export default function SignUpForm() {
           <CheckBtn onClick={CheckId}>중복 확인</CheckBtn>
         </div>
         <Input
-          id="username"
+          id="email"
           type="email"
           placeholder="이메일 주소를 입력해주세요"
           required

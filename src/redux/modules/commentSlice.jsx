@@ -11,6 +11,7 @@ export const __addComment = createAsyncThunk(
     const response = await api.post("posts", {
       comment: payload,
     });
+    // await api.post(`/api/post/${postId}/comment`, { comment: payload });
     console.log(payload);
     console.log(response);
     return payload;

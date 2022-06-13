@@ -8,13 +8,14 @@ import { api } from "../../shared/api";
 export const __signup = createAsyncThunk(
   "signup/SIGNUP_LOG",
   async (payload, thunkAPI) => {
-    const aa = await api.post("/posts", payload);
-    const response = {
-      result: false,
-    };
+    const aa = await api.post("/user/signup", payload);
 
-    alert("회원가입이 완료됐습니다.");
-    return response.result;
+    // const response = {
+    //   result: false,
+    // };
+
+    // alert("회원가입이 완료됐습니다.");
+    // return response.result;
   }
 );
 
@@ -23,7 +24,7 @@ export const __checkUsername = createAsyncThunk(
   "signup/CHECKID_LOG",
   async (payload, thunkAPI) => {
     // const aa = await api.get(`/posts/${payload}`);
-    const aa = await api.get(`/posts/${"36"}`);
+    // const aa = await api.get(`/posts/${"36"}`);
     const response = {
       result: true,
     };
@@ -36,7 +37,7 @@ export const __checkUsername = createAsyncThunk(
 export const __checkNickname = createAsyncThunk(
   "signup/CHECKNICK_LOG",
   async (payload, thunkAPI) => {
-    const aa = await api.get(`/posts/${"36"}`);
+    // const aa = await api.get(`/posts/${"36"}`);
     // const aa = await api.get(`/posts/${payload}`);
     const response = {
       result: true,

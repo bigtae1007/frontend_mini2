@@ -8,14 +8,16 @@ import { api } from "../../shared/api";
 export const __login = createAsyncThunk(
   "log/LOGIN_LOG",
   async (payload, thunkAPI) => {
-    const aa = await api.post("/posts", payload);
+    const response = await api.post("/user/login", payload);
+    console.log(response);
+    localStorage.setItem("token", response.data.token);
     // 토큰 localStorge 저장하기 해야댐
     // 가상으로 받은 값
-    const response = {
-      result: true,
-      nickName: "이건 별명이 들어가요",
-    };
-    return response;
+    // const response = {
+    //   result: true,
+    //   nickName: "이건 별명이 들어가요",
+    // };
+    // return response;
   }
 );
 
