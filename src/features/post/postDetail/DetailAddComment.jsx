@@ -8,7 +8,7 @@ const DetailAddComment = ({ postId }) => {
   let commentText = useRef("");
 
   const addComment = () => {
-    dispatch(
+    const addState = dispatch(
       __addComment({ comment: commentText.current.value, postId: postId })
     );
     commentText.current.value = "";

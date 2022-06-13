@@ -9,7 +9,7 @@ import { __deletePost } from "../../../redux/modules/postSlice";
 export default function DetailSideMenu({ user }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user_data = useSelector((state) => state.login.user.nickName);
+  const user_data = useSelector((state) => state.login.user.nickname);
   // console.log(user_data);
   // console.log(user.nickname);
   const { id } = useParams();

@@ -9,7 +9,7 @@ export const __login = createAsyncThunk(
   "log/LOGIN_LOG",
   async (payload, thunkAPI) => {
     const response = await api.post("/user/login", payload);
-    console.log(response);
+    console.log(response, "받는 값");
     localStorage.setItem("token", response.data.token);
     // 가상으로 받은 값
     // const response = {
