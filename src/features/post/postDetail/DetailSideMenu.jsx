@@ -1,25 +1,56 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function DetailSideMenu() {
+import { __deletePost } from "../../../redux/modules/postSlice";
+
+export default function DetailSideMenu({ user }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user_data = useSelector((state) => state.login.user.nickName);
-  console.log(user_data);
+  // console.log(user_data);
+  // console.log(user.nickname);
+  const { id } = useParams();
+
+  const deletePost = () => {
+    dispatch(__deletePost(id));
+    navigate("/");
+  };
+
   return (
     <>
-      <SideMenuDiv>
-        <div>
-          <span>작성자 : </span> <span>Monkey</span>
-        </div>
-        <div>
-          <span>달린 답변 : </span> <span>31</span>
-        </div>
+      {user_data === user.nickname ? (
+        <SideMenuDiv>
+          <div>
+            <span>작성자 : </span> <span>{user.nickname}</span>
+          </div>
+          <div>
+            <span>달린 답변 : </span> <span>31</span>
+          </div>
 
-        <p>like : 20</p>
-        <p>해결 완료</p>
-        <EditBtn>Edit</EditBtn>
-        <DeleteBtn>Delete</DeleteBtn>
-      </SideMenuDiv>
+          <p>like : 20</p>
+          <p>해결 완료</p>
+          <Link to={`/post/detail/${id}`}>
+            <EditBtn>Edit</EditBtn>
+          </Link>
+
+          <DeleteBtn onClick={deletePost}>Delete</DeleteBtn>
+        </SideMenuDiv>
+      ) : (
+        <SideMenuDiv>
+          <div>
+            <span>작성자 : </span> <span>{user.nickname}</span>
+          </div>
+          <div>
+            <span>달린 답변 : </span> <span>31</span>
+          </div>
+
+          <p>like : 20</p>
+          <p>해결 완료</p>
+        </SideMenuDiv>
+      )}
     </>
   );
 }

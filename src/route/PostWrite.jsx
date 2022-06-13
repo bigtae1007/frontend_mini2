@@ -35,7 +35,7 @@ const PostWrite = () => {
             <option value="JavaScript">JavaScript</option>
             <option value="Java">Java</option>
             <option value="Node">Node</option> {/* 선택하려던 부분! */}
-            <option value="view">view</option>
+            <option value="Vue">Vue</option>
           </select>
           <button onClick={addPost}>작성하기</button>
         </div>

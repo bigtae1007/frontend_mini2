@@ -39,7 +39,7 @@ const PostCard = () => {
                   </Nick>
                 </div>
                 <div>
-                  <Like>like : 2 ㅤㅤFeedBack : 2</Like>
+                  <Like>like : 2 ㅤㅤFeedBack : {dic.Comments.length}</Like>
                 </div>
               </TextBox>
             </Link>
