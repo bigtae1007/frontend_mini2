@@ -32,6 +32,7 @@ export const __editPost = createAsyncThunk(
     // const response = await axios.put("http://localhost:4000/list", payload);
     const response = await api.put(`api/post/${payload.id}`, payload);
     console.log(response.data.id);
+    console.log(response.data);
     return response.data;
   }
 );
@@ -71,6 +72,8 @@ const postSlice = createSlice({
       // 포스트 추가 작성하기
       .addCase(__addPost.fulfilled, (state, action) => {
         state.loading = false;
+        // 임의로 빈 배열 집어넣기
+        // action.payload.Comments = [];
 
         state.list = [...state.list, action.payload];
       })
@@ -79,16 +82,17 @@ const postSlice = createSlice({
       .addCase(__editPost.fulfilled, (state, action) => {
         // console.log(state.list, action);
         state.loading = false;
-        state.list = [...state.list];
-        // state.list.map((v, i) => {
-        //   console.log(action, v.list.id);
-        // if (v.list.id === action.id) {
-        //   v.list = action.list;
-        //   return v;
-        // } else {
-        //   return v;
-        // }
-        // });
+        const newList = state.list.map((v, i) => {
+          if (v.id === action.payload.id) {
+            // 데이터 얘기해서 삭제하기
+            // action.payload.Comments = [];
+            //
+            return action.payload;
+          } else {
+            return v;
+          }
+        });
+        state.list = newList;
       })
 
       // 포스트 삭제하기
