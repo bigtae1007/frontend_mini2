@@ -28,54 +28,26 @@ export const __addPost = createAsyncThunk(
   }
 );
 
-// 포스트 수정하기
+// // 포스트 수정하기
 // export const __editPost = createAsyncThunk(
 //   "memos/DELETE_MEMO",
 //   async (payload, thunkAPI) => {
-//     const response = await axios.put("http://localhost:4000/list", payload);
-//     // const response = await api.put("/post", payload);
+//     // const response = await axios.put("http://localhost:4000/list", payload);
+//     const response = await api.put("/post", payload);
 //     return response;
 //   }
 // );
 
 // 포스트 삭제하기
-// export const __deletePost = createAsyncThunk(
-//   "memos/DELETE_MEMO",
-//   async (payload, thunkAPI) => {
-//     // const response = await axios.delete("http://localhost:4000/list", payload);
-//     await api.del("/post", payload);
+export const __deletePost = createAsyncThunk(
+  "memos/DELETE_MEMO",
+  async (payload, thunkAPI) => {
+    // const response = await axios.delete("http://localhost:4000/list", payload);
+    await api.delete("/post", payload);
 
-//     return payload;
-//   }
-// );
-
-// // 메모 변경하기
-// export const __changeMemo = createAsyncThunk(
-//   "memos/CHANGE_MEMO",
-//   async (payload, thunkAPI) => {
-//     // firebase 사용방법
-//     const docRef = doc(db, "memolist", payload.id);
-//     await updateDoc(docRef, { text: payload.text });
-//     // toolkit에서 thunkAPI로 함수들이 받아진다. getState 사용하기
-//     const memo_index = thunkAPI
-//       .getState()
-//       .memo.text.findIndex((v) => v.id === payload.id);
-//     return { index: memo_index, text: payload.text };
-//   }
-// );
-
-// //메모 삭제하기
-// export const __deleteMemo = createAsyncThunk(
-//   "memos/DELETE_MEMO",
-//   async (payload, thunkAPI) => {
-//     const docRef = doc(db, "memolist", payload);
-//     await deleteDoc(docRef);
-//     const memo_index = thunkAPI
-//       .getState()
-//       .memo.text.findIndex((v) => v.id === payload);
-//     return memo_index;
-//   }
-// );
+    return payload;
+  }
+);
 
 // slice
 
@@ -96,46 +68,36 @@ const postSlice = createSlice({
         state.loading = false;
 
         state.list = action.payload;
+      })
+
+      // 포스트 추가 작성하기
+      .addCase(__addPost.fulfilled, (state, action) => {
+        state.loading = false;
+
+        state.list = [...state.list, action.payload];
+      })
+
+      // // 포스트 수정하기
+      // .addCase(__editPost.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.list = state.list.map((v, i) => {
+      //     if (i === action.payload.id) {
+      //       v.list = action.payload.list;
+      //       return v;
+      //     } else {
+      //       return v;
+      //     }
+      //   });
+      // })
+
+      // 포스트 삭제하기
+      .addCase(__deletePost.fulfilled, (state, action) => {
+        state.loading = false;
+
+        state.list = state.list.filter((v, i) =>
+          i === action.payload ? false : true
+        );
       });
-
-    //포스트 추가 작성하기
-    // .addCase(__addPost.fulfilled, (state, action) => {
-    //   state.loading = false;
-
-    //   state.list = [...state.list, action.payload];
-    // });
-
-    //포스트 수정하기
-    // .addCase(__editPost.fulfilled, (state, action) => {
-    //   state.loading = false;
-
-    //   state.list = [...state.list];
-    // })
-
-    //포스트 삭제하기
-    // .addCase(__deletePost.fulfilled, (state, action) => {
-    //   state.loading = false;
-
-    //   state.list = state.list.filter((v, i) =>
-    //     i === action.payload ? false : true
-    //   );
-    // });
-
-    // .addDefaultCase((state, action) => {
-    //   if (action.meta?.requestStatus === "pending") {
-    //     console.log("peding");
-    //     state.loading = true;
-    //   }
-    //   if (action.meta?.requestStatus === "rejected") {
-    //     console.log("reject");
-    //     state.loading = false;
-    //     state.error = action.error.message;
-    //   }
-    //   if (action.meta?.requestStatus === "fulfilled") {
-    //     console.log("fulfilled");
-    //     state.loading = false;
-    //   }
-    // });
   },
 });
 
@@ -160,31 +122,6 @@ const postSlice = createSlice({
 //   extraReducers: (builder) => {
 //     builder
 //
-
-//       //메모 삭제하기
-//       .addCase(__deleteMemo.fulfilled, (state, action) => {
-//         state.loading = false;
-//         state.text = state.text.filter((v, l) =>
-//           l === action.payload ? false : true
-//         );
-//       })
-
-//       // 메모 수정하기
-//       .addCase(__changeMemo.fulfilled, (state, action) => {
-//         state.loading = false;
-//         state.text = state.text.map((v, l) => {
-//           if (l === action.payload.index) {
-//             v.text = action.payload.text;
-//             return v;
-//           } else {
-//             return v;
-//           }
-//         });
-//       })
-
-//
-//   },
-// });
 
 // // reducer dispatch하기 위해 export 하기
 export const {} = postSlice.actions;
