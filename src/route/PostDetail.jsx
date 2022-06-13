@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useLocation } from "react-router-dom";
 import DetailAddComment from "../features/post/postDetail/DetailAddComment";
 import DetailSideMenu from "../features/post/postDetail/DetailSideMenu";
 import DetailTopTile from "../features/post/postDetail/DetailTopTitle";
 
 export default function PostDetail() {
+  const location = useLocation();
+  const data = location.state.data;
+  console.log(data);
+
   return (
     <WrapDetailPost>
       <DetailTopTile />
