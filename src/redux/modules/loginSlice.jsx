@@ -11,12 +11,7 @@ export const __login = createAsyncThunk(
     const response = await api.post("/user/login", payload);
     console.log(response, "받는 값");
     localStorage.setItem("token", response.data.token);
-    // 가상으로 받은 값
-    // const response = {
-    //   result: true,
-    //   nickName: "이건 별명이 들어가요",
-    // };
-    return response;
+    return response.data;
   }
 );
 // 재 접속시 토큰 유효기간 확인
@@ -47,6 +42,7 @@ const loginSlice = createSlice({
     error: null,
   },
   reducers: {
+    // 로그 아웃시 상태값 초기화
     logOutUser: (state, payload) => {
       console.log(state.user);
       state.user = { nickName: "", result: false };
@@ -59,40 +55,17 @@ const loginSlice = createSlice({
       //로그인
       .addCase(__login.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.user = {
+          nickName: action.payload.nickname,
+          result: action.payload.result,
+        };
       })
       .addCase(__checkToken.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
       })
-      // 메모 추가하기
-      // .addCase(__addMemo.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.text = [action.payload, ...state.text];
-      // })
 
-      // //메모 삭제하기
-      // .addCase(__deleteMemo.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.text = state.text.filter((v, l) =>
-      //     l === action.payload ? false : true
-      //   );
-      // })
-
-      // // 메모 수정하기
-      // .addCase(__changeMemo.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.text = state.text.map((v, l) => {
-      //     if (l === action.payload.index) {
-      //       v.text = action.payload.text;
-      //       return v;
-      //     } else {
-      //       return v;
-      //     }
-      //   });
-      // })
-
-      //요청 시, 실패 시
+      // 전체 모듈 요청 시, 실패 시
       .addDefaultCase((state, action) => {
         if (action.meta?.requestStatus === "pending") {
           console.log("peding");
