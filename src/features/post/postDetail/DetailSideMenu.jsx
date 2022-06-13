@@ -38,7 +38,6 @@ export default function DetailSideMenu({ user, data }) {
 
           <p>like : 20</p>
 
-          <p>해결 완료</p>
           <Link to={`/post/modify/${id}`} state={{ data: data }}>
             <EditBtn>Edit</EditBtn>
           </Link>
