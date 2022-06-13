@@ -16,27 +16,22 @@ export const __login = createAsyncThunk(
     //   result: true,
     //   nickName: "이건 별명이 들어가요",
     // };
-    return {
-      result: true,
-      nickName: "이건 별명이 들어가요",
-    };
+    return response;
   }
 );
 // 재 접속시 토큰 유효기간 확인
 export const __checkToken = createAsyncThunk(
   "__checkToken/CHECK_LOG",
   async (payload, thunkAPI) => {
-    // const response = await api.post("/auth", payload);
+    const response = await api.get("/auth");
     // console.log(response);
     // 가상으로 받은 값
     // const response = {
     //   result: true,
     // };
     // return response.result;
-    return {
-      result: true,
-      nickName: "이건 별명이 들어가요",
-    };
+    console.log(response);
+    return response.data;
   }
 );
 
@@ -107,7 +102,6 @@ const loginSlice = createSlice({
           console.log("reject");
           state.loading = false;
           state.error = action.error.message;
-          alert(`${state.error}, 다시 시도해주세요`);
         }
         if (action.meta?.requestStatus === "fulfilled") {
           console.log("fulfilled");
