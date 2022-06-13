@@ -7,21 +7,24 @@ import { api } from "../../shared/api";
 // 메인 페이지 로드
 export const __loadPost = createAsyncThunk("post/LOAD_POST", async () => {
   // const response = await axios.get("http://localhost:4000/list");
-  const response = await api.get("/posts");
 
-  // console.log(response);
+  const response = await api.get("/api/posts");
 
-  return response.data;
+  console.log(response);
+
+  // return response.data;
 });
 // 포스트 추가하기
 export const __addPost = createAsyncThunk(
   "post/ADD_POST",
   async (payload, thunkAPI) => {
-    // console.log(payload);
     // const response = await axios.post("http://localhost:4000/list", payload);
-    const response = await api.post("/posts", payload);
 
-    return response.data;
+    const response = await api.post("/api/post", payload);
+
+    console.log(response, "asd");
+
+    // return response.data;
   }
 );
 

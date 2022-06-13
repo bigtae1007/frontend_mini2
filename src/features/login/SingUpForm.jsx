@@ -16,16 +16,16 @@ import {
 export default function SignUpForm() {
   const checkName = useSelector((state) => state.signup.checkName);
   const checkNick = useSelector((state) => state.signup.checkNick);
-  const success = useSelector((state) => state.signup.success);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formstate, setFromState] = useState(false);
   const [signData, setsignData] = useState({
-    username: "",
+    email: "",
     nickname: "",
     password: "",
     passwordCheck: "",
   });
+
   const email = checkName;
   const nick = checkNick;
   const [pw, setPw] = useState(false);
@@ -36,15 +36,18 @@ export default function SignUpForm() {
     setsignData({ ...signData, [id]: value });
   };
 
-  // submit 이벤트
-  const submitLogin = (e) => {
+  // 회원가입 이벤트
+  const submitLogin = async (e) => {
     e.preventDefault();
-    dispatch(__signup(signData));
+    const checkState = await dispatch(__signup(signData));
+    if (checkState.payload) {
+      navigate("/login");
+    }
   };
 
   // 중복확인 이벤트
   const CheckId = () => {
-    dispatch(__checkUsername(signData.username));
+    dispatch(__checkUsername(signData.email));
   };
   const CheckNick = () => {
     dispatch(__checkNickname(signData.nickname));
@@ -71,11 +74,6 @@ export default function SignUpForm() {
     }
   }, [email, nick, pw]);
 
-  React.useEffect(() => {
-    if (success) {
-      navigate("/login");
-    }
-  }, [success]);
   return (
     <WrapForm onSubmit={submitLogin}>
       <WrapInputLabel>
@@ -90,7 +88,7 @@ export default function SignUpForm() {
           <CheckBtn onClick={CheckId}>중복 확인</CheckBtn>
         </div>
         <Input
-          id="username"
+          id="email"
           type="email"
           placeholder="이메일 주소를 입력해주세요"
           required
