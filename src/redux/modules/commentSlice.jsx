@@ -4,17 +4,32 @@ import axios from "axios";
 import { api } from "../../shared/api";
 // // thunk 함수
 
+// 댓글 list 받아오기
+export const __getCommentList = createAsyncThunk(
+  "comment/GETCOMMENTLIST_LOG",
+  async (payload, thunkAPI) => {
+    const response = await api.get(`/api/post/${[payload.id]}`);
+    console.log(response, "리스트");
+    return response.data;
+  }
+);
+
 // 댓글 추가
 export const __addComment = createAsyncThunk(
   "comment/ADDCOMMENT_LOG",
   async (payload, thunkAPI) => {
-    // const response = await api.post("posts", {
-    //   comment: payload,
-    // });
-    // await api.post(`/api/post/${payload.postId}/comment`, { comment: payload.comment });
+    const response = await api.post(`/api/post/${payload.postId}/comment`, {
+      comment: payload.comment,
+    });
+    return response.data.comment;
+  }
+);
+
+// 댓글 삭제
+export const __deleteComment = createAsyncThunk(
+  "comment/DELETECOMMENT_LOG",
+  async (payload, thunkAPI) => {
     console.log(payload);
-    // console.log(response);
-    // return payload;
   }
 );
 
@@ -24,14 +39,28 @@ const commentSlice = createSlice({
   name: "signup",
   initialState: {},
   // 리듀서를 작성 할 필요는 없었다.
-  reducers: {},
+  reducers: {
+    comments: [
+      {
+        PostId: "2",
+        UserId: 2,
+        comment: "댓글\n\n\n\n\n\n\n테\n스\n트\n\n\n\n입\n니\n다",
+        createdAt: "2022-06-13T10:35:12.534Z",
+        id: 7,
+        updatedAt: "2022-06-13T10:35:12.534Z",
+      },
+    ],
+  },
 
   extraReducers: (builder) => {
     builder
-      // 회원가입 하기
+      // 댓글 정보 가져오기
+      .addCase(__getCommentList.fulfilled, (state, action) => {
+        state.comments = action.payload;
+      })
+      // 댓글 추가하기
       .addCase(__addComment.fulfilled, (state, action) => {
-        console.log(action.payload);
-        // state.text = action.payload;
+        state.comments = [action.payload, ...state.comments];
       });
   },
 });

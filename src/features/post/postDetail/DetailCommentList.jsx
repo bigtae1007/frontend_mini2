@@ -4,30 +4,17 @@ import { useSelector } from "react-redux/es/exports";
 //컴포넌트
 import Button from "../../../elems/Button";
 
-const DetailCommentList = () => {
-  const myNick = useSelector((state) => state.login.user.nickName);
-  const checkMyComment = "" === myNick;
+const DetailCommentList = ({ commentData }) => {
+  const myNick = useSelector((state) => state.login.user.nickname);
+  const checkMyComment = commentData?.User?.nickname === myNick;
   return (
     <>
       <WrapComment>
-        <h3>작성자</h3>
-        <span>시간이 들어가겠지</span>
+        <h3>{commentData?.User?.nickname}</h3>
+        <span>{commentData.createdAt}</span>
       </WrapComment>
       <CommentText>
-        <pre>
-          내용이 쭉 <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>쭉
-        </pre>
+        <pre>{commentData?.comment}</pre>
       </CommentText>
       {checkMyComment ? (
         <WrapBtn>
