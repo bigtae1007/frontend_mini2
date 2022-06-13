@@ -11,15 +11,36 @@ export const __login = createAsyncThunk(
     const response = await api.post("/user/login", payload);
     console.log(response);
     localStorage.setItem("token", response.data.token);
-    // 토큰 localStorge 저장하기 해야댐
     // 가상으로 받은 값
     // const response = {
     //   result: true,
     //   nickName: "이건 별명이 들어가요",
     // };
-    // return response;
+    return {
+      result: true,
+      nickName: "이건 별명이 들어가요",
+    };
   }
 );
+// 재 접속시 토큰 유효기간 확인
+export const __checkToken = createAsyncThunk(
+  "__checkToken/CHECK_LOG",
+  async (payload, thunkAPI) => {
+    // const response = await api.post("/auth", payload);
+
+    // 가상으로 받은 값
+    // const response = {
+    //   result: true,
+    // };
+    // return response.result;
+    return {
+      result: true,
+      nickName: "이건 별명이 들어가요",
+    };
+  }
+);
+
+// 로그아웃
 
 // // slice
 
@@ -30,7 +51,12 @@ const loginSlice = createSlice({
     loading: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    logOutUser: (state, payload) => {
+      console.log(state.user);
+      state.user = { nickName: "", result: false };
+    },
+  },
   //
   extraReducers: (builder) => {
     builder
@@ -40,7 +66,10 @@ const loginSlice = createSlice({
         state.loading = false;
         state.user = action.payload;
       })
-
+      .addCase(__checkToken.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
       // 메모 추가하기
       // .addCase(__addMemo.fulfilled, (state, action) => {
       //   state.loading = false;
@@ -78,6 +107,7 @@ const loginSlice = createSlice({
           console.log("reject");
           state.loading = false;
           state.error = action.error.message;
+          alert(`${state.error}, 다시 시도해주세요`);
         }
         if (action.meta?.requestStatus === "fulfilled") {
           console.log("fulfilled");
@@ -88,5 +118,5 @@ const loginSlice = createSlice({
 });
 
 // // reducer dispatch하기 위해 export 하기
-export const {} = loginSlice.actions;
+export const { logOutUser } = loginSlice.actions;
 export default loginSlice.reducer;
