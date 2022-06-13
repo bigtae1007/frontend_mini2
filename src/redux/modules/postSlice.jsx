@@ -38,14 +38,14 @@ export const __addPost = createAsyncThunk(
 //   }
 // );
 
-// // 포스트 삭제하기
+// 포스트 삭제하기
 // export const __deletePost = createAsyncThunk(
 //   "memos/DELETE_MEMO",
 //   async (payload, thunkAPI) => {
-//     const response = await axios.delete("http://localhost:4000/list", payload);
-//     // const response = await api.delete("/post", payload);
+//     // const response = await axios.delete("http://localhost:4000/list", payload);
+//     await api.del("/post", payload);
 
-//     return response;
+//     return payload;
 //   }
 // );
 
@@ -96,14 +96,14 @@ const postSlice = createSlice({
         state.loading = false;
 
         state.list = action.payload;
-      })
-
-      //포스트 추가 작성하기
-      .addCase(__addPost.fulfilled, (state, action) => {
-        state.loading = false;
-
-        state.list = [...state.list, action.payload];
       });
+
+    //포스트 추가 작성하기
+    // .addCase(__addPost.fulfilled, (state, action) => {
+    //   state.loading = false;
+
+    //   state.list = [...state.list, action.payload];
+    // });
 
     //포스트 수정하기
     // .addCase(__editPost.fulfilled, (state, action) => {
@@ -112,11 +112,13 @@ const postSlice = createSlice({
     //   state.list = [...state.list];
     // })
 
-    // //포스트 삭제하기
+    //포스트 삭제하기
     // .addCase(__deletePost.fulfilled, (state, action) => {
     //   state.loading = false;
 
-    //   state.list = [...state.list];
+    //   state.list = state.list.filter((v, i) =>
+    //     i === action.payload ? false : true
+    //   );
     // });
 
     // .addDefaultCase((state, action) => {
@@ -158,12 +160,6 @@ const postSlice = createSlice({
 //   extraReducers: (builder) => {
 //     builder
 //
-
-//       // 메모 추가하기
-//       .addCase(__addMemo.fulfilled, (state, action) => {
-//         state.loading = false;
-//         state.text = [action.payload, ...state.text];
-//       })
 
 //       //메모 삭제하기
 //       .addCase(__deleteMemo.fulfilled, (state, action) => {

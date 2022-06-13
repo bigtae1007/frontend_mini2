@@ -25,7 +25,7 @@ const PostCard = () => {
             <ImgBox>
               <img src={logo} alt=""></img>
             </ImgBox>
-            <Link to="/post/detail/:id">
+            <Link to={`/post/detail/${dic.id}`} state={{ data: dic }}>
               <TextBox>
                 <div>
                   <h4>{dic.title}</h4>
