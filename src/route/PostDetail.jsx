@@ -27,6 +27,9 @@ export default function PostDetail() {
 
       <DetailAddComment />
       <DetailCommentList />
+      <DetailCommentList />
+      <DetailCommentList />
+      <DetailCommentList />
     </WrapDetailPost>
   );
 }
