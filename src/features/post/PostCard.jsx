@@ -19,7 +19,7 @@ const PostCard = () => {
   return (
     <Warp>
       {post_list.map((dic, idx) => {
-        // const date = dic.createdAt.slice()
+        console.log(dic.createdAt.toString());
         return (
           <PostBox key={dic.id}>
             <ImgBox>
@@ -35,11 +35,11 @@ const PostCard = () => {
                 </div>
                 <div>
                   <Nick>
-                    {dic.User.nickname}ㅤ-{dic.createdAt}
+                    {dic.User.nickname}ㅤ-{dic.createdAt.toString()}
                   </Nick>
                 </div>
                 <div>
-                  <Like>like : 2 ㅤㅤFeedBack : 2</Like>
+                  <Like>like : 2 ㅤㅤFeedBack : {dic.Comments.length}</Like>
                 </div>
               </TextBox>
             </Link>

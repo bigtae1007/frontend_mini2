@@ -1,20 +1,56 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 
+import { __deletePost } from "../../../redux/modules/postSlice";
+
 export default function DetailSideMenu({ user }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user_data = useSelector((state) => state.login.user.nickName);
+  // console.log(user_data);
+  // console.log(user.nickname);
+  const { id } = useParams();
+
+  const deletePost = () => {
+    dispatch(__deletePost(id));
+    navigate("/");
+  };
+
   return (
     <>
-      <SideMenuDiv>
-        <div>
-          <span>작성자 : </span> <span>{user.nickname}</span>
-        </div>
-        <div>
-          <span>달린 답변 : </span> <span>31</span>
-        </div>
+      {user_data === user.nickname ? (
+        <SideMenuDiv>
+          <div>
+            <span>작성자 : </span> <span>{user.nickname}</span>
+          </div>
+          <div>
+            <span>달린 답변 : </span> <span>31</span>
+          </div>
 
-        <p>like : 20</p>
-        <p>해결 완료</p>
-      </SideMenuDiv>
+          <p>like : 20</p>
+          <p>해결 완료</p>
+          <Link to={`/post/detail/${id}`}>
+            <EditBtn>Edit</EditBtn>
+          </Link>
+
+          <DeleteBtn onClick={deletePost}>Delete</DeleteBtn>
+        </SideMenuDiv>
+      ) : (
+        <SideMenuDiv>
+          <div>
+            <span>작성자 : </span> <span>{user.nickname}</span>
+          </div>
+          <div>
+            <span>달린 답변 : </span> <span>31</span>
+          </div>
+
+          <p>like : 20</p>
+          <p>해결 완료</p>
+        </SideMenuDiv>
+      )}
     </>
   );
 }
@@ -30,4 +66,24 @@ const SideMenuDiv = styled.div`
 
   border-left: 1px solid var(--grey);
   word-break: break-all;
+`;
+
+const EditBtn = styled.button`
+  width: 80px;
+  border: none;
+  margin: 0 auto;
+  padding: 3px 5px;
+  border-radius: 10px;
+  background-color: var(--green);
+  color: white;
+`;
+
+const DeleteBtn = styled.button`
+  margin: 0 auto;
+  width: 80px;
+  border: none;
+  padding: 3px 5px;
+  border-radius: 10px;
+  background-color: var(--red);
+  color: white;
 `;
