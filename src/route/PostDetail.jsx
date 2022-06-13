@@ -22,7 +22,7 @@ export default function PostDetail() {
         <ContentDiv>
           <pre>{data.content}</pre>
         </ContentDiv>
-        <DetailSideMenu user={data.User} />
+        <DetailSideMenu user={data.User} data={data} />
       </DetailContent>
 
       <DetailAddComment postId={data.id} />

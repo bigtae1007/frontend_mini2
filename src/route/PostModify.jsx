@@ -1,34 +1,38 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 import styled from "styled-components";
 
 //모듈
-// import { __editPost } from "../redux/modules/postSlice";
+import { __editPost } from "../redux/modules/postSlice";
 
 const PostModify = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const title_ref = React.useRef(null);
   const select_ref = React.useRef(null);
   const text_ref = React.useRef(null);
+  const location = useLocation();
+  const data = location.state.data;
 
   const modifyPost = () => {
-    // dispatch(
-    //   __editPost({
-    //     title: title_ref.current.value,
-    //     img: select_ref.current.value,
-    //     content: text_ref.current.value,
-    //   })
-    // );
+    dispatch(
+      __editPost({
+        id,
+        title: title_ref.current.value,
+        img: select_ref.current.value,
+        content: text_ref.current.value,
+      })
+    );
     navigate("/");
   };
   return (
     <Wrap>
       <PostWarp>
         <div>
-          <select ref={select_ref}>
+          <select ref={select_ref} defaultValue={data.img}>
             <option value="React">React</option>
             <option value="JavaScript">JavaScript</option>
             <option value="Java">Java</option>
@@ -39,12 +43,21 @@ const PostModify = () => {
         </div>
         <div></div>
         <TitleIpt>
-          <textarea ref={title_ref} placeholder="제목을 입력하세요." />
+          <textarea
+            ref={title_ref}
+            placeholder="제목을 입력하세요."
+            defaultValue={data.title}
+          />
         </TitleIpt>
 
-        <div>
-          <textarea ref={text_ref} className="textIpt" placeholder="" />
-        </div>
+        <TextIpt>
+          <textarea
+            ref={text_ref}
+            className="textIpt"
+            placeholder=""
+            defaultValue={data.content}
+          ></textarea>
+        </TextIpt>
       </PostWarp>
     </Wrap>
   );
@@ -93,4 +106,13 @@ const TitleIpt = styled.div`
   }
   border-bottom: 2px solid lightgray;
 `;
+const TextIpt = styled.div`
+  textarea {
+    height: 800px;
+    max-height: 100vh;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+`;
+
 export default PostModify;

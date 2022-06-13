@@ -10,8 +10,6 @@ export const __loadPost = createAsyncThunk("post/LOAD_POST", async () => {
 
   const response = await api.get("/api/posts");
 
-  console.log(response);
-
   return response.data;
 });
 // 포스트 추가하기
@@ -21,30 +19,30 @@ export const __addPost = createAsyncThunk(
     // const response = await axios.post("http://localhost:4000/list", payload);
 
     const response = await api.post("/api/post", payload);
+    console.log(response.data);
+    // return response.data;
+  }
+);
 
-    console.log(response, "asd");
-
+// 포스트 수정하기
+export const __editPost = createAsyncThunk(
+  "post/EDIT_MEMO",
+  async (payload, thunkAPI) => {
+    console.log(payload);
+    // const response = await axios.put("http://localhost:4000/list", payload);
+    const response = await api.put(`api/post/${payload.id}`, payload);
+    console.log(response.data.id);
     return response.data;
   }
 );
 
-// // 포스트 수정하기
-// export const __editPost = createAsyncThunk(
-//   "memos/DELETE_MEMO",
-//   async (payload, thunkAPI) => {
-//     // const response = await axios.put("http://localhost:4000/list", payload);
-//     const response = await api.put("/post", payload);
-//     return response;
-//   }
-// );
-
 // 포스트 삭제하기
 export const __deletePost = createAsyncThunk(
-  "memos/DELETE_MEMO",
+  "post/DELETE_MEMO",
   async (payload, thunkAPI) => {
     // const response = await axios.delete("http://localhost:4000/list", payload);
-    await api.delete("/post", payload);
-
+    await api.delete(`/api/post/${payload}`);
+    // console.log(payload);
     return payload;
   }
 );
@@ -77,26 +75,31 @@ const postSlice = createSlice({
         state.list = [...state.list, action.payload];
       })
 
-      // // 포스트 수정하기
-      // .addCase(__editPost.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.list = state.list.map((v, i) => {
-      //     if (i === action.payload.id) {
-      //       v.list = action.payload.list;
-      //       return v;
-      //     } else {
-      //       return v;
-      //     }
-      //   });
-      // })
+      // 포스트 수정하기
+      .addCase(__editPost.fulfilled, (state, action) => {
+        // console.log(state.list, action);
+        state.loading = false;
+        state.list = [...state.list];
+        // state.list.map((v, i) => {
+        //   console.log(action, v.list.id);
+        // if (v.list.id === action.id) {
+        //   v.list = action.list;
+        //   return v;
+        // } else {
+        //   return v;
+        // }
+        // });
+      })
 
       // 포스트 삭제하기
       .addCase(__deletePost.fulfilled, (state, action) => {
         state.loading = false;
+        console.log(action.payload);
 
-        state.list = state.list.filter((v, i) =>
-          i === action.payload ? false : true
-        );
+        const delete_list = state.list.filter((v) => {
+          return v.id === action.payload ? false : true;
+        });
+        state.list = delete_list;
       });
   },
 });

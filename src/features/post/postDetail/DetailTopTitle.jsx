@@ -4,11 +4,31 @@ import styled from "styled-components";
 //컴포넌트
 import DetailStack from "./DetailStack";
 import logo from "../../../logo.svg";
+import ReactImg from "../../../images/category_img/React.png";
+import JavaImg from "../../../images/category_img/Java.png";
+import NodeImg from "../../../images/category_img/Node.png";
+import VueImg from "../../../images/category_img/Vue.png";
+import JsImg from "../../../images/category_img/JavaScript.png";
 
 export default function DetailTopTile({ titleText, img, createdAt }) {
   return (
     <WrapTitle>
-      <TitleImg src={logo} alt="stack 이미지" />
+      <TitleImg
+        src={
+          img === "React"
+            ? ReactImg
+            : img === "Java"
+            ? JavaImg
+            : img === "Node"
+            ? NodeImg
+            : img === "Vue"
+            ? VueImg
+            : img === "JavaScript"
+            ? JsImg
+            : logo
+        }
+        alt="stack 이미지"
+      />
 
       <WrapDib>
         <TitleDiv>{titleText}</TitleDiv>

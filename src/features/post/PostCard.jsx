@@ -6,11 +6,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { __loadPost } from "../../redux/modules/postSlice";
 //css
 import logo from "../../logo.svg";
+import ReactImg from "../../images/category_img/React.png";
+import JavaImg from "../../images/category_img/Java.png";
+import NodeImg from "../../images/category_img/Node.png";
+import VueImg from "../../images/category_img/Vue.png";
+import JsImg from "../../images/category_img/JavaScript.png";
 
 const PostCard = () => {
   const dispatch = useDispatch();
   const post_list = useSelector((state) => state.post.list);
-  console.log(post_list);
+  // console.log(post_list);
 
   React.useEffect(() => {
     dispatch(__loadPost());
@@ -19,11 +24,26 @@ const PostCard = () => {
   return (
     <Warp>
       {post_list.map((dic, idx) => {
-        console.log(dic.createdAt.toString());
+        // console.log(dic.createdAt.toString());
         return (
           <PostBox key={dic.id}>
             <ImgBox>
-              <img src={logo} alt=""></img>
+              <img
+                src={
+                  dic.img === "React"
+                    ? ReactImg
+                    : dic.img === "Java"
+                    ? JavaImg
+                    : dic.img === "Node"
+                    ? NodeImg
+                    : dic.img === "Vue"
+                    ? VueImg
+                    : dic.img === "JavaScript"
+                    ? JsImg
+                    : logo
+                }
+                alt=""
+              ></img>
             </ImgBox>
             <Link to={`/post/detail/${dic.id}`} state={{ data: dic }}>
               <TextBox>

@@ -44,9 +44,9 @@ const PostWrite = () => {
           <textarea ref={title_ref} placeholder="제목을 입력하세요." />
         </TitleIpt>
 
-        <div>
+        <TextIpt>
           <textarea ref={text_ref} className="textIpt" placeholder="" />
-        </div>
+        </TextIpt>
       </PostWarp>
     </Wrap>
   );
@@ -94,6 +94,15 @@ const TitleIpt = styled.div`
     margin-bottom: 20px;
   }
   border-bottom: 2px solid lightgray;
+`;
+
+const TextIpt = styled.div`
+  textarea {
+    height: 800px;
+    max-height: 100vh;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
 `;
 
 export default PostWrite;

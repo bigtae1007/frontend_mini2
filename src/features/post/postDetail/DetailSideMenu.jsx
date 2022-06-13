@@ -6,22 +6,24 @@ import styled from "styled-components";
 
 import { __deletePost } from "../../../redux/modules/postSlice";
 
-export default function DetailSideMenu({ user }) {
+export default function DetailSideMenu({ user, data }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user_data = useSelector((state) => state.login.user.nickName);
-  // console.log(user_data);
+  const post_data = useSelector((state) => state.post.list);
+  const user_data = useSelector((state) => state.login.user.nickname);
+  // console.log(data);
   // console.log(user.nickname);
   const { id } = useParams();
 
   const deletePost = () => {
+    console.log(post_data);
     dispatch(__deletePost(id));
     navigate("/");
   };
 
   return (
     <>
-      {user_data === user.nickname ? (
+      {user_data === user.nickName ? (
         <SideMenuDiv>
           <div>
             <span>작성자 : </span> <span>{user.nickname}</span>
@@ -32,7 +34,7 @@ export default function DetailSideMenu({ user }) {
 
           <p>like : 20</p>
           <p>해결 완료</p>
-          <Link to={`/post/detail/${id}`}>
+          <Link to={`/post/modify/${id}`} state={{ data: data }}>
             <EditBtn>Edit</EditBtn>
           </Link>
 
@@ -41,7 +43,7 @@ export default function DetailSideMenu({ user }) {
       ) : (
         <SideMenuDiv>
           <div>
-            <span>작성자 : </span> <span>{user.nickname}</span>
+            <span>작성자 : </span> <span>{user.nickName}</span>
           </div>
           <div>
             <span>달린 답변 : </span> <span>31</span>
