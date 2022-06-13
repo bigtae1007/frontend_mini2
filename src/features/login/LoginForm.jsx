@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 // 컴포넌트
 import Input from "../../elems/Input";
 import Button from "../../elems/Button";
+// 모듈
 import { __login } from "../../redux/modules/loginSlice";
 
 export default function LoginForm() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   // 버튼 잠금 state
   const [formstate, setFromState] = useState(false);
   // data 입력 state
@@ -21,9 +24,17 @@ export default function LoginForm() {
   };
 
   // submit 이벤트
-  const submitLogin = (e) => {
+  const submitLogin = async (e) => {
     e.preventDefault();
-    dispatch(__login(loginData));
+    const loginState = await dispatch(__login(loginData));
+    if (loginState.type === "log/LOGIN_LOG/rejected") {
+      alert("아이디 혹은 비밀번호가 틀렸습니다.");
+    }
+    console.log(loginState.payload);
+    if (loginState.payload.result) {
+      alert(`${loginState.payload.nickname} 님 환영합니다 :) `);
+      navigate("/");
+    }
   };
 
   React.useEffect(() => {
@@ -46,6 +57,7 @@ export default function LoginForm() {
       />
       <Input
         id="password"
+        type="password"
         placeholder="비밀번호 입력"
         required
         onChange={changeInput}

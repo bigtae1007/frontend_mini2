@@ -8,6 +8,8 @@ import Input from "../../elems/Input";
 import Button from "../../elems/Button";
 //모듈
 import {
+  changeCheckName,
+  changeCheckNick,
   __checkNickname,
   __checkUsername,
   __signup,
@@ -26,7 +28,7 @@ export default function SignUpForm() {
     passwordCheck: "",
   });
 
-  const email = checkName;
+  let email = checkName;
   const nick = checkNick;
   const [pw, setPw] = useState(false);
 
@@ -34,12 +36,15 @@ export default function SignUpForm() {
   const changeInput = (e) => {
     const { value, id } = e.target;
     setsignData({ ...signData, [id]: value });
+    if (id === "email") dispatch(changeCheckName());
+    if (id === "nickname") dispatch(changeCheckNick());
   };
 
   // 회원가입 이벤트
   const submitLogin = async (e) => {
     e.preventDefault();
     const checkState = await dispatch(__signup(signData));
+    console.log(checkState, "폼에서");
     if (checkState.payload) {
       navigate("/login");
     }
@@ -47,7 +52,14 @@ export default function SignUpForm() {
 
   // 중복확인 이벤트
   const CheckId = () => {
-    dispatch(__checkUsername(signData.email));
+    if (
+      signData.email.indexOf(".") !== -1 &&
+      signData.email.indexOf("@") !== -1
+    ) {
+      dispatch(__checkUsername(signData.email));
+    } else {
+      alert("이메일 형식으로 작성해주세요");
+    }
   };
   const CheckNick = () => {
     dispatch(__checkNickname(signData.nickname));

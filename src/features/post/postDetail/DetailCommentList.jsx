@@ -1,33 +1,29 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux/es/exports";
+import { useSelector, useDispatch } from "react-redux/es/exports";
 //컴포넌트
 import Button from "../../../elems/Button";
+import { __deleteComment } from "../../../redux/modules/commentSlice";
 
-const DetailCommentList = () => {
-  const myNick = useSelector((state) => state.login.user.nickName);
-  const checkMyComment = "" === myNick;
+const DetailCommentList = ({ commentData }) => {
+  const myNick = useSelector((state) => state.login.user.nickname);
+  const dispatch = useDispatch();
+  const checkMyComment = commentData?.User?.nickname === myNick;
+
+  // 댓글 삭제 이벤트
+  const deleteComment = () => {
+    dispatch(
+      __deleteComment({ commentId: commentData.id, postId: commentData.PostId })
+    );
+  };
   return (
     <>
       <WrapComment>
-        <h3>작성자</h3>
-        <span>시간이 들어가겠지</span>
+        <h3>{commentData?.User?.nickname}</h3>
+        <span>{commentData.createdAt}</span>
       </WrapComment>
       <CommentText>
-        <pre>
-          내용이 쭉 <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>쭉
-        </pre>
+        <pre>{commentData?.comment}</pre>
       </CommentText>
       {checkMyComment ? (
         <WrapBtn>
@@ -35,7 +31,13 @@ const DetailCommentList = () => {
             <Button size="size2" bgcolor="blue" color="white">
               수정
             </Button>
-            <Button size="size2" border="blue">
+            <Button
+              size="size2"
+              border="blue"
+              onClick={() => {
+                deleteComment();
+              }}
+            >
               삭제
             </Button>
           </div>

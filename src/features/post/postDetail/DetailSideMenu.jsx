@@ -9,12 +9,16 @@ import { __deletePost } from "../../../redux/modules/postSlice";
 export default function DetailSideMenu({ user, data }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const post_data = useSelector((state) => state.post.list);
   const user_data = useSelector((state) => state.login.user.nickname);
   // console.log(data);
+  const commentList = useSelector((state) => state.comment.comments);
+  console.log(commentList);
+
   // console.log(user.nickname);
   const { id } = useParams();
-
+  console.log(user);
   const deletePost = () => {
     console.log(post_data);
     dispatch(__deletePost(id));
@@ -29,10 +33,11 @@ export default function DetailSideMenu({ user, data }) {
             <span>작성자 : </span> <span>{user.nickname}</span>
           </div>
           <div>
-            <span>달린 답변 : </span> <span>31</span>
+            <span>달린 답변 : </span> <span>{commentList?.length}</span>
           </div>
 
           <p>like : 20</p>
+
           <p>해결 완료</p>
           <Link to={`/post/modify/${id}`} state={{ data: data }}>
             <EditBtn>Edit</EditBtn>
@@ -46,11 +51,10 @@ export default function DetailSideMenu({ user, data }) {
             <span>작성자 : </span> <span>{user.nickName}</span>
           </div>
           <div>
-            <span>달린 답변 : </span> <span>31</span>
+            <span>달린 답변 : </span> <span>{commentList?.length}</span>
           </div>
 
           <p>like : 20</p>
-          <p>해결 완료</p>
         </SideMenuDiv>
       )}
     </>

@@ -28,7 +28,7 @@ const Header = () => {
   //토큰 유효성 검사하기
   React.useEffect(() => {
     if (localToken) {
-      dispatch(__checkToken(localToken));
+      dispatch(__checkToken());
     }
   }, [localToken]);
   return (
