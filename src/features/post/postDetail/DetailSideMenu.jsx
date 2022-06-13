@@ -10,10 +10,11 @@ export default function DetailSideMenu({ user }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user_data = useSelector((state) => state.login.user.nickname);
-  // console.log(user_data);
+  const commentList = useSelector((state) => state.comment.comments);
+  console.log(commentList);
   // console.log(user.nickname);
   const { id } = useParams();
-
+  console.log(user);
   const deletePost = () => {
     dispatch(__deletePost(id));
     navigate("/");
@@ -27,11 +28,10 @@ export default function DetailSideMenu({ user }) {
             <span>작성자 : </span> <span>{user.nickname}</span>
           </div>
           <div>
-            <span>달린 답변 : </span> <span>31</span>
+            <span>달린 답변 : </span> <span>{commentList.length}</span>
           </div>
 
           <p>like : 20</p>
-          <p>해결 완료</p>
           <Link to={`/post/detail/${id}`}>
             <EditBtn>Edit</EditBtn>
           </Link>
@@ -44,11 +44,10 @@ export default function DetailSideMenu({ user }) {
             <span>작성자 : </span> <span>{user.nickname}</span>
           </div>
           <div>
-            <span>달린 답변 : </span> <span>31</span>
+            <span>달린 답변 : </span> <span>{commentList.length}</span>
           </div>
 
           <p>like : 20</p>
-          <p>해결 완료</p>
         </SideMenuDiv>
       )}
     </>
