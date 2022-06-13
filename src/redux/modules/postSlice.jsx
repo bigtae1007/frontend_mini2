@@ -1,6 +1,29 @@
-// import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { api } from "../../shared/api";
 
-// // thunk 함수
+// thunk 함수
+
+// 메인 페이지 로드
+export const __loadPost = createAsyncThunk("post/LOAD_POST", async () => {
+  const response = await axios.get("http://localhost:4000/list");
+
+  // console.log(response);
+
+  return response.data;
+});
+// 포스트 추가하기
+export const __addPost = createAsyncThunk(
+  "post/ADD_POST",
+  async (payload, thunkAPI) => {
+    console.log(payload);
+    const response = await axios.post("http://localhost:4000/list", payload);
+
+    console.log(response, "asd");
+
+    return response.data;
+  }
+);
 
 // // 메모 변경하기
 // export const __changeMemo = createAsyncThunk(
@@ -17,28 +40,6 @@
 //   }
 // );
 
-// //메모 추가하기
-// export const __addMemo = createAsyncThunk(
-//   "memos/ADD_MEMO",
-//   async (payload, thunkAPI) => {
-//     const memoData = await addDoc(collection(db, "memolist"), payload);
-//     return { id: memoData.id, text: payload.text };
-//   }
-// );
-
-// //메모 가져오기
-// export const __getMemo = createAsyncThunk(
-//   "memos/GET_MEMO",
-//   async (payload, thunkAPI) => {
-//     const memoList = await getDocs(collection(db, "memolist"));
-//     const getMemoList = [];
-//     memoList.forEach((v) => {
-//       getMemoList.push({ id: v.id, ...v.data() });
-//     });
-//     return getMemoList;
-//   }
-// );
-
 // //메모 삭제하기
 // export const __deleteMemo = createAsyncThunk(
 //   "memos/DELETE_MEMO",
@@ -51,6 +52,68 @@
 //     return memo_index;
 //   }
 // );
+// 포스트 삭제하기
+
+// 포스트 수정하기
+
+// slice
+
+const postSlice = createSlice({
+  name: "post",
+  initialState: {
+    list: [],
+    loading: false,
+    error: null,
+  },
+  reducers: {},
+
+  extraReducers: (builder) => {
+    builder
+
+      //메인 페이지 로드
+      .addCase(__loadPost.fulfilled, (state, action) => {
+        state.loading = false;
+
+        state.list = action.payload;
+      })
+
+      //포스트 추가 작성하기
+      .addCase(__addPost.fulfilled, (state, action) => {
+        state.loading = false;
+
+        state.list = [...state.list, action.payload];
+      });
+
+    // //포스트 수정하기
+    // .addCase(__addPost.fulfilled, (state, action) => {
+    //   state.loading = false;
+
+    //   state.list = [...state.list, action.payload];
+    // });
+    // //포스트 삭제하기
+    // .addCase(__addPost.fulfilled, (state, action) => {
+    //   state.loading = false;
+
+    //   state.list = [...state.list, action.payload];
+    // });
+
+    // .addDefaultCase((state, action) => {
+    //   if (action.meta?.requestStatus === "pending") {
+    //     console.log("peding");
+    //     state.loading = true;
+    //   }
+    //   if (action.meta?.requestStatus === "rejected") {
+    //     console.log("reject");
+    //     state.loading = false;
+    //     state.error = action.error.message;
+    //   }
+    //   if (action.meta?.requestStatus === "fulfilled") {
+    //     console.log("fulfilled");
+    //     state.loading = false;
+    //   }
+    // });
+  },
+});
 
 // // slice
 
@@ -66,19 +129,13 @@
 //   reducers: {},
 
 //   /*만들어진 비동기 액션에 대한 리듀서는 아래와 같이 extraReducers로 작성할 수 있다.
-//    extraReducers로 지정된 reducer는 외부 작업을 참조하기 위한 것이기 때문에 slice.actions에 생성되지 않는다. 
+//    extraReducers로 지정된 reducer는 외부 작업을 참조하기 위한 것이기 때문에 slice.actions에 생성되지 않는다.
 //   또한, ActionReducerMapBuilder를 수신하는 콜백으로 작성하는 것이 권장된다.*/
 
 //   // toolkit 장점 통신 상태를 자동으로 받아와 try ~ catch를 사용할 필요가 없다.
 //   extraReducers: (builder) => {
 //     builder
-//       // 메모 가져오기
-
-//       //addCase 외에 사용 할 수있는게 더 있다. 공문 참고하자
-//       .addCase(__getMemo.fulfilled, (state, action) => {
-//         state.loading = false;
-//         state.text = action.payload;
-//       })
+//
 
 //       // 메모 추가하기
 //       .addCase(__addMemo.fulfilled, (state, action) => {
@@ -107,19 +164,10 @@
 //         });
 //       })
 
-//       //요청시, 실패시
-//       .addDefaultCase((state, action) => {
-//         if (action.meta?.requestStatus === "pending") {
-//           state.loading = true;
-//         }
-//         if (action.meta?.requestStatus === "rejected") {
-//           state.loading = false;
-//           state.error = action.error.message;
-//         }
-//       });
+//
 //   },
 // });
 
 // // reducer dispatch하기 위해 export 하기
-// export const {} = memosSlice.actions;
-// export default memosSlice.reducer;
+export const {} = postSlice.actions;
+export default postSlice.reducer;

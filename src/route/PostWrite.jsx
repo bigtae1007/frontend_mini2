@@ -1,17 +1,28 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+//모듈
+import { __addPost } from "../redux/modules/postSlice";
 
 const PostWrite = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const title_ref = React.useRef(null);
   const select_ref = React.useRef(null);
   const text_ref = React.useRef(null);
 
   const addPost = () => {
-    console.log(
-      title_ref.current.value,
-      select_ref.current.value,
-      text_ref.current.value
+    dispatch(
+      __addPost({
+        title: title_ref.current.value,
+        img: select_ref.current.value,
+        content: text_ref.current.value,
+      })
     );
+
+    navigate("/");
   };
 
   return (
