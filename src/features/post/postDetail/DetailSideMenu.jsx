@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 export default function DetailSideMenu() {
-  const user_data = useSelector((state) => state.login.user);
+  const user_data = useSelector((state) => state.login.user.nickName);
   console.log(user_data);
   return (
     <>
