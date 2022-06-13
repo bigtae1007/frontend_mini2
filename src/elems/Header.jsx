@@ -13,6 +13,7 @@ import { logOutUser, __checkToken } from "../redux/modules/loginSlice";
 
 const Header = () => {
   const checkToken = useSelector((state) => state.login.user.result);
+  console.log(checkToken);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const localToken = localStorage.getItem("token");
@@ -31,6 +32,7 @@ const Header = () => {
       dispatch(__checkToken());
     }
   }, [localToken]);
+
   return (
     <header>
       <Wrap>
@@ -69,11 +71,15 @@ const Header = () => {
             <img src={Home} alt="" />
           </HomeBtn>
         </Link>
-        <Link to={"/post"} style={{ textDecoration: "none" }}>
-          <PostBtn>
-            <img src={Plus} alt="" />
-          </PostBtn>
-        </Link>
+
+        <PostBtn
+          onClick={() => {
+            checkToken ? navigate("/post") : alert("로그인하고 이용해주세요!");
+          }}
+        >
+          <img src={Plus} alt="" />
+        </PostBtn>
+
         <BotBtn
           onClick={() => {
             window.scrollTo({ top: 5000, left: 0, behavior: "smooth" });

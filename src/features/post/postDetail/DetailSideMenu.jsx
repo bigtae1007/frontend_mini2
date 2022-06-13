@@ -27,7 +27,7 @@ export default function DetailSideMenu({ user, data }) {
 
   return (
     <>
-      {user_data === user.nickName ? (
+      {user_data === user.nickname ? (
         <SideMenuDiv>
           <div>
             <span>작성자 : </span> <span>{user.nickname}</span>
@@ -48,7 +48,7 @@ export default function DetailSideMenu({ user, data }) {
       ) : (
         <SideMenuDiv>
           <div>
-            <span>작성자 : </span> <span>{user.nickName}</span>
+            <span>작성자 : </span> <span>{user.nickname}</span>
           </div>
           <div>
             <span>달린 답변 : </span> <span>{commentList?.length}</span>

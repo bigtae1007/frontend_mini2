@@ -19,7 +19,7 @@ const PostCard = () => {
 
   React.useEffect(() => {
     dispatch(__loadPost());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Warp>
