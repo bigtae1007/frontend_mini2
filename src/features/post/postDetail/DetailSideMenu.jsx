@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function DetailSideMenu() {
+export default function DetailSideMenu({ user }) {
   return (
     <>
       <SideMenuDiv>
         <div>
-          <span>작성자 : </span> <span>Monkey</span>
+          <span>작성자 : </span> <span>{user.nickname}</span>
         </div>
         <div>
           <span>달린 답변 : </span> <span>31</span>
