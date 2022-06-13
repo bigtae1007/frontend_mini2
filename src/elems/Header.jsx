@@ -1,13 +1,36 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+// 컴포넌트
 import logo_cofee from "../images/logo_cofee.png";
 import Top from "../img/caret-up.svg";
 import Home from "../img/home.svg";
 import Plus from "../img/plus-small.svg";
 import Down from "../img/caret-down.svg";
+//모듈
+import { logOutUser, __checkToken } from "../redux/modules/loginSlice";
 
 const Header = () => {
+  const checkToken = useSelector((state) => state.login.user.result);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const localToken = localStorage.getItem("token");
+
+  //로그아웃 이벤트
+  const logOut = () => {
+    alert("정상 로그아웃 되었습니다.");
+    localStorage.removeItem("token");
+    dispatch(logOutUser());
+    navigate("/");
+  };
+
+  //토큰 유효성 검사하기
+  React.useEffect(() => {
+    if (localToken) {
+      dispatch(__checkToken(localToken));
+    }
+  }, [localToken]);
   return (
     <header>
       <Wrap>
@@ -19,14 +42,18 @@ const Header = () => {
           <img src="" alt="" />
           <SearchBtn>&#128269;</SearchBtn>
         </WrapSearch>
-        <WrapLogBtn>
-          <Link to={"/login"} style={{ textDecoration: "none" }}>
-            <button>로그인</button>
-          </Link>
-          <Link to={"/sign"} style={{ textDecoration: "none" }}>
-            <button>회원가입</button>
-          </Link>
-        </WrapLogBtn>
+        {checkToken ? (
+          <LogoutBtn onClick={logOut}>로그아웃</LogoutBtn>
+        ) : (
+          <WrapLogBtn>
+            <Link to={"/login"} style={{ textDecoration: "none" }}>
+              <button>로그인</button>
+            </Link>
+            <Link to={"/sign"} style={{ textDecoration: "none" }}>
+              <button>회원가입</button>
+            </Link>
+          </WrapLogBtn>
+        )}
       </Wrap>
 
       <BtnWrap>
@@ -156,5 +183,17 @@ const SearchBtn = styled.button`
   height: 25px;
   font-size: 20px;
   border: none;
+`;
+const LogoutBtn = styled.button`
+  width: 200px;
+  height: 40px;
+  color: var(--blue);
+  border: none;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 10px;
+  :hover {
+    border: 1px solid var(--blue);
+  }
 `;
 export default Header;
