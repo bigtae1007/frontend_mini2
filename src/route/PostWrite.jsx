@@ -1,7 +1,8 @@
 import React from "react";
-import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+import styled from "styled-components";
 
 //모듈
 import { __addPost } from "../redux/modules/postSlice";

@@ -1,17 +1,28 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 
+//모듈
+// import { __editPost } from "../redux/modules/postSlice";
+
 const PostModify = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const title_ref = React.useRef(null);
   const select_ref = React.useRef(null);
   const text_ref = React.useRef(null);
 
   const modifyPost = () => {
-    console.log(
-      title_ref.current.value,
-      select_ref.current.value,
-      text_ref.current.value
-    );
+    // dispatch(
+    //   __editPost({
+    //     title: title_ref.current.value,
+    //     img: select_ref.current.value,
+    //     content: text_ref.current.value,
+    //   })
+    // );
+    navigate("/");
   };
   return (
     <Wrap>

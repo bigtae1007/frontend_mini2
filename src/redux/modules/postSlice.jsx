@@ -6,24 +6,48 @@ import { api } from "../../shared/api";
 
 // 메인 페이지 로드
 export const __loadPost = createAsyncThunk("post/LOAD_POST", async () => {
+  // const response = await axios.get("http://localhost:4000/list");
+
   const response = await api.get("/api/posts");
 
   console.log(response);
 
-  // return response.data;
+  return response.data;
 });
 // 포스트 추가하기
 export const __addPost = createAsyncThunk(
   "post/ADD_POST",
   async (payload, thunkAPI) => {
-    console.log(payload);
+    // const response = await axios.post("http://localhost:4000/list", payload);
+
     const response = await api.post("/api/post", payload);
 
     console.log(response, "asd");
 
-    // return response.data;
+    return response.data;
   }
 );
+
+// 포스트 수정하기
+// export const __editPost = createAsyncThunk(
+//   "memos/DELETE_MEMO",
+//   async (payload, thunkAPI) => {
+//     const response = await axios.put("http://localhost:4000/list", payload);
+//     // const response = await api.put("/post", payload);
+//     return response;
+//   }
+// );
+
+// // 포스트 삭제하기
+// export const __deletePost = createAsyncThunk(
+//   "memos/DELETE_MEMO",
+//   async (payload, thunkAPI) => {
+//     const response = await axios.delete("http://localhost:4000/list", payload);
+//     // const response = await api.delete("/post", payload);
+
+//     return response;
+//   }
+// );
 
 // // 메모 변경하기
 // export const __changeMemo = createAsyncThunk(
@@ -52,9 +76,6 @@ export const __addPost = createAsyncThunk(
 //     return memo_index;
 //   }
 // );
-// 포스트 삭제하기
-
-// 포스트 수정하기
 
 // slice
 
@@ -84,17 +105,18 @@ const postSlice = createSlice({
         state.list = [...state.list, action.payload];
       });
 
-    // //포스트 수정하기
-    // .addCase(__addPost.fulfilled, (state, action) => {
+    //포스트 수정하기
+    // .addCase(__editPost.fulfilled, (state, action) => {
     //   state.loading = false;
 
-    //   state.list = [...state.list, action.payload];
-    // });
+    //   state.list = [...state.list];
+    // })
+
     // //포스트 삭제하기
-    // .addCase(__addPost.fulfilled, (state, action) => {
+    // .addCase(__deletePost.fulfilled, (state, action) => {
     //   state.loading = false;
 
-    //   state.list = [...state.list, action.payload];
+    //   state.list = [...state.list];
     // });
 
     // .addDefaultCase((state, action) => {
