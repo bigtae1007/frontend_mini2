@@ -18,18 +18,21 @@ import PostCategory from "./PostCategory";
 const PostCard = () => {
   const post_list = useSelector((state) => state.post.list);
   const dispatch = useDispatch();
-  const [listState, setListState] = useState([]);
+  const [listState, setListState] = useState(post_list);
+  // 세션에 카테고리 있는지 확인
+  const storage = sessionStorage.getItem("category");
+
   React.useEffect(() => {
     dispatch(__loadPost());
   }, []);
 
-  React.useEffect(() => {
-    setListState(post_list);
-  }, [post_list]);
-
   return (
     <Warp>
-      <PostCategory postList={post_list} categoryState={setListState} />
+      <PostCategory
+        session={storage}
+        postList={post_list}
+        categoryState={setListState}
+      />
       {listState.map((dic, idx) => {
         return (
           <PostBox key={dic.id}>

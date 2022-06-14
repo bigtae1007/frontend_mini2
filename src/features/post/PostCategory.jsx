@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 import styled from "styled-components";
 // 커스텀 훅
 import useCategoryList from "../../component/categoryList";
 
 //카테고리 선택 버튼 컴포넌트
-const PostCategory = ({ postList, categoryState }) => {
+const PostCategory = ({ postList, categoryState, session }) => {
+  const sessionState = useSelector((state) => state.post.session);
+  const post_list = useSelector((state) => state.post.list);
+
   //카테고리 상태별 리스트 정렬
   const all = postList;
   const javascript = useCategoryList(postList, "JavaScript");
@@ -32,7 +36,18 @@ const PostCategory = ({ postList, categoryState }) => {
     }
   };
 
+  useEffect(() => {
+    if (session) {
+      //세션 값으로 기준 변경
+      const stack = category(session);
+      categoryState(stack);
+    }
+    // 로딩완료시 , 데이터 추가 삭제 등 변경시 리렌더링
+  }, [sessionState, post_list]);
+
+  // 카테고리 클릭시 해당 카테고리로 변경
   const changeCategory = (e) => {
+    sessionStorage.setItem("category", e.target.id);
     const stack = category(e.target.id);
     categoryState(stack);
   };

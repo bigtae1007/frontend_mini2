@@ -54,6 +54,8 @@ const postSlice = createSlice({
     list: [],
     loading: false,
     error: null,
+    //로딩 완료 상태 값
+    session: false,
   },
   reducers: {},
 
@@ -65,6 +67,7 @@ const postSlice = createSlice({
         state.loading = false;
         // 리스트 전체 저장
         state.list = action.payload;
+        state.session = true;
       })
 
       // 포스트 추가 작성하기
