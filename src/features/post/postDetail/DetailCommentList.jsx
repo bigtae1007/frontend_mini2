@@ -4,12 +4,14 @@ import { useSelector, useDispatch } from "react-redux/es/exports";
 //컴포넌트
 import Button from "../../../elems/Button";
 import { __deleteComment } from "../../../redux/modules/commentSlice";
+import useDateHook from "../../../component/dateHook";
 
 // 상세페이지에 댓글 list 컴포넌트
 const DetailCommentList = ({ commentData }) => {
   const myNick = useSelector((state) => state.login.user.nickname);
   const dispatch = useDispatch();
   const checkMyComment = commentData?.User?.nickname === myNick;
+  const date = useDateHook(commentData.createdAt);
 
   // 댓글 삭제 이벤트
   const deleteComment = () => {
@@ -21,7 +23,7 @@ const DetailCommentList = ({ commentData }) => {
     <>
       <WrapComment>
         <h3>{commentData?.User?.nickname}</h3>
-        <span>{commentData.createdAt}</span>
+        <span>{date}</span>
       </WrapComment>
       <CommentText>
         <pre>{commentData?.comment}</pre>

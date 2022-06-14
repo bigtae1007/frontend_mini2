@@ -9,9 +9,11 @@ import JavaImg from "../../../images/category_img/Java.png";
 import NodeImg from "../../../images/category_img/Node.png";
 import VueImg from "../../../images/category_img/Vue.png";
 import JsImg from "../../../images/category_img/JavaScript.png";
+import useDateHook from "../../../component/dateHook";
 
 // 포스트 상단 제목부분 컴포넌트
 export default function DetailTopTile({ titleText, img, createdAt }) {
+  const date = useDateHook(createdAt);
   return (
     <WrapTitle>
       <TitleImg
@@ -34,7 +36,7 @@ export default function DetailTopTile({ titleText, img, createdAt }) {
       <WrapDib>
         <TitleDiv>{titleText}</TitleDiv>
 
-        <DetailStack img={img} createdAt={createdAt} />
+        <DetailStack img={img} createdAt={date} />
       </WrapDib>
     </WrapTitle>
   );

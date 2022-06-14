@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 // 소 카테고리 화면 컴포넌트
-export default function DetailStack() {
+export default function DetailStack({ createdAt }) {
   return (
     <>
       <WrapUnderTitle>
@@ -10,7 +10,7 @@ export default function DetailStack() {
           <StackSpan>JavaScript</StackSpan>
           <StackSpan>React</StackSpan>
         </WrapStackList>
-        <p>2022-06-06</p>
+        <p>{createdAt}</p>
       </WrapUnderTitle>
     </>
   );

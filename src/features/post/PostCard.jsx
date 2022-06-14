@@ -11,6 +11,7 @@ import JavaImg from "../../images/category_img/Java.png";
 import NodeImg from "../../images/category_img/Node.png";
 import VueImg from "../../images/category_img/Vue.png";
 import JsImg from "../../images/category_img/JavaScript.png";
+import MainPostDate from "../../elems/MainPostDate";
 
 const PostCard = () => {
   const dispatch = useDispatch();
@@ -54,9 +55,10 @@ const PostCard = () => {
                   <Text>{dic.content}</Text>
                 </div>
                 <div>
-                  <Nick>
-                    {dic.User.nickname}ㅤ-{dic.createdAt.toString()}
-                  </Nick>
+                  <MainPostDate
+                    nickname={dic.User.nickname}
+                    date={dic.createdAt.toString()}
+                  />
                 </div>
                 <div>
                   <Like>like : 2 ㅤㅤFeedBack : {dic.Comments.length}</Like>
@@ -118,10 +120,6 @@ const Text = styled.p`
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: left;
-`;
-
-const Nick = styled.p`
-  float: left;
 `;
 
 const Like = styled.p`
