@@ -18,6 +18,7 @@ export const __addPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     const response = await api.post("/api/post", payload);
     //추가한 포스트 하나의 Data
+
     return response.data;
   }
 );
@@ -28,7 +29,9 @@ export const __editPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     const response = await api.put(`api/post/${payload.id}`, payload);
     // 수정한 포스트 Data
+
     return response.data;
+    // 수정할 post id 값과 수정할 내용을 요청하면 백에서 시간, 닉네임 등을 같이 respose
   }
 );
 
@@ -37,13 +40,14 @@ export const __deletePost = createAsyncThunk(
   "post/DELETE_MEMO",
   async (payload, thunkAPI) => {
     await api.delete(`/api/post/${payload}`);
+
     //삭제할 포스트 ID값
     return payload;
+    // 삭제시 삭제 할 post id값만 받아옴 데이터 베이스와 따로 삭제 !
   }
 );
 
 // slice
-
 const postSlice = createSlice({
   name: "post",
   initialState: {
@@ -66,8 +70,7 @@ const postSlice = createSlice({
       // 포스트 추가 작성하기
       .addCase(__addPost.fulfilled, (state, action) => {
         state.loading = false;
-        // 임의로 빈 배열 집어넣기
-        action.payload.Comments = [];
+
         // 저장된 list에서 작성된 포스트 추가하기
         state.list = [action.payload, ...state.list];
       })
@@ -78,9 +81,6 @@ const postSlice = createSlice({
         // id값을 비교해 수정한 포스트로 교체 저장
         const newList = state.list.map((v, i) => {
           if (Number(v.id) === Number(action.payload.id)) {
-            // 데이터 얘기해서 삭제하기
-            action.payload.Comments = [];
-            //
             return action.payload;
           } else {
             return v;
