@@ -69,6 +69,11 @@ const CommentText = styled.div`
   border-radius: 0 0 10px 10px;
   border: 1px solid var(--grey);
   margin-bottom: 8px;
+  pre {
+    white-space: pre-wrap;
+    word-break: break-all;
+    overflow: auto;
+  }
 `;
 
 const WrapBtn = styled.div`

@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 
+// axios 기본 세팅 API
 import { api } from "../../shared/api";
+
 // // thunk 함수
 
 // 댓글 list 받아오기
@@ -9,6 +10,7 @@ export const __getCommentList = createAsyncThunk(
   "comment/GETCOMMENTLIST_LOG",
   async (payload, thunkAPI) => {
     const response = await api.get(`/api/post/${[payload.id]}`);
+    // 댓글 리스트
     return response.data;
   }
 );
@@ -20,6 +22,7 @@ export const __addComment = createAsyncThunk(
     const response = await api.post(`/api/post/${payload.postId}/comment`, {
       comment: payload.comment,
     });
+    // 추가한 댓글 하나의 Data
     return response.data.fullComment;
   }
 );
@@ -31,6 +34,8 @@ export const __deleteComment = createAsyncThunk(
     const response = await api.delete(
       `/api/post/${payload.postId}/comment/${payload.commentId}`
     );
+    // 삭제 완료 msg alert 띄우기
+    // 이렇게 처리할 필요는 없을 것 같다....
     if (response.request.status === 200) {
       alert(response.data.msg);
     }
@@ -42,9 +47,8 @@ export const __deleteComment = createAsyncThunk(
 
 const commentSlice = createSlice({
   name: "signup",
-  initialState: {},
-  // 리듀서를 작성 할 필요는 없었다.
-  reducers: {
+  initialState: {
+    // 새로고침 시 에러 방지를 위한 초기값 설정
     comments: [
       {
         PostId: "2",
@@ -56,19 +60,23 @@ const commentSlice = createSlice({
       },
     ],
   },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder
       // 댓글 정보 가져오기
       .addCase(__getCommentList.fulfilled, (state, action) => {
+        // 받아온 댓글 리스트 전체 받아오기
         state.comments = action.payload;
       })
       // 댓글 추가하기
       .addCase(__addComment.fulfilled, (state, action) => {
+        // 기존 데이터에서 추가 댓글 넣기
         state.comments = [action.payload, ...state.comments];
       })
       // 삭제하기
       .addCase(__deleteComment.fulfilled, (state, action) => {
+        // id값 비교해서 삭제하기
         const newCommentList = state.comments.filter((v) => {
           return v.id === action.payload.commentId ? false : true;
         });

@@ -2,8 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 // 컴포넌트
-import Button from "../../elems/Button";
 
+// 로그인 하단 버튼 컴포넌트
 export default function LoginBottom() {
   const navigate = useNavigate();
   return (
