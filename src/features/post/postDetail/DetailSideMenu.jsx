@@ -10,17 +10,16 @@ export default function DetailSideMenu({ user, data }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const post_data = useSelector((state) => state.post.list);
+  // 로그인 유저 닉네임 가져오기
   const user_data = useSelector((state) => state.login.user.nickname);
-  // console.log(data);
+  // 해당 포스트에 댓글 리스트 갯수를 위해 가져오기
   const commentList = useSelector((state) => state.comment.comments);
-  console.log(commentList);
 
-  // console.log(user.nickname);
+  // post id 를 위해 파라미터 값 가져오기
   const { id } = useParams();
-  console.log(user);
+  // 게시글 삭제하기
+
   const deletePost = () => {
-    console.log(post_data);
     dispatch(__deletePost(id));
     navigate("/");
   };

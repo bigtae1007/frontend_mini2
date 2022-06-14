@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+// 소 카테고리 화면 컴포넌트
 export default function DetailStack() {
   return (
     <>

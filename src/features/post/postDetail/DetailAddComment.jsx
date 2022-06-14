@@ -3,11 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { __addComment } from "../../../redux/modules/commentSlice";
 
+// 댓글 작성하기 컴포넌트
 const DetailAddComment = ({ postId }) => {
+  // 댓글 권한 부여를 위한 로그인 상태 체크
   const checkLogin = useSelector((state) => state.login.user.result);
   const dispatch = useDispatch();
+  // 댓글 input
   let commentText = useRef("");
 
+  // 댓글 작성하기
   const addComment = () => {
     const addState = dispatch(
       __addComment({ comment: commentText.current.value, postId: postId })

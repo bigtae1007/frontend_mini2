@@ -7,6 +7,7 @@ import LoginBottom from "../features/login/LoginBottom";
 import LoginForm from "../features/login/LoginForm";
 import logo_cofee from "../images/logo_cofee.png";
 
+// 로그인 컴포넌트
 export default function Login() {
   return (
     <WrapLoginBox>

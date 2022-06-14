@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux/es/exports";
 import Button from "../../../elems/Button";
 import { __deleteComment } from "../../../redux/modules/commentSlice";
 
+// 상세페이지에 댓글 list 컴포넌트
 const DetailCommentList = ({ commentData }) => {
   const myNick = useSelector((state) => state.login.user.nickname);
   const dispatch = useDispatch();

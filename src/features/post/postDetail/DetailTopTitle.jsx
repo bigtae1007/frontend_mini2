@@ -10,6 +10,7 @@ import NodeImg from "../../../images/category_img/Node.png";
 import VueImg from "../../../images/category_img/Vue.png";
 import JsImg from "../../../images/category_img/JavaScript.png";
 
+// 포스트 상단 제목부분 컴포넌트
 export default function DetailTopTile({ titleText, img, createdAt }) {
   return (
     <WrapTitle>
