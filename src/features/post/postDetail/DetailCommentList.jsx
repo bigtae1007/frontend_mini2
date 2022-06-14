@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 //컴포넌트
 import Button from "../../../elems/Button";
 import { __deleteComment } from "../../../redux/modules/commentSlice";
 import useDateHook from "../../../component/dateHook";
+import DetailChangeComment from "./DetailChangeComment";
 
 // 상세페이지에 댓글 list 컴포넌트
 const DetailCommentList = ({ commentData }) => {
   const myNick = useSelector((state) => state.login.user.nickname);
   const dispatch = useDispatch();
+  const [changeState, setChangeState] = useState(false);
+
   const checkMyComment = commentData?.User?.nickname === myNick;
   const date = useDateHook(commentData.createdAt);
 
@@ -21,6 +24,13 @@ const DetailCommentList = ({ commentData }) => {
   };
   return (
     <>
+      {changeState ? (
+        <DetailChangeComment
+          comment={commentData?.comment}
+          btnState={setChangeState}
+        />
+      ) : null}
+
       <WrapComment>
         <h3>{commentData?.User?.nickname}</h3>
         <span>{date}</span>
@@ -31,7 +41,14 @@ const DetailCommentList = ({ commentData }) => {
       {checkMyComment ? (
         <WrapBtn>
           <div>
-            <Button size="size2" bgcolor="blue" color="white">
+            <Button
+              size="size2"
+              bgcolor="blue"
+              color="white"
+              onClick={() => {
+                setChangeState(true);
+              }}
+            >
               수정
             </Button>
             <Button
