@@ -3,28 +3,56 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
+import { useState, useEffect } from "react";
 
 import { __deletePost } from "../../../redux/modules/postSlice";
+import { __addLike } from "../../../redux/modules/likeSlice";
+import { __deleteLike } from "../../../redux/modules/likeSlice";
 
 export default function DetailSideMenu({ user, data }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [like, setLike] = useState(false);
 
-  const post_data = useSelector((state) => state.post.list);
+  useEffect(() => {
+    console.log(like);
+  }, [like]);
+
+  const like_data = useSelector((state) => state.like.likes);
   const user_data = useSelector((state) => state.login.user.nickname);
-  // console.log(data);
   const commentList = useSelector((state) => state.comment.comments);
-  console.log(commentList);
+  //user_data가 라이크 리스트 안에 있으면 하얀색
+  //없으면 검정색
 
-  // console.log(user.nickname);
+  console.log(like_data);
+  console.log(user_data);
+
   const { id } = useParams();
-  console.log(user);
+
   const deletePost = () => {
-    console.log(post_data);
-    dispatch(__deletePost(id));
-    navigate("/");
+    if (window.confirm("정말 삭제 하시겠습니까?")) {
+      dispatch(__deletePost(id));
+      navigate("/");
+    }
   };
 
+  const addLike = () => {
+    like_data.forEach((v) => {
+      if (v.nickname === user_data && like === false) {
+        setLike(!like);
+      }
+    });
+    dispatch(__addLike(id));
+  };
+
+  const deleteLike = () => {
+    like_data.forEach((v) => {
+      if (v.nickname === user_data && like === true) {
+        setLike(!like);
+      }
+    });
+    dispatch(__deleteLike(id));
+  };
   return (
     <>
       {user_data === user.nickname ? (
@@ -53,7 +81,16 @@ export default function DetailSideMenu({ user, data }) {
             <span>달린 답변 : </span> <span>{commentList?.length}</span>
           </div>
 
-          <p>like : 20</p>
+          {like === true ? (
+            <p>
+              <DeleteLikeBtn onClick={deleteLike}>👍🏻</DeleteLikeBtn> like :
+              {like_data.length}
+            </p>
+          ) : (
+            <p>
+              <LikeBtn onClick={addLike}>👍🏿</LikeBtn> like : {like_data.length}
+            </p>
+          )}
         </SideMenuDiv>
       )}
     </>
@@ -91,4 +128,14 @@ const DeleteBtn = styled.button`
   border-radius: 10px;
   background-color: var(--red);
   color: white;
+`;
+
+const LikeBtn = styled.button`
+  border: none;
+  background-color: transparent;
+`;
+
+const DeleteLikeBtn = styled.button`
+  border: none;
+  background-color: transparent;
 `;

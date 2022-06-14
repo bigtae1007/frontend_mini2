@@ -22,7 +22,6 @@ const PostWrite = () => {
         content: text_ref.current.value,
       })
     );
-
     navigate("/");
   };
 

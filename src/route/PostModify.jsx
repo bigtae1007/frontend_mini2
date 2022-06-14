@@ -28,6 +28,7 @@ const PostModify = () => {
         content: text_ref.current.value,
       })
     );
+    window.alert("수정완료 되었습니다!");
     navigate("/");
   };
   return (

@@ -8,16 +8,24 @@ import DetailSideMenu from "../features/post/postDetail/DetailSideMenu";
 import DetailTopTile from "../features/post/postDetail/DetailTopTitle";
 import DetailCommentList from "../features/post/postDetail/DetailCommentList";
 import { __getCommentList } from "../redux/modules/commentSlice";
+import { __getLikeList } from "../redux/modules/likeSlice";
 
 export default function PostDetail() {
   const commentList = useSelector((state) => state.comment.comments);
+
   const dispatch = useDispatch();
   const location = useLocation();
   // link으로 메인에서 데이터 전달받기
   const data = location.state.data;
+  console.log(data);
   useEffect(() => {
     dispatch(__getCommentList({ id: data.id }));
   }, []);
+
+  // useEffect(() => {
+  //   dispatch(__getLikeList({ id: data.id }));
+  // }, []);
+
   return (
     <WrapDetailPost>
       <DetailTopTile
