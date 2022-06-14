@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,19 +11,26 @@ import JavaImg from "../../images/category_img/Java.png";
 import NodeImg from "../../images/category_img/Node.png";
 import VueImg from "../../images/category_img/Vue.png";
 import JsImg from "../../images/category_img/JavaScript.png";
+// 컴포넌트
 import MainPostDate from "../../elems/MainPostDate";
+import PostCategory from "./PostCategory";
 
 const PostCard = () => {
-  const dispatch = useDispatch();
   const post_list = useSelector((state) => state.post.list);
-
+  const dispatch = useDispatch();
+  const [listState, setListState] = useState([]);
   React.useEffect(() => {
     dispatch(__loadPost());
-  }, [dispatch]);
+  }, []);
+
+  React.useEffect(() => {
+    setListState(post_list);
+  }, [post_list]);
 
   return (
     <Warp>
-      {post_list.map((dic, idx) => {
+      <PostCategory postList={post_list} categoryState={setListState} />
+      {listState.map((dic, idx) => {
         return (
           <PostBox key={dic.id}>
             <ImgBox>

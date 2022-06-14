@@ -24,6 +24,7 @@ const GlobalStyle = createGlobalStyle`
   }
   :root {
     --black : #333333;
+    --yellow : #adad3e;
     --white: #ffffff;
     --grey : #dddddd;
     --greyD : #aaaaaa;
