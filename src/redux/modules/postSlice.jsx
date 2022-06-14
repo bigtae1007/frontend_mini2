@@ -32,7 +32,7 @@ export const __editPost = createAsyncThunk(
     // const response = await axios.put("http://localhost:4000/list", payload);
     const response = await api.put(`api/post/${payload.id}`, payload);
     console.log(response.data.id);
-    console.log(response.data);
+
     return response.data;
   }
 );

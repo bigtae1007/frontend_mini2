@@ -15,7 +15,7 @@ import JsImg from "../../images/category_img/JavaScript.png";
 const PostCard = () => {
   const dispatch = useDispatch();
   const post_list = useSelector((state) => state.post.list);
-  // console.log(post_list);
+  console.log(post_list);
 
   React.useEffect(() => {
     dispatch(__loadPost());
