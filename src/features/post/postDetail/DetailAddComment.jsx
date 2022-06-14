@@ -1,24 +1,43 @@
 import React, { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { __addComment } from "../../../redux/modules/commentSlice";
 
-const DetailAddComment = () => {
+// 댓글 작성하기 컴포넌트
+const DetailAddComment = ({ postId }) => {
+  // 댓글 권한 부여를 위한 로그인 상태 체크
+  const checkLogin = useSelector((state) => state.login.user.result);
+  const dispatch = useDispatch();
+  // 댓글 input
   let commentText = useRef("");
+
+  // 댓글 작성하기
+  const addComment = () => {
+    const addState = dispatch(
+      __addComment({ comment: commentText.current.value, postId: postId })
+    );
+    commentText.current.value = "";
+  };
   return (
     <>
       <WrapComment>
-        <h4>답변 작성해주기</h4>
-        <Textarea ref={commentText} />
+        <h4>
+          {checkLogin ? "답변 작성해주기" : "답변을 하시려면 로그인 해주세요"}
+        </h4>
+        {checkLogin ? <Textarea ref={commentText} /> : null}
       </WrapComment>
-      <WrapBtn>
-        <button>저장</button>
-        <button
-          onClick={() => {
-            commentText.current.value = "";
-          }}
-        >
-          취소
-        </button>
-      </WrapBtn>
+      {checkLogin ? (
+        <WrapBtn>
+          <button onClick={addComment}>저장</button>
+          <button
+            onClick={() => {
+              commentText.current.value = "";
+            }}
+          >
+            취소
+          </button>
+        </WrapBtn>
+      ) : null}
     </>
   );
 };

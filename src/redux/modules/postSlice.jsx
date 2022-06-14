@@ -1,125 +1,107 @@
-// import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { api } from "../../shared/api";
 
-// // thunk 함수
+// thunk 함수
 
-// // 메모 변경하기
-// export const __changeMemo = createAsyncThunk(
-//   "memos/CHANGE_MEMO",
-//   async (payload, thunkAPI) => {
-//     // firebase 사용방법
-//     const docRef = doc(db, "memolist", payload.id);
-//     await updateDoc(docRef, { text: payload.text });
-//     // toolkit에서 thunkAPI로 함수들이 받아진다. getState 사용하기
-//     const memo_index = thunkAPI
-//       .getState()
-//       .memo.text.findIndex((v) => v.id === payload.id);
-//     return { index: memo_index, text: payload.text };
-//   }
-// );
+// 메인 페이지 로드
+export const __loadPost = createAsyncThunk("post/LOAD_POST", async () => {
+  const response = await api.get("/api/posts");
 
-// //메모 추가하기
-// export const __addMemo = createAsyncThunk(
-//   "memos/ADD_MEMO",
-//   async (payload, thunkAPI) => {
-//     const memoData = await addDoc(collection(db, "memolist"), payload);
-//     return { id: memoData.id, text: payload.text };
-//   }
-// );
+  // 전체 포스트 리스트
+  return response.data;
+});
 
-// //메모 가져오기
-// export const __getMemo = createAsyncThunk(
-//   "memos/GET_MEMO",
-//   async (payload, thunkAPI) => {
-//     const memoList = await getDocs(collection(db, "memolist"));
-//     const getMemoList = [];
-//     memoList.forEach((v) => {
-//       getMemoList.push({ id: v.id, ...v.data() });
-//     });
-//     return getMemoList;
-//   }
-// );
+// 포스트 추가하기
+export const __addPost = createAsyncThunk(
+  "post/ADD_POST",
+  async (payload, thunkAPI) => {
+    const response = await api.post("/api/post", payload);
+    //추가한 포스트 하나의 Data
 
-// //메모 삭제하기
-// export const __deleteMemo = createAsyncThunk(
-//   "memos/DELETE_MEMO",
-//   async (payload, thunkAPI) => {
-//     const docRef = doc(db, "memolist", payload);
-//     await deleteDoc(docRef);
-//     const memo_index = thunkAPI
-//       .getState()
-//       .memo.text.findIndex((v) => v.id === payload);
-//     return memo_index;
-//   }
-// );
+    return response.data;
+  }
+);
 
-// // slice
+// 포스트 수정하기
+export const __editPost = createAsyncThunk(
+  "post/EDIT_MEMO",
+  async (payload, thunkAPI) => {
+    const response = await api.put(`api/post/${payload.id}`, payload);
+    // 수정한 포스트 Data
 
-// const memosSlice = createSlice({
-//   name: "memo",
-//   initialState: {
-//     text: [],
-//     check: false,
-//     loading: false,
-//     error: null,
-//   },
-//   // 리듀서를 작성 할 필요는 없었다.
-//   reducers: {},
+    return response.data;
+    // 수정할 post id 값과 수정할 내용을 요청하면 백에서 시간, 닉네임 등을 같이 respose
+  }
+);
 
-//   /*만들어진 비동기 액션에 대한 리듀서는 아래와 같이 extraReducers로 작성할 수 있다.
-//    extraReducers로 지정된 reducer는 외부 작업을 참조하기 위한 것이기 때문에 slice.actions에 생성되지 않는다. 
-//   또한, ActionReducerMapBuilder를 수신하는 콜백으로 작성하는 것이 권장된다.*/
+// 포스트 삭제하기
+export const __deletePost = createAsyncThunk(
+  "post/DELETE_MEMO",
+  async (payload, thunkAPI) => {
+    await api.delete(`/api/post/${payload}`);
 
-//   // toolkit 장점 통신 상태를 자동으로 받아와 try ~ catch를 사용할 필요가 없다.
-//   extraReducers: (builder) => {
-//     builder
-//       // 메모 가져오기
+    //삭제할 포스트 ID값
+    return payload;
+    // 삭제시 삭제 할 post id값만 받아옴 데이터 베이스와 따로 삭제 !
+  }
+);
 
-//       //addCase 외에 사용 할 수있는게 더 있다. 공문 참고하자
-//       .addCase(__getMemo.fulfilled, (state, action) => {
-//         state.loading = false;
-//         state.text = action.payload;
-//       })
+// slice
+const postSlice = createSlice({
+  name: "post",
+  initialState: {
+    list: [],
+    loading: false,
+    error: null,
+  },
+  reducers: {},
 
-//       // 메모 추가하기
-//       .addCase(__addMemo.fulfilled, (state, action) => {
-//         state.loading = false;
-//         state.text = [action.payload, ...state.text];
-//       })
+  extraReducers: (builder) => {
+    builder
 
-//       //메모 삭제하기
-//       .addCase(__deleteMemo.fulfilled, (state, action) => {
-//         state.loading = false;
-//         state.text = state.text.filter((v, l) =>
-//           l === action.payload ? false : true
-//         );
-//       })
+      //메인 페이지 로드
+      .addCase(__loadPost.fulfilled, (state, action) => {
+        state.loading = false;
+        // 리스트 전체 저장
+        state.list = action.payload;
+      })
 
-//       // 메모 수정하기
-//       .addCase(__changeMemo.fulfilled, (state, action) => {
-//         state.loading = false;
-//         state.text = state.text.map((v, l) => {
-//           if (l === action.payload.index) {
-//             v.text = action.payload.text;
-//             return v;
-//           } else {
-//             return v;
-//           }
-//         });
-//       })
+      // 포스트 추가 작성하기
+      .addCase(__addPost.fulfilled, (state, action) => {
+        state.loading = false;
 
-//       //요청시, 실패시
-//       .addDefaultCase((state, action) => {
-//         if (action.meta?.requestStatus === "pending") {
-//           state.loading = true;
-//         }
-//         if (action.meta?.requestStatus === "rejected") {
-//           state.loading = false;
-//           state.error = action.error.message;
-//         }
-//       });
-//   },
-// });
+        // 저장된 list에서 작성된 포스트 추가하기
+        state.list = [action.payload, ...state.list];
+      })
+
+      // 포스트 수정하기
+      .addCase(__editPost.fulfilled, (state, action) => {
+        state.loading = false;
+        // id값을 비교해 수정한 포스트로 교체 저장
+        const newList = state.list.map((v, i) => {
+          if (Number(v.id) === Number(action.payload.id)) {
+            return action.payload;
+          } else {
+            return v;
+          }
+        });
+        state.list = newList;
+      })
+
+      // 포스트 삭제하기
+      .addCase(__deletePost.fulfilled, (state, action) => {
+        state.loading = false;
+
+        // id값 비교해 삭제하기
+        const delete_list = state.list.filter((v) => {
+          return Number(v.id) === Number(action.payload) ? false : true;
+        });
+        state.list = delete_list;
+      });
+  },
+});
 
 // // reducer dispatch하기 위해 export 하기
-// export const {} = memosSlice.actions;
-// export default memosSlice.reducer;
+export const {} = postSlice.actions;
+export default postSlice.reducer;

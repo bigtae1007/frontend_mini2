@@ -4,20 +4,40 @@ import styled from "styled-components";
 //컴포넌트
 import DetailStack from "./DetailStack";
 import logo from "../../../logo.svg";
+import ReactImg from "../../../images/category_img/React.png";
+import JavaImg from "../../../images/category_img/Java.png";
+import NodeImg from "../../../images/category_img/Node.png";
+import VueImg from "../../../images/category_img/Vue.png";
+import JsImg from "../../../images/category_img/JavaScript.png";
+import useDateHook from "../../../component/dateHook";
 
-export default function DetailTopTile() {
+// 포스트 상단 제목부분 컴포넌트
+export default function DetailTopTile({ titleText, img, createdAt }) {
+  const date = useDateHook(createdAt);
   return (
     <WrapTitle>
-      <TitleImg src={logo} alt="stack 이미지" />
+      <TitleImg
+        src={
+          img === "React"
+            ? ReactImg
+            : img === "Java"
+            ? JavaImg
+            : img === "Node"
+            ? NodeImg
+            : img === "Vue"
+            ? VueImg
+            : img === "JavaScript"
+            ? JsImg
+            : logo
+        }
+        alt="stack 이미지"
+      />
 
-      <div>
-        <TitleDiv>
-          질문에 핵심을 담은 제목이 들어가야지 얼마나 어렵다고 생생내고 있어
-          알아서 검색해서 풀어 질문하지마 !!!
-        </TitleDiv>
+      <WrapDib>
+        <TitleDiv>{titleText}</TitleDiv>
 
-        <DetailStack />
-      </div>
+        <DetailStack img={img} createdAt={date} />
+      </WrapDib>
     </WrapTitle>
   );
 }
@@ -36,4 +56,8 @@ const TitleDiv = styled.div`
   padding: 20px 0;
   font-size: 1.4rem;
   font-weight: bolder;
+`;
+
+const WrapDib = styled.div`
+  width: 100%;
 `;

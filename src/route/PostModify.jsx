@@ -1,39 +1,66 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+
 import styled from "styled-components";
 
+//모듈
+import { __editPost } from "../redux/modules/postSlice";
+
 const PostModify = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const title_ref = React.useRef(null);
   const select_ref = React.useRef(null);
   const text_ref = React.useRef(null);
+  const location = useLocation();
+  // Link 로 보낸 데이터를 받을 때 useLocation 사용 필수 !
+  const data = location.state.data;
 
+  // 수정하기 dispatch
   const modifyPost = () => {
-    console.log(
-      title_ref.current.value,
-      select_ref.current.value,
-      text_ref.current.value
+    dispatch(
+      __editPost({
+        id,
+        title: title_ref.current.value,
+        img: select_ref.current.value,
+        content: text_ref.current.value,
+      })
     );
+    navigate("/");
   };
   return (
     <Wrap>
       <PostWarp>
         <div>
-          <select ref={select_ref}>
+          <select ref={select_ref} defaultValue={data.img}>
             <option value="React">React</option>
             <option value="JavaScript">JavaScript</option>
             <option value="Java">Java</option>
             <option value="Node">Node</option> {/* 선택하려던 부분! */}
-            <option value="view">view</option>
+            <option value="Vue">Vue</option>
           </select>
           <button onClick={modifyPost}>수정하기</button>
         </div>
         <div></div>
         <TitleIpt>
-          <textarea ref={title_ref} placeholder="제목을 입력하세요." />
+          <textarea
+            ref={title_ref}
+            placeholder="제목을 입력하세요."
+            defaultValue={data.title}
+            // 수정시 기본값을 원래 게시글에 있는 내용을 가져옴
+          />
         </TitleIpt>
 
-        <div>
-          <textarea ref={text_ref} className="textIpt" placeholder="" />
-        </div>
+        <TextIpt>
+          <textarea
+            ref={text_ref}
+            className="textIpt"
+            placeholder=""
+            defaultValue={data.content}
+          ></textarea>
+        </TextIpt>
       </PostWarp>
     </Wrap>
   );
@@ -82,4 +109,14 @@ const TitleIpt = styled.div`
   }
   border-bottom: 2px solid lightgray;
 `;
+
+const TextIpt = styled.div`
+  textarea {
+    height: 800px;
+    max-height: 100vh;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+`;
+
 export default PostModify;

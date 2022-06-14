@@ -5,6 +5,7 @@ import styled from "styled-components";
 import LoginTop from "../features/login/LoginTop";
 import SignUpForm from "../features/login/SingUpForm";
 
+// 회원가입 컴포넌트
 export default function SignUp() {
   return (
     <WrapSignBox>

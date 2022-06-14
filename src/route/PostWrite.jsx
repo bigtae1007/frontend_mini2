@@ -1,17 +1,29 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 
+//모듈
+import { __addPost } from "../redux/modules/postSlice";
+
 const PostWrite = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const title_ref = React.useRef(null);
   const select_ref = React.useRef(null);
   const text_ref = React.useRef(null);
 
   const addPost = () => {
-    console.log(
-      title_ref.current.value,
-      select_ref.current.value,
-      text_ref.current.value
+    dispatch(
+      __addPost({
+        title: title_ref.current.value,
+        img: select_ref.current.value,
+        content: text_ref.current.value,
+      })
     );
+
+    navigate("/");
   };
 
   return (
@@ -23,7 +35,7 @@ const PostWrite = () => {
             <option value="JavaScript">JavaScript</option>
             <option value="Java">Java</option>
             <option value="Node">Node</option> {/* 선택하려던 부분! */}
-            <option value="view">view</option>
+            <option value="Vue">Vue</option>
           </select>
           <button onClick={addPost}>작성하기</button>
         </div>
@@ -32,9 +44,9 @@ const PostWrite = () => {
           <textarea ref={title_ref} placeholder="제목을 입력하세요." />
         </TitleIpt>
 
-        <div>
+        <TextIpt>
           <textarea ref={text_ref} className="textIpt" placeholder="" />
-        </div>
+        </TextIpt>
       </PostWarp>
     </Wrap>
   );
@@ -82,6 +94,15 @@ const TitleIpt = styled.div`
     margin-bottom: 20px;
   }
   border-bottom: 2px solid lightgray;
+`;
+
+const TextIpt = styled.div`
+  textarea {
+    height: 800px;
+    max-height: 100vh;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
 `;
 
 export default PostWrite;
