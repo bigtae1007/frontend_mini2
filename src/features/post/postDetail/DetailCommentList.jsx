@@ -11,6 +11,7 @@ import DetailChangeComment from "./DetailChangeComment";
 const DetailCommentList = ({ commentData }) => {
   const myNick = useSelector((state) => state.login.user.nickname);
   const dispatch = useDispatch();
+  // 수정 토글 창 관리 state
   const [changeState, setChangeState] = useState(false);
 
   const checkMyComment = commentData?.User?.nickname === myNick;
@@ -26,7 +27,7 @@ const DetailCommentList = ({ commentData }) => {
     <>
       {changeState ? (
         <DetailChangeComment
-          comment={commentData?.comment}
+          commentData={commentData}
           btnState={setChangeState}
         />
       ) : null}

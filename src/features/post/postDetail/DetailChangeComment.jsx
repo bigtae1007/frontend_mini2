@@ -1,13 +1,28 @@
 import React, { useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import Button from "../../../elems/Button";
+import { __changeComment } from "../../../redux/modules/commentSlice";
 
-const DetailChangeComment = ({ comment, btnState }) => {
+const DetailChangeComment = ({ commentData, btnState }) => {
+  const dispatch = useDispatch();
   const commentText = useRef("");
 
+  // 댓글 수정하기 이벤트
+  const changeComment = () => {
+    dispatch(
+      __changeComment({
+        postId: commentData.PostId,
+        commentId: commentData.id,
+        comment: commentText.current.value,
+      })
+    );
+    btnState(false);
+  };
+
   useEffect(() => {
-    commentText.current.value = comment;
-  }, [comment]);
+    commentText.current.value = commentData.comment;
+  }, [commentData]);
   return (
     <BackgroundDiv>
       <Wrapdiv>
@@ -16,7 +31,12 @@ const DetailChangeComment = ({ comment, btnState }) => {
           <CommentChangeTextBox ref={commentText} />
         </WrapTextarea>
         <WrapBtn>
-          <Button size="size1" color="white" bgcolor="blue">
+          <Button
+            size="size1"
+            color="white"
+            bgcolor="blue"
+            onClick={changeComment}
+          >
             수정하기
           </Button>
           <Button

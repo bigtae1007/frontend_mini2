@@ -27,6 +27,20 @@ export const __addComment = createAsyncThunk(
   }
 );
 
+// 댓글 수정
+export const __changeComment = createAsyncThunk(
+  "comment/CHANGECOMMENT_LOG",
+  async (payload, thunkAPI) => {
+    const response = await api.put(
+      `api/post/${payload.postId}/comment/${payload.commentId}`,
+      {
+        comment: payload.comment,
+      }
+    );
+    return response.data;
+  }
+);
+
 // 댓글 삭제
 export const __deleteComment = createAsyncThunk(
   "comment/DELETECOMMENT_LOG",
@@ -74,6 +88,14 @@ const commentSlice = createSlice({
         // 기존 데이터에서 추가 댓글 넣기
         state.comments = [action.payload, ...state.comments];
       })
+      // 댓글 수정하기
+      .addCase(__changeComment.fulfilled, (state, action) => {
+        const newCommentList = state.comments.map((v) => {
+          return v.id === action.payload.id ? action.payload : v;
+        });
+        state.comments = newCommentList;
+      })
+
       // 삭제하기
       .addCase(__deleteComment.fulfilled, (state, action) => {
         // id값 비교해서 삭제하기
