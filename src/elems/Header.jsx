@@ -13,7 +13,6 @@ import { logOutUser, __checkToken } from "../redux/modules/loginSlice";
 
 const Header = () => {
   const checkToken = useSelector((state) => state.login.user.result);
-  console.log(checkToken);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const localToken = localStorage.getItem("token");
@@ -71,15 +70,14 @@ const Header = () => {
             <img src={Home} alt="" />
           </HomeBtn>
         </Link>
-
         <PostBtn
           onClick={() => {
+            // 토큰값 검사를 활용해 로그인이 되어야 글 작성 페이지로 이동할 수 있게 함
             checkToken ? navigate("/post") : alert("로그인하고 이용해주세요!");
           }}
         >
           <img src={Plus} alt="" />
         </PostBtn>
-
         <BotBtn
           onClick={() => {
             window.scrollTo({ top: 5000, left: 0, behavior: "smooth" });
@@ -92,12 +90,12 @@ const Header = () => {
   );
 };
 const Wrap = styled.div`
-  position: fixed;
-  top: 0;
   display: flex;
   width: 100%;
   height: 100px;
   padding: 20px;
+  position: fixed;
+  top: 0;
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
@@ -107,8 +105,8 @@ const Wrap = styled.div`
 
 const WrapLogBtn = styled.div`
   display: flex;
-  gap: 10px;
   width: 200px;
+  gap: 10px;
   & > a {
     & button {
       width: 100px;
@@ -141,6 +139,7 @@ const TopBtn = styled.button`
   border: none;
   background-color: transparent;
 `;
+
 const HomeBtn = styled.button`
   border: none;
   background-color: transparent;
@@ -150,10 +149,12 @@ const HomeBtn = styled.button`
     height: 25px;
   }
 `;
+
 const PostBtn = styled.button`
   border: none;
   background-color: transparent;
 `;
+
 const BotBtn = styled.button`
   border: none;
   background-color: transparent;
@@ -184,12 +185,14 @@ const SearchInput = styled.input`
     text-align: left;
   }
 `;
+
 const SearchBtn = styled.button`
   width: 25px;
   height: 25px;
   font-size: 20px;
   border: none;
 `;
+
 const LogoutBtn = styled.button`
   width: 200px;
   height: 40px;

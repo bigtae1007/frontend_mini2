@@ -15,8 +15,10 @@ const PostModify = () => {
   const select_ref = React.useRef(null);
   const text_ref = React.useRef(null);
   const location = useLocation();
+  // Link 로 보낸 데이터를 받을 때 useLocation 사용 필수 !
   const data = location.state.data;
 
+  // 수정하기 dispatch
   const modifyPost = () => {
     dispatch(
       __editPost({
@@ -47,6 +49,7 @@ const PostModify = () => {
             ref={title_ref}
             placeholder="제목을 입력하세요."
             defaultValue={data.title}
+            // 수정시 기본값을 원래 게시글에 있는 내용을 가져옴
           />
         </TitleIpt>
 
@@ -106,6 +109,7 @@ const TitleIpt = styled.div`
   }
   border-bottom: 2px solid lightgray;
 `;
+
 const TextIpt = styled.div`
   textarea {
     height: 800px;

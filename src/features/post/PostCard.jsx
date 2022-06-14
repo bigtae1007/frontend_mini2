@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 //모듈
 import { __loadPost } from "../../redux/modules/postSlice";
-//css
+//css //카테고리 로고 이미지 import
 import logo from "../../logo.svg";
 import ReactImg from "../../images/category_img/React.png";
 import JavaImg from "../../images/category_img/Java.png";
@@ -15,7 +15,6 @@ import JsImg from "../../images/category_img/JavaScript.png";
 const PostCard = () => {
   const dispatch = useDispatch();
   const post_list = useSelector((state) => state.post.list);
-  console.log(post_list);
 
   React.useEffect(() => {
     dispatch(__loadPost());
@@ -24,11 +23,11 @@ const PostCard = () => {
   return (
     <Warp>
       {post_list.map((dic, idx) => {
-        // console.log(dic.createdAt.toString());
         return (
           <PostBox key={dic.id}>
             <ImgBox>
               <img
+                // 연속 삼항 연산자로 조건을 줘서 이미지를 바꿈
                 src={
                   dic.img === "React"
                     ? ReactImg
@@ -45,6 +44,7 @@ const PostCard = () => {
                 alt=""
               ></img>
             </ImgBox>
+            {/* Link 로 props 보내기를 활용해 상세페이지에 들어갈 때 데이터를 전송 */}
             <Link to={`/post/detail/${dic.id}`} state={{ data: dic }}>
               <TextBox>
                 <div>
@@ -71,19 +71,15 @@ const PostCard = () => {
 };
 const Warp = styled.div`
   width: 60vw;
-
   margin: 20px auto;
   padding: 20px;
-  /* background-color: aquamarine; */
 `;
 
 const PostBox = styled.div`
-  width: 55vw;
   display: flex;
-
+  width: 55vw;
   margin: 50px auto;
   padding: 20px;
-
   border-bottom: solid 4px darkgrey;
 `;
 
@@ -115,6 +111,7 @@ const TextBox = styled.div`
     text-align: left;
   }
 `;
+
 const Text = styled.p`
   display: block;
   overflow: hidden;
