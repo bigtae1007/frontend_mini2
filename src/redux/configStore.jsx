@@ -4,6 +4,7 @@ import loginReducer from "./modules/loginSlice";
 import signupReducer from "./modules/signupSlice";
 import commentReducer from "./modules/commentSlice";
 import postReducer from "./modules/postSlice";
+import likeReducer from "./modules/likeSlice";
 
 const middlewares = [thunk];
 // 리듀서 통합
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   signup: signupReducer,
   comment: commentReducer,
   post: postReducer,
+  like: likeReducer,
 });
 // 스토어 연결
 const store = configureStore({

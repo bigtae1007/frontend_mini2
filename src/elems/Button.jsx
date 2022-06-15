@@ -14,6 +14,8 @@ const Btn = styled.button`
         return size1;
       case "size2":
         return size2;
+      case "size3":
+        return size3;
       default:
         break;
     }
@@ -35,4 +37,9 @@ export const size1 = css`
 `;
 export const size2 = css`
   width: 50%;
+`;
+export const size3 = css`
+  width: 40%;
+  height: 60px;
+  font-size: 1.2rem;
 `;

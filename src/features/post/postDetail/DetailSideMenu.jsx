@@ -3,27 +3,70 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
+import { useState, useEffect } from "react";
 
 import { __deletePost } from "../../../redux/modules/postSlice";
+import { __addLike } from "../../../redux/modules/likeSlice";
+import { __deleteLike } from "../../../redux/modules/likeSlice";
 
 export default function DetailSideMenu({ user, data }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [like, setLike] = useState(false);
 
+  const like_data = useSelector((state) => state.like.likes);
   // 로그인 유저 닉네임 가져오기
   const user_data = useSelector((state) => state.login.user.nickname);
   // 해당 포스트에 댓글 리스트 갯수를 위해 가져오기
   const commentList = useSelector((state) => state.comment.comments);
-
   // post id 를 위해 파라미터 값 가져오기
   const { id } = useParams();
-  // 게시글 삭제하기
 
+  // 게시글 삭제하기
   const deletePost = () => {
-    dispatch(__deletePost(id));
-    navigate("/");
+    if (window.confirm("정말 삭제 하시겠습니까?")) {
+      dispatch(__deletePost(id));
+      navigate("/");
+    }
   };
 
+  const findLike = like_data.findIndex((v) => v.nickname === user_data);
+  useEffect(() => {
+    if (findLike === 0) {
+      setLike(true);
+    } else {
+      setLike(false);
+    }
+  }, [findLike]);
+
+  const addLike = () => {
+    if (!user_data) {
+      alert("로그인 후 이용해 주세요");
+      navigate("/login");
+      return;
+    }
+    if (findLike === -1) {
+      setLike(!like);
+    }
+
+    dispatch(__addLike(id));
+  };
+
+  const deleteLike = () => {
+    console.log(user_data);
+
+    if (!user_data) {
+      alert("로그인 후 이용해 주세요");
+      navigate("/login");
+      return;
+    }
+    like_data.forEach((v) => {
+      if (v.nickname === user_data && like === true) {
+        setLike(!like);
+      }
+    });
+    dispatch(__deleteLike(id));
+  };
   return (
     <>
       {user_data === user.nickname ? (
@@ -35,8 +78,16 @@ export default function DetailSideMenu({ user, data }) {
             <span>달린 답변 : </span> <span>{commentList?.length}</span>
           </div>
 
-          <p>like : 20</p>
-
+          {like === true ? (
+            <p>
+              <DeleteLikeBtn onClick={deleteLike}>👍🏻</DeleteLikeBtn> like :
+              {like_data.length}
+            </p>
+          ) : (
+            <p>
+              <LikeBtn onClick={addLike}>👍🏿</LikeBtn> like : {like_data.length}
+            </p>
+          )}
           <Link to={`/post/modify/${id}`} state={{ data: data }}>
             <EditBtn>Edit</EditBtn>
           </Link>
@@ -52,7 +103,16 @@ export default function DetailSideMenu({ user, data }) {
             <span>달린 답변 : </span> <span>{commentList?.length}</span>
           </div>
 
-          <p>like : 20</p>
+          {like === true ? (
+            <p>
+              <DeleteLikeBtn onClick={deleteLike}>👍🏻</DeleteLikeBtn> like :
+              {like_data.length}
+            </p>
+          ) : (
+            <p>
+              <LikeBtn onClick={addLike}>👍🏿</LikeBtn> like : {like_data.length}
+            </p>
+          )}
         </SideMenuDiv>
       )}
     </>
@@ -90,4 +150,14 @@ const DeleteBtn = styled.button`
   border-radius: 10px;
   background-color: var(--red);
   color: white;
+`;
+
+const LikeBtn = styled.button`
+  border: none;
+  background-color: transparent;
+`;
+
+const DeleteLikeBtn = styled.button`
+  border: none;
+  background-color: transparent;
 `;
