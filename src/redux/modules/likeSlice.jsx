@@ -37,7 +37,7 @@ export const __deleteLike = createAsyncThunk(
 
 const likeSlice = createSlice({
   name: "like",
-  initialState: { likes: [] },
+  initialState: { likes: ["배열 "] },
   // 리듀서를 작성 할 필요는 없었다.
   reducers: {},
 

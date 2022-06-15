@@ -32,14 +32,16 @@ export default function DetailSideMenu({ user, data }) {
   };
 
   const findLike = like_data.findIndex((v) => v.nickname === user_data);
+
   useEffect(() => {
     if (findLike === 0) {
       setLike(true);
+    } else {
+      setLike(false);
     }
   }, [findLike]);
 
   const addLike = () => {
-    console.log(findLike, "파인드");
     if (findLike === -1 || findLike === 0) {
       setLike(!like);
     }
@@ -49,7 +51,7 @@ export default function DetailSideMenu({ user, data }) {
 
   const deleteLike = () => {
     like_data.forEach((v) => {
-      if (v.nickname === user_data && like === true) {
+      if (findLike === 0) {
         setLike(!like);
       }
     });
