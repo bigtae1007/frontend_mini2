@@ -51,7 +51,20 @@ export const __deletePost = createAsyncThunk(
 const postSlice = createSlice({
   name: "post",
   initialState: {
-    list: [],
+    list: [
+      {
+        Comments: [],
+        Likers: [],
+        User: { id: 10, nickname: "btae" },
+        UserId: 10,
+        content: "테스트",
+        createdAt: "2022-06-16 00:24:38",
+        id: 150,
+        img: "React",
+        title: "테스트",
+        updatedAt: "2022-06-16 00:24:38",
+      },
+    ],
     loading: false,
     error: null,
     //로딩 완료 상태 값
