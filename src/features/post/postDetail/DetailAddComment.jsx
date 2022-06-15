@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { useBeforeunload } from "react-beforeunload";
 
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -12,6 +13,8 @@ const DetailAddComment = ({ postId }) => {
   const dispatch = useDispatch();
   // 댓글 input
   let commentText = useRef("");
+
+  useBeforeunload((event) => event.preventDefault());
 
   // 댓글 작성하기
   const addComment = () => {

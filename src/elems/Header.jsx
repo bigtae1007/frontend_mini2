@@ -8,6 +8,7 @@ import Top from "../img/caret-up.svg";
 import Home from "../img/home.svg";
 import Plus from "../img/plus-small.svg";
 import Down from "../img/caret-down.svg";
+import PostSearch from "../features/post/postSearch";
 //모듈
 import { logOutUser, __checkToken } from "../redux/modules/loginSlice";
 
@@ -39,10 +40,9 @@ const Header = () => {
           <LogoImg src={logo_cofee} alt="로고 사진" />
         </Link>
         <WrapSearch>
-          <SearchInput type="text" placeholder="검색 키워드를 입력해주세요" />
-          <img src="" alt="" />
-          <SearchBtn>&#128269;</SearchBtn>
+          <PostSearch />
         </WrapSearch>
+
         {checkToken ? (
           <LogoutBtn onClick={logOut}>로그아웃</LogoutBtn>
         ) : (
@@ -169,29 +169,29 @@ const WrapSearch = styled.form`
   width: 40%;
 `;
 
-const SearchInput = styled.input`
-  width: 80%;
-  padding: 10px;
-  outline: none;
-  border: none;
-  border: 1px solid var(--blue);
-  background-color: rgba(0, 0, 0, 0);
-  border-radius: 20px;
-  text-align: center;
-  :focus {
-    transition: 0.1s border;
-    border: 3px solid var(--blue);
-    border-radius: 20px;
-    text-align: left;
-  }
-`;
+// const SearchInput = styled.input`
+//   width: 80%;
+//   padding: 10px;
+//   outline: none;
+//   border: none;
+//   border: 1px solid var(--blue);
+//   background-color: rgba(0, 0, 0, 0);
+//   border-radius: 20px;
+//   text-align: center;
+//   :focus {
+//     transition: 0.1s border;
+//     border: 3px solid var(--blue);
+//     border-radius: 20px;
+//     text-align: left;
+//   }
+// `;
 
-const SearchBtn = styled.button`
-  width: 25px;
-  height: 25px;
-  font-size: 20px;
-  border: none;
-`;
+// const SearchBtn = styled.button`
+//   width: 25px;
+//   height: 25px;
+//   font-size: 20px;
+//   border: none;
+// `;
 
 const LogoutBtn = styled.button`
   width: 200px;

@@ -12,6 +12,16 @@ export const __loadPost = createAsyncThunk("post/LOAD_POST", async () => {
   return response.data;
 });
 
+export const __searchPost = createAsyncThunk(
+  "post/SEARCH_POST",
+  async (payload) => {
+    const response = await api.get(`/api/post/${payload.search}`);
+
+    // 검색한 제목을 가지고 있는 포스트 리스트
+    return response.data;
+  }
+);
+
 // 포스트 추가하기
 export const __addPost = createAsyncThunk(
   "post/ADD_POST",
@@ -25,7 +35,7 @@ export const __addPost = createAsyncThunk(
 
 // 포스트 수정하기
 export const __editPost = createAsyncThunk(
-  "post/EDIT_MEMO",
+  "post/EDIT_POST",
   async (payload, thunkAPI) => {
     const response = await api.put(`api/post/${payload.id}`, payload);
     // 수정한 포스트 Data
@@ -37,7 +47,18 @@ export const __editPost = createAsyncThunk(
 
 // 포스트 삭제하기
 export const __deletePost = createAsyncThunk(
-  "post/DELETE_MEMO",
+  "post/DELETE_POST",
+  async (payload, thunkAPI) => {
+    await api.delete(`/api/post/${payload}`);
+
+    //삭제할 포스트 ID값
+    return payload;
+    // 삭제시 삭제 할 post id값만 받아옴 데이터 베이스와 따로 삭제 !
+  }
+);
+
+export const __SerchPost = createAsyncThunk(
+  "post/SERCH_POST",
   async (payload, thunkAPI) => {
     await api.delete(`/api/post/${payload}`);
 
@@ -64,6 +85,13 @@ const postSlice = createSlice({
 
       //메인 페이지 로드
       .addCase(__loadPost.fulfilled, (state, action) => {
+        state.loading = false;
+        // 리스트 전체 저장
+        state.list = action.payload;
+        state.session = true;
+      })
+
+      .addCase(__searchPost.fulfilled, (state, action) => {
         state.loading = false;
         // 리스트 전체 저장
         state.list = action.payload;

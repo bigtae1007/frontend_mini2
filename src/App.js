@@ -11,6 +11,7 @@ import PostList from "./route/PostList";
 import PostWrite from "./route/PostWrite";
 import PostModify from "./route/PostModify";
 import PostDetail from "./route/PostDetail";
+import SearchLi
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/" element={<PostList />} />
         <Route path="/post" element={<PostWrite />} />
         <Route path="/post/detail/:id" element={<PostDetail />} />
+        <Route path="/post/modify/:id" element={<PostModify />} />
         <Route path="/post/modify/:id" element={<PostModify />} />
       </Routes>
     </div>

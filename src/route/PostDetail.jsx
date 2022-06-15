@@ -17,7 +17,6 @@ export default function PostDetail() {
   const location = useLocation();
   // link으로 메인에서 데이터 전달받기
   const data = location.state.data;
-  console.log(data);
   useEffect(() => {
     dispatch(__getCommentList({ id: data.id }));
   }, []);

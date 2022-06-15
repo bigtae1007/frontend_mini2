@@ -5,8 +5,9 @@ import styled from "styled-components";
 import useCategoryList from "../../component/categoryList";
 
 //카테고리 선택 버튼 컴포넌트
-const PostCategory = ({ postList, categoryState, session }) => {
+const PostCategory = ({ postList, categoryState, session, searchSession }) => {
   const sessionState = useSelector((state) => state.post.session);
+  console.log(sessionState);
   const post_list = useSelector((state) => state.post.list);
 
   //카테고리 상태별 리스트 정렬
