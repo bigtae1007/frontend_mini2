@@ -75,7 +75,10 @@ const PostCard = () => {
                   />
                 </div>
                 <div>
-                  <Like>like : 2 ㅤㅤFeedBack : {dic.Comments.length}</Like>
+                  <Like>
+                    like : {dic.Likers.length} ㅤㅤFeedBack :{" "}
+                    {dic.Comments.length}
+                  </Like>
                 </div>
               </TextBox>
             </Link>
