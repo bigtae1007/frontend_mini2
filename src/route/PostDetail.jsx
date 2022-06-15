@@ -64,5 +64,7 @@ const ContentDiv = styled.div`
   text-align: left;
   & > pre {
     white-space: pre-wrap;
+    word-break: break-all;
+    overflow: auto;
   }
 `;

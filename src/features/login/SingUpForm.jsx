@@ -15,12 +15,17 @@ import {
   __signup,
 } from "../../redux/modules/signupSlice";
 
+//회원가입 form 컴포넌트
 export default function SignUpForm() {
+  // 이름 중복확인 상태 값 가져오기 기본 값 false
   const checkName = useSelector((state) => state.signup.checkName);
+  // 닉네임 중복확인 상태 값 가져오기 기본 값 false
   const checkNick = useSelector((state) => state.signup.checkNick);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // 버튼 활성화 상태
   const [formstate, setFromState] = useState(false);
+  // 보낼 데이터 상태관리
   const [signData, setsignData] = useState({
     email: "",
     nickname: "",
@@ -28,7 +33,8 @@ export default function SignUpForm() {
     passwordCheck: "",
   });
 
-  let email = checkName;
+  // 이메일, 닉네임, 비밀번호 조건 통과 상태
+  const email = checkName;
   const nick = checkNick;
   const [pw, setPw] = useState(false);
 
@@ -36,6 +42,7 @@ export default function SignUpForm() {
   const changeInput = (e) => {
     const { value, id } = e.target;
     setsignData({ ...signData, [id]: value });
+    // 중복 확인 후 데이터 변경시 상태 false로 변환하는 action 실행
     if (id === "email") dispatch(changeCheckName());
     if (id === "nickname") dispatch(changeCheckNick());
   };
@@ -43,8 +50,8 @@ export default function SignUpForm() {
   // 회원가입 이벤트
   const submitLogin = async (e) => {
     e.preventDefault();
+    // 회원가입 성공시 로그인 페이지 이동
     const checkState = await dispatch(__signup(signData));
-    console.log(checkState, "폼에서");
     if (checkState.payload) {
       navigate("/login");
     }
@@ -52,6 +59,7 @@ export default function SignUpForm() {
 
   // 중복확인 이벤트
   const CheckId = () => {
+    // 이메일 형식 간이 체크 후 중복체크
     if (
       signData.email.indexOf(".") !== -1 &&
       signData.email.indexOf("@") !== -1
@@ -66,8 +74,7 @@ export default function SignUpForm() {
   };
 
   React.useEffect(() => {
-    // input 조건
-
+    // 비밀번호 일치 조건 확인
     if (
       signData.passwordCheck === signData.password &&
       signData.password !== ""
@@ -77,8 +84,9 @@ export default function SignUpForm() {
       setPw(false);
     }
   }, [signData]);
+
   React.useEffect(() => {
-    // 버튼 잠금
+    // 3개 조건 확인 후 버튼 활성화
     if (email && nick && pw) {
       setFromState(true);
     } else {

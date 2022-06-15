@@ -15,19 +15,22 @@ export default function DetailSideMenu({ user, data }) {
   const [like, setLike] = useState(false);
 
   const like_data = useSelector((state) => state.like);
+  // 로그인 유저 닉네임 가져오기
   const user_data = useSelector((state) => state.login.user.nickname);
+  // 해당 포스트에 댓글 리스트 갯수를 위해 가져오기
   const commentList = useSelector((state) => state.comment.comments);
-
-  console.log(like_data);
+  // post id 를 위해 파라미터 값 가져오기
   const { id } = useParams();
+  console.log(like_data);
 
+   // 게시글 삭제하기
   const deletePost = () => {
     if (window.confirm("정말 삭제 하시겠습니까?")) {
       dispatch(__deletePost(id));
       navigate("/");
     }
-  };
 
+ 
   // const findLike = like_data.findIndex((v) => v.nickname === user_data);
   // useEffect(() => {
   //   if (findLike === 0) {

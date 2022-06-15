@@ -9,6 +9,7 @@ import Button from "../../elems/Button";
 // 모듈
 import { __login } from "../../redux/modules/loginSlice";
 
+// 로그인 form 컴포넌트
 export default function LoginForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,12 +26,14 @@ export default function LoginForm() {
 
   // submit 이벤트
   const submitLogin = async (e) => {
+    // 새로고침 막기
     e.preventDefault();
+    // 상태 받아오기 (에러로 받아져서 .....)
     const loginState = await dispatch(__login(loginData));
     if (loginState.type === "log/LOGIN_LOG/rejected") {
       alert("아이디 혹은 비밀번호가 틀렸습니다.");
     }
-    console.log(loginState.payload);
+    // 로그인시 환영 인사 후 페이지 이동
     if (loginState.payload.result) {
       alert(`${loginState.payload.nickname} 님 환영합니다 :) `);
       navigate("/");
@@ -38,7 +41,7 @@ export default function LoginForm() {
   };
 
   React.useEffect(() => {
-    // 버튼 잠금
+    // 로그인 버튼 잠금
     if (loginData.email !== "" && loginData.password !== "") {
       setFromState(true);
     } else {

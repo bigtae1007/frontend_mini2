@@ -6,7 +6,7 @@ import PostCard from "../features/post/PostCard";
 const PostList = () => {
   return (
     <div>
-      <PostCard />;
+      <PostCard />
     </div>
   );
 };

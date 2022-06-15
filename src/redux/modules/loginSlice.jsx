@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+
+// axios 기본 세팅
 import { api } from "../../shared/api";
 
 // // thunk 함수
@@ -9,8 +10,9 @@ export const __login = createAsyncThunk(
   "log/LOGIN_LOG",
   async (payload, thunkAPI) => {
     const response = await api.post("/user/login", payload);
-    console.log(response, "받는 값");
+    // 토큰 localstorge 저장하기
     localStorage.setItem("token", response.data.token);
+    // 로그인 상태 값 {true / false}
     return response.data;
   }
 );
@@ -18,25 +20,20 @@ export const __login = createAsyncThunk(
 export const __checkToken = createAsyncThunk(
   "__checkToken/CHECK_LOG",
   async (payload, thunkAPI) => {
+    // 토큰으로 유효값 확인하기
     const response = await api.get("/auth");
-    // console.log(response);
-    // 가상으로 받은 값
-    // const response = {
-    //   result: true,
-    // };
-    // return response.result;
-    console.log(response);
+    // 상태값 true / false
     return response.data;
   }
 );
-
-// 로그아웃
 
 // // slice
 
 const loginSlice = createSlice({
   name: "login",
   initialState: {
+    // 초기값, 유저 닉네임 로그인 상태
+    // 전체 loading, error 값 저장
     user: { nickName: "", result: false },
     loading: false,
     error: null,
@@ -44,7 +41,6 @@ const loginSlice = createSlice({
   reducers: {
     // 로그 아웃시 상태값 초기화
     logOutUser: (state, payload) => {
-      console.log(state.user);
       state.user = { nickName: "", result: false };
     },
   },
@@ -60,24 +56,25 @@ const loginSlice = createSlice({
           result: action.payload.result,
         };
       })
+      // 토큰 확인하기
       .addCase(__checkToken.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
       })
 
       // 전체 모듈 요청 시, 실패 시
+      // 요청시 loading 상태 true
       .addDefaultCase((state, action) => {
         if (action.meta?.requestStatus === "pending") {
-          console.log("peding");
           state.loading = true;
         }
+        // 실패시 loading상태 false, error 메세지 저장
         if (action.meta?.requestStatus === "rejected") {
-          console.log("reject");
           state.loading = false;
           state.error = action.error.message;
         }
+        // 성공시 loading 상태 false
         if (action.meta?.requestStatus === "fulfilled") {
-          console.log("fulfilled");
           state.loading = false;
         }
       });

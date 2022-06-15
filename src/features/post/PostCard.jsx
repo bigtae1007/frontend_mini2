@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,18 +11,33 @@ import JavaImg from "../../images/category_img/Java.png";
 import NodeImg from "../../images/category_img/Node.png";
 import VueImg from "../../images/category_img/Vue.png";
 import JsImg from "../../images/category_img/JavaScript.png";
+// 컴포넌트
+import MainPostDate from "../../elems/MainPostDate";
+import PostCategory from "./PostCategory";
 
 const PostCard = () => {
-  const dispatch = useDispatch();
   const post_list = useSelector((state) => state.post.list);
+  const dispatch = useDispatch();
+  const [listState, setListState] = useState(post_list);
+  // 세션에 카테고리 있는지 확인
+  const storage = sessionStorage.getItem("category");
 
   React.useEffect(() => {
     dispatch(__loadPost());
-  }, [dispatch]);
-
+  }, []);
+  React.useEffect(() => {
+    if (!storage) {
+      setListState(post_list);
+    }
+  }, [post_list]);
   return (
     <Warp>
-      {post_list.map((dic, idx) => {
+      <PostCategory
+        session={storage}
+        postList={post_list}
+        categoryState={setListState}
+      />
+      {listState.map((dic, idx) => {
         return (
           <PostBox key={dic.id}>
             <ImgBox>
@@ -54,9 +69,10 @@ const PostCard = () => {
                   <Text>{dic.content}</Text>
                 </div>
                 <div>
-                  <Nick>
-                    {dic.User.nickname}ㅤ-{dic.createdAt.toString()}
-                  </Nick>
+                  <MainPostDate
+                    nickname={dic.User.nickname}
+                    date={dic.createdAt.toString()}
+                  />
                 </div>
                 <div>
                   <Like>like : 2 ㅤㅤFeedBack : {dic.Comments.length}</Like>
@@ -118,10 +134,6 @@ const Text = styled.p`
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: left;
-`;
-
-const Nick = styled.p`
-  float: left;
 `;
 
 const Like = styled.p`

@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 //컴포넌트
 import Button from "../../../elems/Button";
 import { __deleteComment } from "../../../redux/modules/commentSlice";
+import useDateHook from "../../../component/dateHook";
+import DetailChangeComment from "./DetailChangeComment";
 
+// 상세페이지에 댓글 list 컴포넌트
 const DetailCommentList = ({ commentData }) => {
   const myNick = useSelector((state) => state.login.user.nickname);
   const dispatch = useDispatch();
+  // 수정 토글 창 관리 state
+  const [changeState, setChangeState] = useState(false);
+
   const checkMyComment = commentData?.User?.nickname === myNick;
+  const date = useDateHook(commentData.createdAt);
 
   // 댓글 삭제 이벤트
   const deleteComment = () => {
@@ -18,9 +25,16 @@ const DetailCommentList = ({ commentData }) => {
   };
   return (
     <>
+      {changeState ? (
+        <DetailChangeComment
+          commentData={commentData}
+          btnState={setChangeState}
+        />
+      ) : null}
+
       <WrapComment>
         <h3>{commentData?.User?.nickname}</h3>
-        <span>{commentData.createdAt}</span>
+        <span>{date}</span>
       </WrapComment>
       <CommentText>
         <pre>{commentData?.comment}</pre>
@@ -28,7 +42,14 @@ const DetailCommentList = ({ commentData }) => {
       {checkMyComment ? (
         <WrapBtn>
           <div>
-            <Button size="size2" bgcolor="blue" color="white">
+            <Button
+              size="size2"
+              bgcolor="blue"
+              color="white"
+              onClick={() => {
+                setChangeState(true);
+              }}
+            >
               수정
             </Button>
             <Button
@@ -69,6 +90,11 @@ const CommentText = styled.div`
   border-radius: 0 0 10px 10px;
   border: 1px solid var(--grey);
   margin-bottom: 8px;
+  pre {
+    white-space: pre-wrap;
+    word-break: break-all;
+    overflow: auto;
+  }
 `;
 
 const WrapBtn = styled.div`

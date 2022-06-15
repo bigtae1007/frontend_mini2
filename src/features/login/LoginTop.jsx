@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+// 로그인 & 회원가입 상단 메세지, 뒤로가기 버튼 컴포넌트
 export default function LoginTop({ title }) {
   const navigate = useNavigate();
 
