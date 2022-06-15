@@ -25,7 +25,11 @@ const PostCard = () => {
   React.useEffect(() => {
     dispatch(__loadPost());
   }, []);
-
+  React.useEffect(() => {
+    if (!storage) {
+      setListState(post_list);
+    }
+  }, [post_list]);
   return (
     <Warp>
       <PostCategory
