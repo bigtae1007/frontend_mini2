@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 //모듈
-import { __loadPost } from "../../redux/modules/postSlice";
+import { moreList, __loadPost } from "../../redux/modules/postSlice";
 //css //카테고리 로고 이미지 import
 import logo from "../../logo.svg";
 import ReactImg from "../../images/category_img/React.png";
@@ -17,11 +17,50 @@ import PostCategory from "./PostCategory";
 
 const PostCard = () => {
   const post_list = useSelector((state) => state.post.list);
+  const listCount = useSelector((state) => state.post.countList);
   const dispatch = useDispatch();
-  const [listState, setListState] = useState(post_list);
+  const [listState, setListState] = useState([]);
+  // 포스트 보이는 갯수 상태 , 마지막 포스트 확인 상태
+  // const [listCount, setListCount] = useState(5);
+  // >> 5 >>> 10
+  const [lastPost, setLastPost] = useState(false);
+
   // 세션에 카테고리 있는지 확인
   const storage = sessionStorage.getItem("category");
 
+  // const handleScroll = (aa) => {
+  //   console.log(aa);
+  //   const scrollHeight = document.documentElement.scrollHeight;
+  //   const scrollTop = document.documentElement.scrollTop;
+  //   const clientHeight = document.documentElement.clientHeight;
+
+  //   if (scrollTop + clientHeight >= scrollHeight - 50 && !lastPost) {
+  //     // changeCount();
+  // >>>>> 5  >>>> 5
+  //     // const newCount = listCount + 5;
+  //     setListCount(newCount);
+  //   }
+  // };
+  // const changeCount = (count) => {
+  //   // setListCount(count + 5);
+  // };
+
+  const handleScroll = (e, listState, listCount, lastPost) => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
+    if (
+      scrollTop + clientHeight >= scrollHeight - 30 &&
+      !lastPost &&
+      listState.length !== 0
+    ) {
+      if (listCount < listState.length) {
+        dispatch(moreList());
+      } else {
+        setLastPost(true);
+      }
+    }
+  };
   React.useEffect(() => {
     dispatch(__loadPost());
   }, []);
@@ -30,6 +69,18 @@ const PostCard = () => {
       setListState(post_list);
     }
   }, [post_list]);
+  React.useEffect(() => {
+    // scroll event listener 등록
+    window.addEventListener("scroll", (e) => {
+      handleScroll(e, listState, listCount, lastPost);
+    });
+    return () => {
+      // scroll event listener 해제
+      window.removeEventListener("scroll", (e) => {
+        handleScroll(e, listState, listCount, lastPost);
+      });
+    };
+  });
   return (
     <Warp>
       <PostCategory
@@ -37,7 +88,7 @@ const PostCard = () => {
         postList={post_list}
         categoryState={setListState}
       />
-      {listState.map((dic, idx) => {
+      {listState.slice(0, listCount).map((dic, idx) => {
         return (
           <PostBox key={dic.id}>
             <ImgBox>
@@ -75,7 +126,10 @@ const PostCard = () => {
                   />
                 </div>
                 <div>
-                  <Like>like : 2 ㅤㅤFeedBack : {dic.Comments.length}</Like>
+                  <Like>
+                    like : {dic.Likers.length} ㅤㅤFeedBack :{" "}
+                    {dic.Comments.length}
+                  </Like>
                 </div>
               </TextBox>
             </Link>

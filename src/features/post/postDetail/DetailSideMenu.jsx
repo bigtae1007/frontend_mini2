@@ -40,6 +40,11 @@ export default function DetailSideMenu({ user, data }) {
   }, [findLike]);
 
   const addLike = () => {
+    if (!user_data) {
+      alert("로그인 후 이용해 주세요");
+      navigate("/login");
+      return;
+    }
     if (findLike === -1) {
       setLike(!like);
     }
@@ -48,6 +53,13 @@ export default function DetailSideMenu({ user, data }) {
   };
 
   const deleteLike = () => {
+    console.log(user_data);
+
+    if (!user_data) {
+      alert("로그인 후 이용해 주세요");
+      navigate("/login");
+      return;
+    }
     like_data.forEach((v) => {
       if (v.nickname === user_data && like === true) {
         setLike(!like);
