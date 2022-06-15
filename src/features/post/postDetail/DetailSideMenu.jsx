@@ -21,7 +21,6 @@ export default function DetailSideMenu({ user, data }) {
   const commentList = useSelector((state) => state.comment.comments);
   // post id 를 위해 파라미터 값 가져오기
   const { id } = useParams();
-  console.log(like_data);
 
   // 게시글 삭제하기
   const deletePost = () => {
@@ -35,12 +34,13 @@ export default function DetailSideMenu({ user, data }) {
   useEffect(() => {
     if (findLike === 0) {
       setLike(true);
+    } else {
+      setLike(false);
     }
   }, [findLike]);
 
   const addLike = () => {
-    console.log(findLike, "파인드");
-    if (findLike === -1 || findLike === 0) {
+    if (findLike === -1) {
       setLike(!like);
     }
 

@@ -8,7 +8,6 @@ export const __getLikeList = createAsyncThunk(
   "like/GETLIKELIST",
   async (payload, thunkAPI) => {
     const response = await api.get(`/api/post/${payload.id}`);
-    console.log(response.data.Likers);
     return response.data.Likers;
   }
 );
@@ -37,7 +36,20 @@ export const __deleteLike = createAsyncThunk(
 
 const likeSlice = createSlice({
   name: "like",
-  initialState: { likes: [] },
+  initialState: {
+    likes: [
+      {
+        Like: {
+          PostId: 107,
+          UserId: 11,
+          createdAt: "2022-06-15 11:36:23",
+          updatedAt: "2022-06-15 11:36:23",
+        },
+        id: 11,
+        nickname: "kim",
+      },
+    ],
+  },
   // 리듀서를 작성 할 필요는 없었다.
   reducers: {},
 
