@@ -56,8 +56,14 @@ const postSlice = createSlice({
     error: null,
     //로딩 완료 상태 값
     session: false,
+    // 가져올 게시글 수
+    countList: 5,
   },
-  reducers: {},
+  reducers: {
+    moreList: (state, payload) => {
+      state.countList = state.countList + 5;
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -106,5 +112,5 @@ const postSlice = createSlice({
 });
 
 // // reducer dispatch하기 위해 export 하기
-export const {} = postSlice.actions;
+export const { moreList } = postSlice.actions;
 export default postSlice.reducer;
