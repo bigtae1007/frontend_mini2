@@ -14,7 +14,7 @@ export default function DetailSideMenu({ user, data }) {
   const navigate = useNavigate();
   const [like, setLike] = useState(false);
 
-  const like_data = useSelector((state) => state.like);
+  const like_data = useSelector((state) => state.like.likes);
   // 로그인 유저 닉네임 가져오기
   const user_data = useSelector((state) => state.login.user.nickname);
   // 해당 포스트에 댓글 리스트 갯수를 위해 가져오기
@@ -23,36 +23,36 @@ export default function DetailSideMenu({ user, data }) {
   const { id } = useParams();
   console.log(like_data);
 
-   // 게시글 삭제하기
+  // 게시글 삭제하기
   const deletePost = () => {
     if (window.confirm("정말 삭제 하시겠습니까?")) {
       dispatch(__deletePost(id));
       navigate("/");
     }
+  };
 
- 
-  // const findLike = like_data.findIndex((v) => v.nickname === user_data);
-  // useEffect(() => {
-  //   if (findLike === 0) {
-  //     setLike(true);
-  //   }
-  // }, [findLike]);
+  const findLike = like_data.findIndex((v) => v.nickname === user_data);
+  useEffect(() => {
+    if (findLike === 0) {
+      setLike(true);
+    }
+  }, [findLike]);
 
   const addLike = () => {
-    // console.log(findLike, "파인드");
-    // if (findLike === -1 || findLike === 0) {
-    //   setLike(!like);
-    // }
+    console.log(findLike, "파인드");
+    if (findLike === -1 || findLike === 0) {
+      setLike(!like);
+    }
 
     dispatch(__addLike(id));
   };
 
   const deleteLike = () => {
-    // like_data.forEach((v) => {
-    //   if (v.nickname === user_data && like === true) {
-    //     setLike(!like);
-    //   }
-    // });
+    like_data.forEach((v) => {
+      if (v.nickname === user_data && like === true) {
+        setLike(!like);
+      }
+    });
     dispatch(__deleteLike(id));
   };
   return (

@@ -7,7 +7,7 @@ import { api } from "../../shared/api";
 export const __getLikeList = createAsyncThunk(
   "like/GETLIKELIST",
   async (payload, thunkAPI) => {
-    const response = await api.get(`/api/post/${payload}`);
+    const response = await api.get(`/api/post/${payload.id}`);
     console.log(response.data.Likers);
     return response.data.Likers;
   }
@@ -37,7 +37,7 @@ export const __deleteLike = createAsyncThunk(
 
 const likeSlice = createSlice({
   name: "like",
-  initialState: { likes: [1] },
+  initialState: { likes: [] },
   // 리듀서를 작성 할 필요는 없었다.
   reducers: {},
 

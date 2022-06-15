@@ -11,7 +11,8 @@ export const __getCommentList = createAsyncThunk(
   async (payload, thunkAPI) => {
     const response = await api.get(`/api/post/${[payload.id]}`);
     // 댓글 리스트
-    return response.data;
+    console.log(response.data);
+    return response.data.comment;
   }
 );
 
