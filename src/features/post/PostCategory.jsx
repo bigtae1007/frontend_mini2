@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import styled from "styled-components";
 // 커스텀 훅
 import useCategoryList from "../../component/categoryList";
+import { resetListCount } from "../../redux/modules/postSlice";
 
 //카테고리 선택 버튼 컴포넌트
 const PostCategory = ({ postList, categoryState, session }) => {
   const sessionState = useSelector((state) => state.post.session);
   const post_list = useSelector((state) => state.post.list);
+  const dispatch = useDispatch();
 
   //카테고리 상태별 리스트 정렬
   const all = postList;
@@ -50,6 +53,7 @@ const PostCategory = ({ postList, categoryState, session }) => {
     sessionStorage.setItem("category", e.target.id);
     const stack = category(e.target.id);
     categoryState(stack);
+    dispatch(resetListCount());
   };
   return (
     <WrapSpan>

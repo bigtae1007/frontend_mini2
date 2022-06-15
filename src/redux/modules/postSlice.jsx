@@ -60,8 +60,13 @@ const postSlice = createSlice({
     countList: 5,
   },
   reducers: {
+    // 무한 스크롤 리스트 갯수
     moreList: (state, payload) => {
       state.countList = state.countList + 5;
+    },
+    // 무한 스크롤 초기화
+    resetListCount: (state, payload) => {
+      state.countList = 5;
     },
   },
 
@@ -112,5 +117,5 @@ const postSlice = createSlice({
 });
 
 // // reducer dispatch하기 위해 export 하기
-export const { moreList } = postSlice.actions;
+export const { moreList, resetListCount } = postSlice.actions;
 export default postSlice.reducer;
