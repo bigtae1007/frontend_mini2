@@ -22,9 +22,9 @@ export default function PostDetail() {
     dispatch(__getCommentList({ id: data.id }));
   }, []);
 
-  // useEffect(() => {
-  //   dispatch(__getLikeList({ id: data.id }));
-  // }, []);
+  useEffect(() => {
+    dispatch(__getLikeList({ id: data.id }));
+  }, []);
 
   return (
     <WrapDetailPost>

@@ -14,19 +14,11 @@ export default function DetailSideMenu({ user, data }) {
   const navigate = useNavigate();
   const [like, setLike] = useState(false);
 
-  useEffect(() => {
-    console.log(like);
-  }, [like]);
-
-  const like_data = useSelector((state) => state.like.likes);
+  const like_data = useSelector((state) => state.like);
   const user_data = useSelector((state) => state.login.user.nickname);
   const commentList = useSelector((state) => state.comment.comments);
-  //user_data가 라이크 리스트 안에 있으면 하얀색
-  //없으면 검정색
 
   console.log(like_data);
-  console.log(user_data);
-
   const { id } = useParams();
 
   const deletePost = () => {
@@ -36,21 +28,28 @@ export default function DetailSideMenu({ user, data }) {
     }
   };
 
+  // const findLike = like_data.findIndex((v) => v.nickname === user_data);
+  // useEffect(() => {
+  //   if (findLike === 0) {
+  //     setLike(true);
+  //   }
+  // }, [findLike]);
+
   const addLike = () => {
-    like_data.forEach((v) => {
-      if (v.nickname === user_data && like === false) {
-        setLike(!like);
-      }
-    });
+    // console.log(findLike, "파인드");
+    // if (findLike === -1 || findLike === 0) {
+    //   setLike(!like);
+    // }
+
     dispatch(__addLike(id));
   };
 
   const deleteLike = () => {
-    like_data.forEach((v) => {
-      if (v.nickname === user_data && like === true) {
-        setLike(!like);
-      }
-    });
+    // like_data.forEach((v) => {
+    //   if (v.nickname === user_data && like === true) {
+    //     setLike(!like);
+    //   }
+    // });
     dispatch(__deleteLike(id));
   };
   return (
@@ -64,8 +63,16 @@ export default function DetailSideMenu({ user, data }) {
             <span>달린 답변 : </span> <span>{commentList?.length}</span>
           </div>
 
-          <p>like : 20</p>
-
+          {like === true ? (
+            <p>
+              <DeleteLikeBtn onClick={deleteLike}>👍🏻</DeleteLikeBtn> like :
+              {like_data.length}
+            </p>
+          ) : (
+            <p>
+              <LikeBtn onClick={addLike}>👍🏿</LikeBtn> like : {like_data.length}
+            </p>
+          )}
           <Link to={`/post/modify/${id}`} state={{ data: data }}>
             <EditBtn>Edit</EditBtn>
           </Link>

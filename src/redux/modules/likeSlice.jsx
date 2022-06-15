@@ -7,9 +7,9 @@ import { api } from "../../shared/api";
 export const __getLikeList = createAsyncThunk(
   "like/GETLIKELIST",
   async (payload, thunkAPI) => {
-    const response = await api.get(`/api/posts`);
-    console.log(response.data);
-    return response.data;
+    const response = await api.get(`/api/post/${payload}`);
+    console.log(response.data.Likers);
+    return response.data.Likers;
   }
 );
 
@@ -18,7 +18,7 @@ export const __addLike = createAsyncThunk(
   "like/ADDLIKE",
   async (payload, thunkAPI) => {
     const response = await api.patch(`/api/post/${payload}/like`);
-    console.log(response.data);
+
     return response.data;
   }
 );
@@ -28,7 +28,7 @@ export const __deleteLike = createAsyncThunk(
   "like/DELETELIKE",
   async (payload, thunkAPI) => {
     const response = await api.delete(`/api/post/${payload}/like`);
-    console.log(response.data);
+
     return response.data;
   }
 );
@@ -37,7 +37,7 @@ export const __deleteLike = createAsyncThunk(
 
 const likeSlice = createSlice({
   name: "like",
-  initialState: { likes: [] },
+  initialState: { likes: [1] },
   // 리듀서를 작성 할 필요는 없었다.
   reducers: {},
 

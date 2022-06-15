@@ -29,7 +29,7 @@ const PostModify = () => {
       })
     );
     window.alert("수정완료 되었습니다!");
-    navigate("/");
+    navigate(`/modify/${id}`);
   };
   return (
     <Wrap>
