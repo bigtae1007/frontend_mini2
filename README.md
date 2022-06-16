@@ -11,7 +11,7 @@
 코딩 피드백 플랫폼 COFEE!
 
 ## 프로젝트 기간
-* 22. 06. 10 ~ 22. 06. 16 
+##### 22\. 06\. 10 ~ 22\. 06. 16 
 
 ## 프로젝트 주소 
 * 도메인 : http://btae.shop.s3-website.ap-northeast-2.amazonaws.com/
