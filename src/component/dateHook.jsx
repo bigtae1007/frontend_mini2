@@ -1,6 +1,11 @@
 const useDateHook = (date) => {
-  const day = date.slice(0, 10);
-  const time = date.slice(11, 19);
+  let day = "";
+  let time = "";
+  if (date) {
+    day = date.slice(0, 10);
+    time = date.slice(11, 19);
+  }
+
   return `${day} / ${time}`;
 };
 

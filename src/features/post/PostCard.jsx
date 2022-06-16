@@ -61,6 +61,10 @@ const PostCard = () => {
       }
     }
   };
+
+  const eventFn = (e) => {
+    handleScroll(e, listState, listCount, lastPost);
+  };
   React.useEffect(() => {
     dispatch(__loadPost());
   }, []);
@@ -71,14 +75,10 @@ const PostCard = () => {
   }, [post_list]);
   React.useEffect(() => {
     // scroll event listener 등록
-    window.addEventListener("scroll", (e) => {
-      handleScroll(e, listState, listCount, lastPost);
-    });
+    window.addEventListener("scroll", eventFn);
     return () => {
       // scroll event listener 해제
-      window.removeEventListener("scroll", (e) => {
-        handleScroll(e, listState, listCount, lastPost);
-      });
+      window.removeEventListener("scroll", eventFn);
     };
   });
   return (
