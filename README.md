@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+## CoFee (code feedback)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+* FE : 박태형, 김정욱
+* BE : 송민지, 김윤보, 문광민  (BE GitHub : [https://github.com/KwangMin-Moon/Cofee-miniProject.git](https://github.com/KwangMin-Moon/cofee-practice.git) )
 
-In the project directory, you can run:
+## 프로젝트 소개
+한국의 stack Overflow를 꿈꾼다! 
 
-### `yarn start`
+개발자 코피가 멈추는 그날까지
+코딩 피드백 플랫폼 COFEE!
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 프로젝트 기간
+* 22. 06. 10 ~ 22. 06. 16 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 프로젝트 주소 
+* 도메인 : http://btae.shop.s3-website.ap-northeast-2.amazonaws.com/
+* 시연 영상 : https://youtu.be/InTUrvCMZUk
 
-### `yarn test`
+### 구현 기능
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### LOG
+* 로그인 : 로그인 기능, 로그인 후 토큰 저장
+* 회원가입 : 아이디/닉네임 중복확인, 비밀번호 일치 확인
+* 로그아웃 : 토큰 삭제
 
-### `yarn build`
+#### Mainpage
+* 검색 : 특정 검색으로 포스트 검색 기능 
+* 알림 : 다른 사람의 좋아요, 댓글 새 알림 받고 링크 기능
+* 카테고리 : 특정 stack 카테고리 선택으로 원하는 stack 포스트만 선별 가능
+* 무한 스크롤 : 5개씩 추가되는 무한 스크롤 기능
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### 게시글
+* CRUD : 기본적인 CRUD 구현 
+* 해쉬 태그 : 게시글 작성/수정에서 해쉬 태그도 작성 가능
+* 좋아요 : 해당 게시글 좋아요 가능
+* 작성 접근 권한을 로그인한 유저에 한정
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### 댓글
+* CRUD : 기본적인 CRUD 구현
+* 작성 접근 권한을 로그인한 유저에 한정
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
