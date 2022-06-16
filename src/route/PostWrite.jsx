@@ -68,14 +68,11 @@ const PostWrite = () => {
             </form>
             {hastList.map((v, l) => {
               return (
-                <>
-                  <span key={l}>
-                    # {v}{" "}
-                    <span id={l} onClick={deleteHash}>
-                      x
-                    </span>
+                <div key={l}>
+                  <span>
+                    # {v} <span onClick={deleteHash}>x</span>
                   </span>
-                </>
+                </div>
               );
             })}
           </WrapHash>
@@ -142,10 +139,16 @@ const TextIpt = styled.div`
 `;
 
 const WrapHash = styled.div`
+  margin: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  > span {
+  align-items: center;
+  gap: 5px 10px;
+  min-height: 50px;
+  > div {
+    margin: 0;
+  }
+  > div > span {
     padding: 2px 5px;
     border-radius: 8px;
     color: var(--greyD);
