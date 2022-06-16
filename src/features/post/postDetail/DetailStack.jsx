@@ -13,7 +13,7 @@ export default function DetailStack({ createdAt, hash }) {
     <>
       <WrapUnderTitle>
         <WrapStackList>
-          {hashList.map((v, l) => {
+          {hashList?.map((v, l) => {
             return <StackSpan key={l}># {v}</StackSpan>;
           })}
         </WrapStackList>
