@@ -12,6 +12,14 @@ export const __getAlarmList = createAsyncThunk(
   }
 );
 
+// 알림 일괄 상태 초기화
+export const __resetState = createAsyncThunk(
+  "ALARM/RESETALARMSTATE_LOG",
+  async () => {
+    await api.put(`/api/alarm`);
+  }
+);
+
 // // slice
 
 const alarmSlice = createSlice({
@@ -29,18 +37,31 @@ const alarmSlice = createSlice({
       },
     ],
   },
-  reducers: {},
+  reducers: {
+    // 읽은 알림 상태 변경
+    changeAlarmState: (state, action) => {
+      console.log(action.payload);
+      const newAlarm = state.alarm.map((v) => {
+        if (v.PostId === action.payload) {
+          v.state = true;
+        }
+        return v;
+      });
+      console.log(newAlarm);
+      state.alarm = newAlarm;
+    },
+  },
 
   extraReducers: (builder) => {
     builder
       // 알림 리스트 받아오기
       .addCase(__getAlarmList.fulfilled, (state, action) => {
-        state.alarm = action.payload.alarm;
+        state.alarm = action.payload.alarm.reverse();
         state.nickname = action.payload.nickname;
       });
   },
 });
 
 // // reducer dispatch하기 위해 export 하기
-export const {} = alarmSlice.actions;
+export const { changeAlarmState } = alarmSlice.actions;
 export default alarmSlice.reducer;

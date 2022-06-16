@@ -89,6 +89,7 @@ const PostCard = () => {
         session={storage}
         postList={post_list}
         categoryState={setListState}
+        lastPostState={setLastPost}
       />
       {listState.slice(0, listCount).map((dic, idx) => {
         return (

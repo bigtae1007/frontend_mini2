@@ -1,14 +1,17 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 // 컴포넌트
 import Button from "../../elems/Button";
+import { changeAlarmState } from "../../redux/modules/alarmSlice";
 
 const AlarmTogle = ({ setTogleState, countNewAlarm, alarmList }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const locatePost = (postId) => {
+    dispatch(changeAlarmState(postId));
     setTogleState(false);
     navigate(`/post/detail/${postId}`);
   };
@@ -83,8 +86,7 @@ const WrapAlarmCardList = styled.div`
 
 const AlarmCard = styled.div`
   border-top: 1px solid var(--greyD);
-  background-color: var(--grey);
-  background-color: ${({ check }) => (check ? "var(--grey)" : "var(--greyD)")};
+  background-color: ${({ check }) => (check ? "var(--grey)" : "skyblue")};
   border-radius: 5px;
   padding: 5px 10px;
   cursor: pointer;

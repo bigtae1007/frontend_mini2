@@ -56,28 +56,45 @@ const loginSlice = createSlice({
           result: action.payload.result,
         };
       })
+      .addCase(__login.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(__login.pending, (state, action) => {
+        state.loading = true;
+      })
       // 토큰 확인하기
       .addCase(__checkToken.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
       })
-
-      // 전체 모듈 요청 시, 실패 시
-      // 요청시 loading 상태 true
-      .addDefaultCase((state, action) => {
-        if (action.meta?.requestStatus === "pending") {
-          state.loading = true;
-        }
-        // 실패시 loading상태 false, error 메세지 저장
-        if (action.meta?.requestStatus === "rejected") {
-          state.loading = false;
-          state.error = action.error.message;
-        }
-        // 성공시 loading 상태 false
-        if (action.meta?.requestStatus === "fulfilled") {
-          state.loading = false;
-        }
+      .addCase(__checkToken.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(__checkToken.pending, (state, action) => {
+        state.loading = true;
       });
+
+    // 전체 모듈 요청 시, 실패 시
+
+    //이 방법을 사용하지 말자
+
+    // 요청시 loading 상태 true
+    // .addDefaultCase((state, action) => {
+    //   if (action.meta?.requestStatus === "pending") {
+    //     console.log("pending");
+    //   }
+    //   // 실패시 loading상태 false, error 메세지 저장
+    //   if (action.meta?.requestStatus === "rejected") {
+    //     console.log("error");
+    //     state.loading = false;
+    //     state.error = action.error.message;
+    //   }
+    //   // 성공시 loading 상태 false
+    //   if (action.meta?.requestStatus === "fulfilled") {
+    //     console.log("fullfill");
+    //     state.loading = false;
+    //   }
+    // });
   },
 });
 

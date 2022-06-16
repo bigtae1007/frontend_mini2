@@ -52,32 +52,17 @@ export const __deletePost = createAsyncThunk(
   }
 );
 
-// 검색한 포스트 로드
-// export const __searchPost = createAsyncThunk(
-//   "post/SEARCH_POST",
-//   async (payload) => {
-//     try {
-//       const response = await api.get(`/api/title?title=${payload}`);
-//       console.log(response.data);
-//       return response.data;
-//     } catch (err) {
-//       if (!err.response) {
-//         throw err;
-//       }
-//       return isRejectedWithValue(err.response.data.msg);
-//     }
-//   }
-// );
 export const __searchPost = createAsyncThunk(
   "post/SEARCH_POST",
   async (payload) => {
-    const response = await api.get(`/api/title?title=${payload}`);
-    console.log(response.data);
-    // if (!response.ok) {
-    //   return isRejectedWithValue(response.data.msg);
-    // }
+    try {
+      const response = await api.get(`/api/title?title=${payload}`);
 
-    return response.data;
+      return response.data;
+    } catch (error) {
+      const errorMsg = JSON.parse(error.request.response);
+      alert(errorMsg.msg);
+    }
   }
 );
 
@@ -130,12 +115,16 @@ const postSlice = createSlice({
 
       // 포스트 추가 작성하기
       .addCase(__addPost.fulfilled, (state, action) => {
-        state.loading = false;
-
         // 저장된 list에서 작성된 포스트 추가하기
         state.list = [action.payload, ...state.list];
+        state.loading = false;
       })
-
+      .addCase(__addPost.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(__addPost.pending, (state, action) => {
+        state.loading = true;
+      })
       // 포스트 수정하기
       .addCase(__editPost.fulfilled, (state, action) => {
         state.loading = false;
@@ -165,7 +154,9 @@ const postSlice = createSlice({
       .addCase(__searchPost.fulfilled, (state, action) => {
         state.loading = false;
         // 리스트 전체 저장
-        state.list = action.payload;
+        if (action.payload) {
+          state.list = action.payload;
+        }
         state.session = true;
       })
 

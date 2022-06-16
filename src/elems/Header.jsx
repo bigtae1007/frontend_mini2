@@ -12,7 +12,7 @@ import PostSearch from "../features/post/postSearch";
 //모듈
 import { logOutUser, __checkToken } from "../redux/modules/loginSlice";
 import AlarmTogle from "../features/alarm/AlarmTogle";
-import { __getAlarmList } from "../redux/modules/alarmSlice";
+import { __getAlarmList, __resetState } from "../redux/modules/alarmSlice";
 
 const Header = () => {
   const checkToken = useSelector((state) => state.login.user.result);
@@ -62,9 +62,13 @@ const Header = () => {
               <AlarmBtn
                 onClick={() => {
                   setAlarmState(true);
+                  dispatch(__resetState());
                 }}
               >
-                알림 <span>{countNewAlarm(alarmList.alarm)}</span>
+                알림{" "}
+                {countNewAlarm(alarmList.alarm) === 0 ? null : (
+                  <span>{countNewAlarm(alarmList.alarm)}</span>
+                )}
               </AlarmBtn>
               {alarmState ? (
                 <AlarmTogle

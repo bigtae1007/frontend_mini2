@@ -22,7 +22,6 @@ export default function PostDetail() {
 
   const newPostData = postList.list.filter((v) => v.id === Number(id));
 
-  // console.log(data);
   useEffect(() => {
     if (newPostData[0] === undefined) {
       dispatch(__loadPost());
@@ -42,6 +41,7 @@ export default function PostDetail() {
         titleText={newPostData[0]?.title}
         img={newPostData[0]?.img}
         createdAt={newPostData[0]?.createdAt}
+        hash={newPostData[0]?.Hashtags}
       />
       <DetailContent>
         <ContentDiv>
