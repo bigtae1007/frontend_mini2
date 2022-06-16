@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 // 컴포넌트
 import DetailAddComment from "../features/post/postDetail/DetailAddComment";
 import DetailSideMenu from "../features/post/postDetail/DetailSideMenu";
@@ -9,37 +9,48 @@ import DetailTopTile from "../features/post/postDetail/DetailTopTitle";
 import DetailCommentList from "../features/post/postDetail/DetailCommentList";
 import { __getCommentList } from "../redux/modules/commentSlice";
 import { __getLikeList } from "../redux/modules/likeSlice";
+import { __loadPost } from "../redux/modules/postSlice";
 
 export default function PostDetail() {
   const commentList = useSelector((state) => state.comment.comments);
-
+  const postList = useSelector((state) => state.post);
   const dispatch = useDispatch();
+  const { id } = useParams();
   const location = useLocation();
   // link으로 메인에서 데이터 전달받기
-  const data = location.state.data;
+  // const data = location.state.data;
+
+  const newPostData = postList.list.filter((v) => v.id === Number(id));
+
+  // console.log(data);
   useEffect(() => {
-    dispatch(__getCommentList({ id: data.id }));
+    if (newPostData[0] === undefined) {
+      dispatch(__loadPost());
+    }
   }, []);
 
   useEffect(() => {
-    dispatch(__getLikeList({ id: data.id }));
-  }, []);
+    if (newPostData[0]) {
+      dispatch(__getCommentList({ id: newPostData[0]?.id }));
+      dispatch(__getLikeList({ id: newPostData[0]?.id }));
+    }
+  }, [newPostData[0]]);
 
   return (
     <WrapDetailPost>
       <DetailTopTile
-        titleText={data.title}
-        img={data.img}
-        createdAt={data.createdAt}
+        titleText={newPostData[0]?.title}
+        img={newPostData[0]?.img}
+        createdAt={newPostData[0]?.createdAt}
       />
       <DetailContent>
         <ContentDiv>
-          <pre>{data.content}</pre>
+          <pre>{newPostData[0]?.content}</pre>
         </ContentDiv>
-        <DetailSideMenu user={data.User} data={data} />
+        <DetailSideMenu user={newPostData[0]?.User} data={newPostData[0]} />
       </DetailContent>
 
-      <DetailAddComment postId={data.id} />
+      <DetailAddComment postId={newPostData[0]?.id} />
       {commentList?.map((v, l) => {
         return <DetailCommentList key={v.id} commentData={v} />;
       })}

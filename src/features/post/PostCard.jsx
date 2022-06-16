@@ -20,6 +20,8 @@ const PostCard = () => {
   const listCount = useSelector((state) => state.post.countList);
   const dispatch = useDispatch();
   const [listState, setListState] = useState([]);
+  const error = useSelector((state) => state.post.error);
+  console.log(error);
   // 포스트 보이는 갯수 상태 , 마지막 포스트 확인 상태
   // const [listCount, setListCount] = useState(5);
   // >> 5 >>> 10
@@ -61,6 +63,10 @@ const PostCard = () => {
       }
     }
   };
+
+  const eventFn = (e) => {
+    handleScroll(e, listState, listCount, lastPost);
+  };
   React.useEffect(() => {
     dispatch(__loadPost());
   }, []);
@@ -71,14 +77,10 @@ const PostCard = () => {
   }, [post_list]);
   React.useEffect(() => {
     // scroll event listener 등록
-    window.addEventListener("scroll", (e) => {
-      handleScroll(e, listState, listCount, lastPost);
-    });
+    window.addEventListener("scroll", eventFn);
     return () => {
       // scroll event listener 해제
-      window.removeEventListener("scroll", (e) => {
-        handleScroll(e, listState, listCount, lastPost);
-      });
+      window.removeEventListener("scroll", eventFn);
     };
   });
   return (

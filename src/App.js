@@ -25,7 +25,7 @@ function App() {
         <Route path="/post" element={<PostWrite />} />
         <Route path="/post/detail/:id" element={<PostDetail />} />
         <Route path="/post/modify/:id" element={<PostModify />} />
-        {/* <Route path="/post/search=?id" element={<SearchList />} /> */}
+        {/* <Route path="/post/search?title=title" element={<SearchList />} /> */}
       </Routes>
     </div>
   );

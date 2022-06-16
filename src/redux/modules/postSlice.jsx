@@ -1,6 +1,11 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSlice,
+  isRejectedWithValue,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 import { api } from "../../shared/api";
+import produce from "immer";
 
 // thunk 함수
 
@@ -11,16 +16,6 @@ export const __loadPost = createAsyncThunk("post/LOAD_POST", async () => {
   // 전체 포스트 리스트
   return response.data;
 });
-
-export const __searchPost = createAsyncThunk(
-  "post/SEARCH_POST",
-  async (payload) => {
-    const response = await api.get(`/api/post/${payload.search}`);
-
-    // 검색한 제목을 가지고 있는 포스트 리스트
-    return response.data;
-  }
-);
 
 // 포스트 추가하기
 export const __addPost = createAsyncThunk(
@@ -35,7 +30,7 @@ export const __addPost = createAsyncThunk(
 
 // 포스트 수정하기
 export const __editPost = createAsyncThunk(
-  "post/EDIT_POST",
+  "post/EDIT_MEMO",
   async (payload, thunkAPI) => {
     const response = await api.put(`api/post/${payload.id}`, payload);
     // 수정한 포스트 Data
@@ -47,7 +42,7 @@ export const __editPost = createAsyncThunk(
 
 // 포스트 삭제하기
 export const __deletePost = createAsyncThunk(
-  "post/DELETE_POST",
+  "post/DELETE_MEMO",
   async (payload, thunkAPI) => {
     await api.delete(`/api/post/${payload}`);
 
@@ -57,14 +52,32 @@ export const __deletePost = createAsyncThunk(
   }
 );
 
-export const __SerchPost = createAsyncThunk(
-  "post/SERCH_POST",
-  async (payload, thunkAPI) => {
-    await api.delete(`/api/post/${payload}`);
+// 검색한 포스트 로드
+// export const __searchPost = createAsyncThunk(
+//   "post/SEARCH_POST",
+//   async (payload) => {
+//     try {
+//       const response = await api.get(`/api/title?title=${payload}`);
+//       console.log(response.data);
+//       return response.data;
+//     } catch (err) {
+//       if (!err.response) {
+//         throw err;
+//       }
+//       return isRejectedWithValue(err.response.data.msg);
+//     }
+//   }
+// );
+export const __searchPost = createAsyncThunk(
+  "post/SEARCH_POST",
+  async (payload) => {
+    const response = await api.get(`/api/title?title=${payload}`);
+    console.log(response.data);
+    // if (!response.ok) {
+    //   return isRejectedWithValue(response.data.msg);
+    // }
 
-    //삭제할 포스트 ID값
-    return payload;
-    // 삭제시 삭제 할 post id값만 받아옴 데이터 베이스와 따로 삭제 !
+    return response.data;
   }
 );
 
@@ -72,7 +85,20 @@ export const __SerchPost = createAsyncThunk(
 const postSlice = createSlice({
   name: "post",
   initialState: {
-    list: [],
+    list: [
+      {
+        Comments: [],
+        Likers: [],
+        User: { id: 10, nickname: "btae" },
+        UserId: 10,
+        content: "테스트",
+        createdAt: "2022-06-16 00:24:38",
+        id: 150,
+        img: "React",
+        title: "테스트",
+        updatedAt: "2022-06-16 00:24:38",
+      },
+    ],
     loading: false,
     error: null,
     //로딩 완료 상태 값
@@ -81,8 +107,13 @@ const postSlice = createSlice({
     countList: 5,
   },
   reducers: {
+    // 무한 스크롤 리스트 갯수
     moreList: (state, payload) => {
       state.countList = state.countList + 5;
+    },
+    // 무한 스크롤 초기화
+    resetListCount: (state, payload) => {
+      state.countList = 5;
     },
   },
 
@@ -91,13 +122,6 @@ const postSlice = createSlice({
 
       //메인 페이지 로드
       .addCase(__loadPost.fulfilled, (state, action) => {
-        state.loading = false;
-        // 리스트 전체 저장
-        state.list = action.payload;
-        state.session = true;
-      })
-
-      .addCase(__searchPost.fulfilled, (state, action) => {
         state.loading = false;
         // 리스트 전체 저장
         state.list = action.payload;
@@ -135,10 +159,23 @@ const postSlice = createSlice({
           return Number(v.id) === Number(action.payload) ? false : true;
         });
         state.list = delete_list;
+      })
+
+      // 포스트 검색하기
+      .addCase(__searchPost.fulfilled, (state, action) => {
+        state.loading = false;
+        // 리스트 전체 저장
+        state.list = action.payload;
+        state.session = true;
+      })
+
+      .addCase(__searchPost.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error;
       });
   },
 });
 
 // // reducer dispatch하기 위해 export 하기
-export const { moreList } = postSlice.actions;
+export const { moreList, resetListCount } = postSlice.actions;
 export default postSlice.reducer;

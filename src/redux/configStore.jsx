@@ -5,7 +5,7 @@ import signupReducer from "./modules/signupSlice";
 import commentReducer from "./modules/commentSlice";
 import postReducer from "./modules/postSlice";
 import likeReducer from "./modules/likeSlice";
-
+import alarmReducer from "./modules/alarmSlice";
 const middlewares = [thunk];
 // 리듀서 통합
 const rootReducer = combineReducers({
@@ -14,6 +14,7 @@ const rootReducer = combineReducers({
   comment: commentReducer,
   post: postReducer,
   like: likeReducer,
+  alarm: alarmReducer,
 });
 // 스토어 연결
 const store = configureStore({

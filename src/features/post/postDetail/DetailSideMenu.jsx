@@ -53,8 +53,6 @@ export default function DetailSideMenu({ user, data }) {
   };
 
   const deleteLike = () => {
-    console.log(user_data);
-
     if (!user_data) {
       alert("로그인 후 이용해 주세요");
       navigate("/login");
@@ -69,10 +67,10 @@ export default function DetailSideMenu({ user, data }) {
   };
   return (
     <>
-      {user_data === user.nickname ? (
+      {user_data === user?.nickname ? (
         <SideMenuDiv>
           <div>
-            <span>작성자 : </span> <span>{user.nickname}</span>
+            <span>작성자 : </span> <span>{user?.nickname}</span>
           </div>
           <div>
             <span>달린 답변 : </span> <span>{commentList?.length}</span>
@@ -97,7 +95,7 @@ export default function DetailSideMenu({ user, data }) {
       ) : (
         <SideMenuDiv>
           <div>
-            <span>작성자 : </span> <span>{user.nickname}</span>
+            <span>작성자 : </span> <span>{user?.nickname}</span>
           </div>
           <div>
             <span>달린 답변 : </span> <span>{commentList?.length}</span>

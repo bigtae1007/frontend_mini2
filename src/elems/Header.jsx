@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -11,11 +11,15 @@ import Down from "../img/caret-down.svg";
 import PostSearch from "../features/post/postSearch";
 //모듈
 import { logOutUser, __checkToken } from "../redux/modules/loginSlice";
+import AlarmTogle from "../features/alarm/AlarmTogle";
+import { __getAlarmList } from "../redux/modules/alarmSlice";
 
 const Header = () => {
   const checkToken = useSelector((state) => state.login.user.result);
+  const alarmList = useSelector((state) => state.alarm);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [alarmState, setAlarmState] = useState(false);
   const localToken = localStorage.getItem("token");
 
   //로그아웃 이벤트
@@ -30,8 +34,18 @@ const Header = () => {
   React.useEffect(() => {
     if (localToken) {
       dispatch(__checkToken());
+      dispatch(__getAlarmList());
     }
   }, [localToken]);
+
+  // 새 알림 갯수 새기 함수
+  const countNewAlarm = (list) => {
+    let count = 0;
+    list.forEach((v) => {
+      if (!v.state) count++;
+    });
+    return count;
+  };
 
   return (
     <header>
@@ -42,19 +56,36 @@ const Header = () => {
         <WrapSearch>
           <PostSearch />
         </WrapSearch>
-
-        {checkToken ? (
-          <LogoutBtn onClick={logOut}>로그아웃</LogoutBtn>
-        ) : (
-          <WrapLogBtn>
-            <Link to={"/login"} style={{ textDecoration: "none" }}>
-              <button>로그인</button>
-            </Link>
-            <Link to={"/sign"} style={{ textDecoration: "none" }}>
-              <button>회원가입</button>
-            </Link>
-          </WrapLogBtn>
-        )}
+        <WrapLogBtn>
+          {checkToken ? (
+            <>
+              <AlarmBtn
+                onClick={() => {
+                  setAlarmState(true);
+                }}
+              >
+                알림 <span>{countNewAlarm(alarmList.alarm)}</span>
+              </AlarmBtn>
+              {alarmState ? (
+                <AlarmTogle
+                  countNewAlarm={countNewAlarm}
+                  alarmList={alarmList}
+                  setTogleState={setAlarmState}
+                />
+              ) : null}
+              <LogoutBtn onClick={logOut}>로그아웃</LogoutBtn>
+            </>
+          ) : (
+            <>
+              <Link to={"/login"} style={{ textDecoration: "none" }}>
+                <button>로그인</button>
+              </Link>
+              <Link to={"/sign"} style={{ textDecoration: "none" }}>
+                <button>회원가입</button>
+              </Link>
+            </>
+          )}
+        </WrapLogBtn>
       </Wrap>
 
       <BtnWrap>
@@ -194,15 +225,35 @@ const WrapSearch = styled.form`
 // `;
 
 const LogoutBtn = styled.button`
-  width: 200px;
+  width: 100%;
   height: 40px;
-  color: var(--blue);
+  color: var(--black);
   border: none;
   font-size: 1rem;
   background-color: rgba(0, 0, 0, 0);
   border-radius: 10px;
   :hover {
     border: 1px solid var(--blue);
+  }
+`;
+const AlarmBtn = styled.button`
+  width: 100%;
+  height: 40px;
+  color: var(--blue);
+  border: 1px solid var(--blue);
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 10px;
+  :hover {
+    border: 1px solid var(--blue);
+  }
+  span {
+    width: 10px;
+    height: 10px;
+    padding: 5px;
+    border-radius: 50%;
+    background-color: var(--red);
+    color: var(--white);
   }
 `;
 export default Header;
