@@ -16,7 +16,6 @@ import { useSelector } from "react-redux";
 
 function App() {
   const loading = useSelector((state) => state.login.loading);
-  console.log(loading);
 
   return (
     <div className="App">

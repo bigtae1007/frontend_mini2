@@ -12,7 +12,7 @@ import JsImg from "../../../images/category_img/JavaScript.png";
 import useDateHook from "../../../component/dateHook";
 
 // 포스트 상단 제목부분 컴포넌트
-export default function DetailTopTile({ titleText, img, createdAt }) {
+export default function DetailTopTile({ titleText, img, createdAt, hash }) {
   const date = useDateHook(createdAt);
   return (
     <WrapTitle>
@@ -36,7 +36,7 @@ export default function DetailTopTile({ titleText, img, createdAt }) {
       <WrapDib>
         <TitleDiv>{titleText}</TitleDiv>
 
-        <DetailStack img={img} createdAt={date} />
+        <DetailStack img={img} createdAt={date} hash={hash} />
       </WrapDib>
     </WrapTitle>
   );
