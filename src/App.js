@@ -15,13 +15,14 @@ import LoadingPage from "./elems/LoadingPage";
 import { useSelector } from "react-redux";
 
 function App() {
-  const loading = useSelector((state) => state.login.loading);
+  const loginLoading = useSelector((state) => state.login.loading);
+  const postLoading = useSelector((state) => state.post.loading);
 
   return (
     <div className="App">
       <Header />
       <GlobalStyle />
-      {loading ? (
+      {loginLoading || postLoading ? (
         <LoadingPage />
       ) : (
         <Routes>

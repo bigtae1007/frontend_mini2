@@ -96,12 +96,16 @@ const postSlice = createSlice({
 
       // 포스트 추가 작성하기
       .addCase(__addPost.fulfilled, (state, action) => {
-        state.loading = false;
-
         // 저장된 list에서 작성된 포스트 추가하기
         state.list = [action.payload, ...state.list];
+        state.loading = false;
       })
-
+      .addCase(__addPost.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(__addPost.pending, (state, action) => {
+        state.loading = true;
+      })
       // 포스트 수정하기
       .addCase(__editPost.fulfilled, (state, action) => {
         state.loading = false;
