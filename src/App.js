@@ -11,20 +11,29 @@ import PostList from "./route/PostList";
 import PostWrite from "./route/PostWrite";
 import PostModify from "./route/PostModify";
 import PostDetail from "./route/PostDetail";
+import LoadingPage from "./elems/LoadingPage";
+import { useSelector } from "react-redux";
 
 function App() {
+  const loading = useSelector((state) => state.login.loading);
+  console.log(loading);
+
   return (
     <div className="App">
       <Header />
       <GlobalStyle />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/sign" element={<SignUp />} />
-        <Route path="/" element={<PostList />} />
-        <Route path="/post" element={<PostWrite />} />
-        <Route path="/post/detail/:id" element={<PostDetail />} />
-        <Route path="/post/modify/:id" element={<PostModify />} />
-      </Routes>
+      {loading ? (
+        <LoadingPage />
+      ) : (
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/sign" element={<SignUp />} />
+          <Route path="/" element={<PostList />} />
+          <Route path="/post" element={<PostWrite />} />
+          <Route path="/post/detail/:id" element={<PostDetail />} />
+          <Route path="/post/modify/:id" element={<PostModify />} />
+        </Routes>
+      )}
     </div>
   );
 }

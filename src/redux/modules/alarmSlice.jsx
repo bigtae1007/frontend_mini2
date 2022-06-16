@@ -8,7 +8,6 @@ export const __getAlarmList = createAsyncThunk(
   "ALARM/GETALARM_LOG",
   async () => {
     const response = await api.get(`/api/alarm`);
-    console.log(response);
     return response.data;
   }
 );
