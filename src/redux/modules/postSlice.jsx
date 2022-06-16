@@ -1,6 +1,11 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSlice,
+  isRejectedWithValue,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 import { api } from "../../shared/api";
+import produce from "immer";
 
 // thunk 함수
 
@@ -44,6 +49,20 @@ export const __deletePost = createAsyncThunk(
     //삭제할 포스트 ID값
     return payload;
     // 삭제시 삭제 할 post id값만 받아옴 데이터 베이스와 따로 삭제 !
+  }
+);
+
+export const __searchPost = createAsyncThunk(
+  "post/SEARCH_POST",
+  async (payload) => {
+    try {
+      const response = await api.get(`/api/title?title=${payload}`);
+
+      return response.data;
+    } catch (error) {
+      const errorMsg = JSON.parse(error.request.response);
+      alert(errorMsg.msg);
+    }
   }
 );
 
@@ -129,6 +148,21 @@ const postSlice = createSlice({
           return Number(v.id) === Number(action.payload) ? false : true;
         });
         state.list = delete_list;
+      })
+
+      // 포스트 검색하기
+      .addCase(__searchPost.fulfilled, (state, action) => {
+        state.loading = false;
+        // 리스트 전체 저장
+        if (action.payload) {
+          state.list = action.payload;
+        }
+        state.session = true;
+      })
+
+      .addCase(__searchPost.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error;
       });
   },
 });

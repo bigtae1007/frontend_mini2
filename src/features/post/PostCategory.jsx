@@ -7,7 +7,13 @@ import useCategoryList from "../../component/categoryList";
 import { resetListCount } from "../../redux/modules/postSlice";
 
 //카테고리 선택 버튼 컴포넌트
-const PostCategory = ({ postList, categoryState, session, lastPostState }) => {
+const PostCategory = ({
+  postList,
+  categoryState,
+  session,
+  lastPostState,
+  searchSession,
+}) => {
   const sessionState = useSelector((state) => state.post.session);
   const post_list = useSelector((state) => state.post.list);
   const dispatch = useDispatch();

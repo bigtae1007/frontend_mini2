@@ -20,6 +20,7 @@ const PostCard = () => {
   const listCount = useSelector((state) => state.post.countList);
   const dispatch = useDispatch();
   const [listState, setListState] = useState([]);
+  const error = useSelector((state) => state.post.error);
   // 포스트 보이는 갯수 상태 , 마지막 포스트 확인 상태
   // const [listCount, setListCount] = useState(5);
   // >> 5 >>> 10
