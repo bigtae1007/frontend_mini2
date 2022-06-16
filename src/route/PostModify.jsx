@@ -49,8 +49,11 @@ const PostModify = () => {
   // 해쉬 태그 삭제
   const deleteHash = (e) => {
     const newList = hastList.filter((v, l) => {
+      console.log(e.target.id);
+      console.log(l !== Number(e.target.id));
       return l !== Number(e.target.id);
     });
+    console.log(newList);
     setHashList(newList);
   };
 
@@ -89,7 +92,10 @@ const PostModify = () => {
               return (
                 <div key={l}>
                   <span>
-                    # {v} <span onClick={deleteHash}>x</span>
+                    # {v}{" "}
+                    <span id={l} onClick={deleteHash}>
+                      x
+                    </span>
                   </span>
                 </div>
               );

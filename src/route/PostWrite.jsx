@@ -70,7 +70,10 @@ const PostWrite = () => {
               return (
                 <div key={l}>
                   <span>
-                    # {v} <span onClick={deleteHash}>x</span>
+                    # {v}{" "}
+                    <span id={l} onClick={deleteHash}>
+                      x
+                    </span>
                   </span>
                 </div>
               );
