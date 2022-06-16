@@ -21,16 +21,27 @@ const PostSearch = () => {
             setSerch(e.target.value);
           }}
           onKeyPress={(e) => {
-
-            if (e.key === "Enter" && ) {
-              dispatch(__searchPost(serch));
+            if (serch === "") {
+              window.alert("검색 키워드를 입력해주세요!");
+            } else {
+              if (e.key === "Enter") {
+                dispatch(__searchPost(serch));
+              }
             }
           }}
         />
         <img src="" alt="" />
-        <SearchBtn onClick={() => {
-          dispatch(__searchPost(serch));
-        }}>&#128269;</SearchBtn>
+        <SearchBtn
+          onClick={() => {
+            if (serch === "") {
+              window.alert("검색 키워드를 입력해주세요!");
+            } else {
+              dispatch(__searchPost(serch));
+            }
+          }}
+        >
+          &#128269;
+        </SearchBtn>
       </>
     </div>
   );
